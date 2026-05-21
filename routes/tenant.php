@@ -31,6 +31,7 @@ use App\Http\Controllers\Tenant\ScansController;
 use App\Http\Controllers\Tenant\SdsController;
 use App\Http\Controllers\Tenant\SearchController;
 use App\Http\Controllers\Tenant\Settings\AutomatedReportsController;
+use App\Http\Controllers\Tenant\Settings\ComplianceFormController;
 use App\Http\Controllers\Tenant\Settings\GlobalSettingsController;
 use App\Http\Controllers\Tenant\Settings\PasswordController as SettingsPasswordController;
 use App\Http\Controllers\Tenant\Settings\ProfileController as SettingsProfileController;
@@ -38,7 +39,6 @@ use App\Http\Controllers\Tenant\Settings\StoreSettingsController;
 use App\Http\Controllers\Tenant\Store\LocationController;
 use App\Http\Controllers\Tenant\Store\SwitchStoreController;
 use App\Http\Controllers\Tenant\UserController as TenantUserController;
-use App\Http\Livewire\Dealer\Settings\FrontEndComplianceForm;
 use App\Routing\ViolationAuditRoutes;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Route;
@@ -123,7 +123,8 @@ Route::name('dealer.')->middleware([
         Route::delete('{vendor}', [VendorController::class, 'destroy'])->name('destroy');
     });
 
-    Route::get('email/settings', FrontEndComplianceForm::class)->name('dealer.settings.form')->middleware('signed');
+    Route::get('email/settings', [ComplianceFormController::class, 'show'])->name('dealer.settings.form')->middleware('signed');
+    Route::post('email/settings', [ComplianceFormController::class, 'update'])->name('dealer.settings.form.update')->middleware('signed');
 
     Route::middleware('auth')->group(function (): void {
         Route::get('/profile', [SettingsProfileController::class, 'edit'])->name('profile.edit');

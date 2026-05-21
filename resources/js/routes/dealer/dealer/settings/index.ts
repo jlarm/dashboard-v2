@@ -2,8 +2,8 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
 import general from './general'
 import resetCoursesBc10d6 from './reset-courses'
 /**
-* @see \App\Http\Livewire\Dealer\Settings\FrontEndComplianceForm::__invoke
-* @see app/Http/Livewire/Dealer/Settings/FrontEndComplianceForm.php:7
+* @see \App\Http\Controllers\Tenant\Settings\ComplianceFormController::form
+* @see app/Http/Controllers/Tenant/Settings/ComplianceFormController.php:26
 * @route '/email/settings'
 */
 export const form = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -17,8 +17,8 @@ form.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see \App\Http\Livewire\Dealer\Settings\FrontEndComplianceForm::__invoke
-* @see app/Http/Livewire/Dealer/Settings/FrontEndComplianceForm.php:7
+* @see \App\Http\Controllers\Tenant\Settings\ComplianceFormController::form
+* @see app/Http/Controllers/Tenant/Settings/ComplianceFormController.php:26
 * @route '/email/settings'
 */
 form.url = (options?: RouteQueryOptions) => {
@@ -26,8 +26,8 @@ form.url = (options?: RouteQueryOptions) => {
 }
 
 /**
-* @see \App\Http\Livewire\Dealer\Settings\FrontEndComplianceForm::__invoke
-* @see app/Http/Livewire/Dealer/Settings/FrontEndComplianceForm.php:7
+* @see \App\Http\Controllers\Tenant\Settings\ComplianceFormController::form
+* @see app/Http/Controllers/Tenant/Settings/ComplianceFormController.php:26
 * @route '/email/settings'
 */
 form.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -36,8 +36,8 @@ form.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 
 /**
-* @see \App\Http\Livewire\Dealer\Settings\FrontEndComplianceForm::__invoke
-* @see app/Http/Livewire/Dealer/Settings/FrontEndComplianceForm.php:7
+* @see \App\Http\Controllers\Tenant\Settings\ComplianceFormController::form
+* @see app/Http/Controllers/Tenant/Settings/ComplianceFormController.php:26
 * @route '/email/settings'
 */
 form.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -46,8 +46,8 @@ form.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see \App\Http\Livewire\Dealer\Settings\FrontEndComplianceForm::__invoke
-* @see app/Http/Livewire/Dealer/Settings/FrontEndComplianceForm.php:7
+* @see \App\Http\Controllers\Tenant\Settings\ComplianceFormController::form
+* @see app/Http/Controllers/Tenant/Settings/ComplianceFormController.php:26
 * @route '/email/settings'
 */
 const formForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -56,8 +56,8 @@ const formForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 })
 
 /**
-* @see \App\Http\Livewire\Dealer\Settings\FrontEndComplianceForm::__invoke
-* @see app/Http/Livewire/Dealer/Settings/FrontEndComplianceForm.php:7
+* @see \App\Http\Controllers\Tenant\Settings\ComplianceFormController::form
+* @see app/Http/Controllers/Tenant/Settings/ComplianceFormController.php:26
 * @route '/email/settings'
 */
 formForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -66,8 +66,8 @@ formForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 })
 
 /**
-* @see \App\Http\Livewire\Dealer\Settings\FrontEndComplianceForm::__invoke
-* @see app/Http/Livewire/Dealer/Settings/FrontEndComplianceForm.php:7
+* @see \App\Http\Controllers\Tenant\Settings\ComplianceFormController::form
+* @see app/Http/Controllers/Tenant/Settings/ComplianceFormController.php:26
 * @route '/email/settings'
 */
 formForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
