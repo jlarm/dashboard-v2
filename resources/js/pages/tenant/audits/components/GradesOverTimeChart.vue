@@ -51,7 +51,7 @@ const tooltipTemplate = computed(() =>
 </script>
 
 <template>
-    <article class="rounded-2xl border bg-card p-5">
+    <article class="min-w-0 overflow-hidden rounded-2xl border bg-card p-3 sm:p-5">
         <header class="mb-4">
             <h3 class="text-sm font-semibold tracking-tight">Grades Over Time</h3>
             <p class="text-xs text-muted-foreground">Historical audit grades</p>

@@ -50,7 +50,7 @@ const tooltipTemplate = computed(() =>
 </script>
 
 <template>
-    <article class="rounded-2xl border bg-card p-5">
+    <article class="min-w-0 overflow-hidden rounded-2xl border bg-card p-3 sm:p-5">
         <header class="mb-4 flex items-start justify-between gap-3">
             <div>
                 <h3 class="text-sm font-semibold tracking-tight">Violations &amp; Remediations</h3>

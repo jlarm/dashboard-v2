@@ -153,56 +153,109 @@ const formatAuditDate = (iso: string): string => {
                     <CardTitle class="text-sm">Deal jackets</CardTitle>
                 </CardHeader>
                 <CardContent class="px-0">
-                <Table v-if="group.deal_jackets.length > 0">
-                    <TableHeader class="bg-muted/40 [&_tr]:border-b">
-                        <TableRow>
-                            <TableHead>Customer</TableHead>
-                            <TableHead>Deal #</TableHead>
-                            <TableHead>Finance manager</TableHead>
-                            <TableHead>Date</TableHead>
-                            <TableHead>Pass / Fail</TableHead>
-                            <TableHead>Score</TableHead>
-                            <TableHead class="w-0" />
-                        </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                        <TableRow v-for="jacket in group.deal_jackets" :key="jacket.id">
-                            <TableCell class="font-medium">{{ jacket.customer_name || '—' }}</TableCell>
-                            <TableCell class="text-muted-foreground">{{ jacket.customer_deal_number || '—' }}</TableCell>
-                            <TableCell class="text-muted-foreground">{{ jacket.finance_manager_name || 'House' }}</TableCell>
-                            <TableCell class="text-muted-foreground">{{ formatAuditDate(jacket.audit_date) }}</TableCell>
-                            <TableCell>
-                                <span class="text-emerald-700">{{ jacket.total_passed }}</span>
-                                <span class="text-muted-foreground"> / </span>
-                                <span class="text-red-700">{{ jacket.total_failed }}</span>
-                            </TableCell>
-                            <TableCell>{{ jacket.percentage }}%</TableCell>
-                            <TableCell class="text-right">
-                                <div class="flex items-center justify-end gap-1">
-                                    <Link
-                                        v-if="canManage && !group.completed"
-                                        :href="dealJackets.edit.url({ dealJacketGroup: group.uuid, dealJacket: jacket.uuid })"
-                                    >
-                                        <Button variant="ghost" size="sm">
-                                            <Pencil class="size-4" />
-                                            <span class="sr-only">Edit</span>
+                <template v-if="group.deal_jackets.length > 0">
+                    <!-- Table layout (md and up) -->
+                    <Table class="hidden md:table">
+                        <TableHeader class="bg-muted/40 [&_tr]:border-b">
+                            <TableRow>
+                                <TableHead>Customer</TableHead>
+                                <TableHead>Deal #</TableHead>
+                                <TableHead>Finance manager</TableHead>
+                                <TableHead>Date</TableHead>
+                                <TableHead>Pass / Fail</TableHead>
+                                <TableHead>Score</TableHead>
+                                <TableHead class="w-0" />
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            <TableRow v-for="jacket in group.deal_jackets" :key="jacket.id">
+                                <TableCell class="font-medium">{{ jacket.customer_name || '—' }}</TableCell>
+                                <TableCell class="text-muted-foreground">{{ jacket.customer_deal_number || '—' }}</TableCell>
+                                <TableCell class="text-muted-foreground">{{ jacket.finance_manager_name || 'House' }}</TableCell>
+                                <TableCell class="text-muted-foreground">{{ formatAuditDate(jacket.audit_date) }}</TableCell>
+                                <TableCell>
+                                    <span class="text-emerald-700">{{ jacket.total_passed }}</span>
+                                    <span class="text-muted-foreground"> / </span>
+                                    <span class="text-red-700">{{ jacket.total_failed }}</span>
+                                </TableCell>
+                                <TableCell>{{ jacket.percentage }}%</TableCell>
+                                <TableCell class="text-right">
+                                    <div class="flex items-center justify-end gap-1">
+                                        <Link
+                                            v-if="canManage && !group.completed"
+                                            :href="dealJackets.edit.url({ dealJacketGroup: group.uuid, dealJacket: jacket.uuid })"
+                                        >
+                                            <Button variant="ghost" size="sm">
+                                                <Pencil class="size-4" />
+                                                <span class="sr-only">Edit</span>
+                                            </Button>
+                                        </Link>
+                                        <Button
+                                            v-if="canManage && !group.completed"
+                                            variant="ghost"
+                                            size="sm"
+                                            class="text-destructive hover:text-destructive"
+                                            @click="deleteJacket(jacket)"
+                                        >
+                                            <Trash2 class="size-4" />
+                                            <span class="sr-only">Delete</span>
                                         </Button>
-                                    </Link>
-                                    <Button
-                                        v-if="canManage && !group.completed"
-                                        variant="ghost"
-                                        size="sm"
-                                        class="text-destructive hover:text-destructive"
-                                        @click="deleteJacket(jacket)"
-                                    >
-                                        <Trash2 class="size-4" />
-                                        <span class="sr-only">Delete</span>
-                                    </Button>
+                                    </div>
+                                </TableCell>
+                            </TableRow>
+                        </TableBody>
+                    </Table>
+
+                    <!-- Stacked card layout (mobile) -->
+                    <ul class="divide-y md:hidden">
+                        <li
+                            v-for="jacket in group.deal_jackets"
+                            :key="jacket.id"
+                            class="flex flex-col gap-2 px-5 py-4"
+                        >
+                            <div class="flex items-start justify-between gap-3">
+                                <div class="min-w-0">
+                                    <p class="font-medium">{{ jacket.customer_name || '—' }}</p>
+                                    <p class="text-xs text-muted-foreground">
+                                        Deal #{{ jacket.customer_deal_number || '—' }}
+                                        · {{ formatAuditDate(jacket.audit_date) }}
+                                    </p>
                                 </div>
-                            </TableCell>
-                        </TableRow>
-                    </TableBody>
-                </Table>
+                                <span class="shrink-0 text-sm font-semibold">{{ jacket.percentage }}%</span>
+                            </div>
+                            <div class="flex items-center justify-between gap-3 text-sm">
+                                <span class="text-muted-foreground">{{ jacket.finance_manager_name || 'House' }}</span>
+                                <span>
+                                    <span class="text-emerald-700">{{ jacket.total_passed }}</span>
+                                    <span class="text-muted-foreground"> / </span>
+                                    <span class="text-red-700">{{ jacket.total_failed }}</span>
+                                </span>
+                            </div>
+                            <div
+                                v-if="canManage && !group.completed"
+                                class="-ml-2 flex items-center gap-1"
+                            >
+                                <Link
+                                    :href="dealJackets.edit.url({ dealJacketGroup: group.uuid, dealJacket: jacket.uuid })"
+                                >
+                                    <Button variant="ghost" size="sm">
+                                        <Pencil class="size-4" />
+                                        Edit
+                                    </Button>
+                                </Link>
+                                <Button
+                                    variant="ghost"
+                                    size="sm"
+                                    class="text-destructive hover:text-destructive"
+                                    @click="deleteJacket(jacket)"
+                                >
+                                    <Trash2 class="size-4" />
+                                    Delete
+                                </Button>
+                            </div>
+                        </li>
+                    </ul>
+                </template>
                 <p v-else class="px-5 py-12 text-center text-sm text-muted-foreground">
                     No deal jackets yet. Click "Add Deal Jacket" to start.
                 </p>

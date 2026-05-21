@@ -68,7 +68,7 @@ const handleUpdate = (value: DateValue | undefined): void => {
                 variant="outline"
                 :disabled="disabled"
                 :class="cn(
-                    'w-full justify-start text-left font-normal',
+                    'w-full justify-start text-left font-normal shadow-none',
                     !modelValue && 'text-muted-foreground',
                 )"
             >

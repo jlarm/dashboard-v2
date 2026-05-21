@@ -123,11 +123,11 @@ const breadcrumbs: BreadcrumbItem[] = [
 const answerClasses = (answer: 'yes' | 'no' | 'na'): string => {
     switch (answer) {
         case 'yes':
-            return 'border-emerald-500 bg-emerald-500 text-white shadow-sm';
+            return 'border-emerald-500 bg-emerald-500 text-white';
         case 'no':
-            return 'border-red-600 bg-red-600 text-white shadow-sm';
+            return 'border-red-600 bg-red-600 text-white';
         case 'na':
-            return 'border-slate-400 bg-slate-400 text-white shadow-sm';
+            return 'border-slate-400 bg-slate-400 text-white';
     }
 };
 
@@ -195,7 +195,7 @@ const submit = (): void => {
         </template>
 
         <form class="mx-auto max-w-3xl space-y-5 px-3 py-6 sm:px-6" @submit.prevent="submit">
-            <section class="rounded-lg border bg-card p-5 shadow-sm">
+            <section class="rounded-lg border bg-card p-5">
                 <h2 class="text-sm font-semibold tracking-tight">Deal info</h2>
                 <div class="mt-4 grid gap-4 md:grid-cols-2">
                     <Field>
@@ -262,14 +262,14 @@ const submit = (): void => {
                 </div>
             </section>
 
-            <section v-if="filteredQuestions.length > 0" class="rounded-lg border bg-card p-5 shadow-sm">
+            <section v-if="filteredQuestions.length > 0" class="rounded-lg border bg-card p-5">
                 <h2 class="text-sm font-semibold tracking-tight">Compliance questions</h2>
                 <p class="mt-1 text-xs text-muted-foreground">{{ filteredQuestions.length }} questions for this deal type</p>
                 <div class="mt-4 space-y-3">
                     <div
                         v-for="(question, index) in filteredQuestions"
                         :key="question.id"
-                        class="space-y-3 rounded-lg border bg-card p-4 shadow-sm"
+                        class="space-y-3 rounded-lg border bg-card p-4"
                     >
                         <p class="text-sm font-medium leading-snug">{{ index + 1 }}. {{ question.question }}</p>
 
@@ -337,7 +337,7 @@ const submit = (): void => {
                     </div>
                 </div>
             </section>
-            <section v-else class="rounded-lg border bg-card p-5 text-center text-sm text-muted-foreground shadow-sm">
+            <section v-else class="rounded-lg border bg-card p-5 text-center text-sm text-muted-foreground">
                 Select a deal type and vehicle type to see the compliance questions.
             </section>
 

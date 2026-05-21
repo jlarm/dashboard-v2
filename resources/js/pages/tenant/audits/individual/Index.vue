@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Head, Link, router } from '@inertiajs/vue3';
-import { ClipboardList, FileDown, Plus, Trash2 } from 'lucide-vue-next';
+import { ClipboardList, FileDown, Trash2 } from 'lucide-vue-next';
 import AppLayout from '@/layouts/tenant/AppLayout.vue';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -59,7 +59,6 @@ const formatDate = (iso: string): string => {
     <AppLayout :breadcrumbs="breadcrumbs">
         <template #actions>
             <Button @click="createParent">
-                <Plus class="size-4" />
                 New audit
             </Button>
         </template>

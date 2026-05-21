@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { Head, Link, router, usePage } from '@inertiajs/vue3';
-import { CheckCircle2, ClipboardList, Plus, Trash2 } from 'lucide-vue-next';
+import { CheckCircle2, ClipboardList, Trash2 } from 'lucide-vue-next';
 import AppLayout from '@/layouts/tenant/AppLayout.vue';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -81,8 +81,7 @@ const formatPercent = (value: number | null): string => {
     <AppLayout :breadcrumbs="breadcrumbs">
         <template #actions>
             <Button v-if="canManage" @click="startGroup">
-                <Plus class="size-4" />
-                New quarterly audit
+                New audit
             </Button>
         </template>
 
@@ -146,21 +145,21 @@ const formatPercent = (value: number | null): string => {
                 </CardHeader>
                 <CardContent class="px-0">
                 <div v-if="groups.length === 0" class="px-5 py-12 text-center text-sm text-muted-foreground">
-                    No Deal Jacket groups yet. Click "New quarterly audit" to start.
+                    No Deal Jacket groups yet. Click "New audit" to start.
                 </div>
                 <ul v-else class="divide-y">
                     <li
                         v-for="group in groups"
                         :key="group.id"
-                        class="flex items-center justify-between gap-4 px-5 py-4"
+                        class="flex flex-col gap-2 px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4"
                     >
                         <div class="min-w-0 flex-1">
-                            <div class="flex items-center gap-2">
+                            <div class="flex flex-wrap items-center gap-2">
                                 <p class="text-sm font-medium">{{ formatDate(group.created_at) }}</p>
                                 <Badge v-if="group.completed" class="bg-emerald-100 text-emerald-700 ring-1 ring-emerald-200">Completed</Badge>
                                 <Badge v-else class="bg-amber-100 text-amber-700 ring-1 ring-amber-200">In progress</Badge>
                             </div>
-                            <p class="text-xs text-muted-foreground">
+                            <p class="mt-0.5 text-xs text-muted-foreground">
                                 {{ group.deal_jackets_count }} deal jackets
                                 · {{ group.total_passed }} pass / {{ group.total_failed }} fail
                                 <span v-if="group.total_high_risk > 0" class="text-red-600">· {{ group.total_high_risk }} high-risk</span>
@@ -168,7 +167,7 @@ const formatPercent = (value: number | null): string => {
                             </p>
                         </div>
                         <TooltipProvider :delay-duration="150">
-                            <div class="flex items-center gap-1">
+                            <div class="-ml-2 flex items-center gap-1 sm:ml-0">
                                 <Tooltip>
                                     <TooltipTrigger as-child>
                                         <Link :href="dealJackets.show.url({ dealJacketGroup: group.uuid })">

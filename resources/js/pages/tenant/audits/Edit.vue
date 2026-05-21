@@ -621,7 +621,7 @@ const addViolation = (statementId: number): void => {
                 <div
                     v-for="comment in audit.comments"
                     :key="comment.id"
-                    class="rounded-lg border bg-card p-3 shadow-sm"
+                    class="rounded-lg border bg-card p-3"
                 >
                     <div class="flex items-start gap-3">
                         <span class="grid size-9 shrink-0 place-items-center rounded-full bg-primary/10 text-xs font-semibold text-primary">
@@ -694,7 +694,7 @@ const addViolation = (statementId: number): void => {
                 </div>
 
                 <!-- Add comment -->
-                <div class="space-y-3 rounded-lg border bg-card p-3 shadow-sm">
+                <div class="space-y-3 rounded-lg border bg-card p-3">
                     <Textarea
                         v-model="newCommentBody"
                         rows="2"

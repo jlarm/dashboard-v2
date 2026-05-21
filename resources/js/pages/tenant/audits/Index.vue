@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import { Head, Link, router, usePage } from '@inertiajs/vue3';
-import { CheckCircle2, ClipboardList, Eye, FileDown, MoreVertical, Pencil, Pencil as PencilIcon, Plus, RotateCcw, Trash2 } from 'lucide-vue-next';
+import { CheckCircle2, ClipboardList, Eye, FileDown, MoreVertical, Pencil, Pencil as PencilIcon, RotateCcw, Trash2 } from 'lucide-vue-next';
 import AppLayout from '@/layouts/tenant/AppLayout.vue';
 import { Button } from '@/components/ui/button';
 import {
@@ -137,8 +137,7 @@ const gradeBadgeClass = (grade: string | null): string => {
         <template #actions>
             <Link v-if="store && canManageAudits" :href="routes.create.url({ store: store.id })">
                 <Button>
-                    <Plus class="size-4" />
-                    New {{ label }} audit
+                    New audit
                 </Button>
             </Link>
         </template>
@@ -158,7 +157,7 @@ const gradeBadgeClass = (grade: string | null): string => {
             </div>
 
             <div class="rounded-md border">
-                <Table>
+                <Table class="hidden md:table">
                     <TableHeader class="bg-muted/50 [&_tr]:border-b">
                         <TableRow>
                             <TableHead>Quarter</TableHead>
@@ -311,8 +310,7 @@ const gradeBadgeClass = (grade: string | null): string => {
                                 <div v-if="store && canManageAudits" class="mt-4">
                                     <Button as-child size="sm">
                                         <Link :href="routes.create.url({ store: store.id })">
-                                            <Plus class="size-3.5" />
-                                            New {{ label }} audit
+                                            New audit
                                         </Link>
                                     </Button>
                                 </div>
@@ -320,6 +318,160 @@ const gradeBadgeClass = (grade: string | null): string => {
                         </TableRow>
                     </TableBody>
                 </Table>
+
+                <!-- Stacked card layout (mobile) -->
+                <div class="md:hidden">
+                    <template v-if="audits.data.length > 0">
+                        <div
+                            v-for="audit in audits.data"
+                            :key="audit.id"
+                            class="space-y-2 border-b p-4 last:border-b-0"
+                        >
+                            <div class="flex items-start justify-between gap-3">
+                                <div class="min-w-0">
+                                    <p class="font-medium text-foreground">{{ audit.quarter }}</p>
+                                    <p class="text-xs text-muted-foreground">{{ audit.date }}</p>
+                                </div>
+                                <div class="flex shrink-0 items-center gap-2">
+                                    <Popover
+                                        v-if="canManageAudits && audit.is_completed"
+                                        :open="gradePopoverFor === audit.id"
+                                        @update:open="(value) => gradePopoverFor = value ? audit.id : null"
+                                    >
+                                        <PopoverTrigger as-child>
+                                            <button
+                                                type="button"
+                                                class="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold ring-1 transition hover:opacity-80"
+                                                :class="gradeBadgeClass(audit.grade)"
+                                                :disabled="savingGradeFor === audit.id"
+                                            >
+                                                {{ audit.grade ?? 'Set grade' }}
+                                                <PencilIcon class="size-3 opacity-60" />
+                                            </button>
+                                        </PopoverTrigger>
+                                        <PopoverContent class="w-auto p-2" align="end">
+                                            <div class="flex gap-1">
+                                                <button
+                                                    v-for="option in gradeOptions"
+                                                    :key="option"
+                                                    type="button"
+                                                    class="grid size-9 place-items-center rounded-md text-sm font-semibold ring-1 transition hover:opacity-80"
+                                                    :class="[
+                                                        gradeBadgeClass(option),
+                                                        audit.grade === option ? 'ring-2 ring-foreground' : '',
+                                                    ]"
+                                                    :disabled="savingGradeFor === audit.id"
+                                                    @click="setGrade(audit, option)"
+                                                >
+                                                    {{ option }}
+                                                </button>
+                                            </div>
+                                        </PopoverContent>
+                                    </Popover>
+                                    <span
+                                        v-else
+                                        class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold ring-1"
+                                        :class="gradeBadgeClass(audit.grade)"
+                                    >
+                                        {{ audit.grade ?? '—' }}
+                                    </span>
+                                    <Popover>
+                                        <PopoverTrigger as-child>
+                                            <Button variant="outline" size="icon" aria-label="Open actions">
+                                                <MoreVertical class="size-4" />
+                                            </Button>
+                                        </PopoverTrigger>
+                                        <PopoverContent
+                                            align="end"
+                                            :side-offset="4"
+                                            :collision-padding="16"
+                                            class="z-[60] w-48 p-1"
+                                        >
+                                            <Link
+                                                v-if="audit.is_completed"
+                                                :href="routes.show.url({ audit: audit.uuid })"
+                                                class="flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-sm hover:bg-accent"
+                                            >
+                                                <Eye class="size-4" />
+                                                View
+                                            </Link>
+                                            <Link
+                                                v-if="canManageAudits && !audit.is_completed"
+                                                :href="routes.edit.url({ audit: audit.uuid })"
+                                                class="flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-sm hover:bg-accent"
+                                            >
+                                                <Pencil class="size-4" />
+                                                Edit
+                                            </Link>
+                                            <button
+                                                v-if="canManageAudits && !audit.is_completed"
+                                                type="button"
+                                                class="flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-left text-sm hover:bg-accent"
+                                                @click="markComplete(audit)"
+                                            >
+                                                <CheckCircle2 class="size-4 text-emerald-600" />
+                                                Mark complete
+                                            </button>
+                                            <button
+                                                v-if="canManageAudits && audit.is_completed"
+                                                type="button"
+                                                class="flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-left text-sm hover:bg-accent"
+                                                @click="reopenAudit(audit)"
+                                            >
+                                                <RotateCcw class="size-4" />
+                                                Reopen
+                                            </button>
+                                            <Link
+                                                v-if="audit.is_completed"
+                                                :href="routes.remediation.url({ audit: audit.uuid })"
+                                                class="flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-sm hover:bg-accent"
+                                            >
+                                                <ClipboardList class="size-4" />
+                                                Remediate
+                                            </Link>
+                                            <a
+                                                v-if="audit.is_completed"
+                                                :href="routes.download.url({ audit: audit.uuid })"
+                                                target="_blank"
+                                                rel="noopener"
+                                                class="flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-sm hover:bg-accent"
+                                            >
+                                                <FileDown class="size-4" />
+                                                Download PDF
+                                            </a>
+                                            <template v-if="canManageAudits">
+                                                <div class="my-1 h-px bg-border" />
+                                                <button
+                                                    type="button"
+                                                    class="flex w-full items-center gap-2 rounded-sm px-2 py-1.5 text-left text-sm text-destructive hover:bg-accent"
+                                                    @click="deleteAudit(audit)"
+                                                >
+                                                    <Trash2 class="size-4" />
+                                                    Delete
+                                                </button>
+                                            </template>
+                                        </PopoverContent>
+                                    </Popover>
+                                </div>
+                            </div>
+                            <p class="text-sm text-muted-foreground">
+                                {{ audit.violation_count }} violations
+                                · {{ audit.remediation_count }} / {{ audit.violation_count }} remediated ({{ audit.remediation_progress }}%)
+                            </p>
+                        </div>
+                    </template>
+                    <div v-else class="py-12 text-center">
+                        <ClipboardList class="mx-auto size-10 text-muted-foreground" />
+                        <p class="mt-3 text-sm text-foreground">No audits yet.</p>
+                        <div v-if="store && canManageAudits" class="mt-4">
+                            <Button as-child size="sm">
+                                <Link :href="routes.create.url({ store: store.id })">
+                                    New audit
+                                </Link>
+                            </Button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <AppPagination :pagination="audits" :only="['audits']" />
