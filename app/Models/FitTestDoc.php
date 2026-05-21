@@ -4,12 +4,19 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Database\Factories\FitTestDocFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Override;
 
 class FitTestDoc extends Model
 {
+    /**
+     * @use HasFactory<FitTestDocFactory>
+     */
+    use HasFactory;
+
     #[Override]
     protected $fillable = [
         'store_id',

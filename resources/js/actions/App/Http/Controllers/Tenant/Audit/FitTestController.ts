@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\Audit\FitTestController::index
 * @see app/Http/Controllers/Tenant/Audit/FitTestController.php:28
@@ -331,11 +331,6 @@ destroyForm.delete = (args: { fitTestDoc: string | number | { id: string | numbe
 
 destroy.form = destroyForm
 
-const fitTests = {
-    index: Object.assign(index, index),
-    store: Object.assign(store, store),
-    download: Object.assign(download, download),
-    destroy: Object.assign(destroy, destroy),
-}
+const FitTestController = { index, store, download, destroy }
 
-export default fitTests
+export default FitTestController

@@ -10,6 +10,7 @@ use App\Http\Controllers\Dealer\UserController;
 use App\Http\Controllers\Dealer\VendorController;
 use App\Http\Controllers\Tenant\Audit\DealJacketController;
 use App\Http\Controllers\Tenant\Audit\DealJacketReportDownloadController;
+use App\Http\Controllers\Tenant\Audit\FitTestController;
 use App\Http\Controllers\Tenant\Audit\IndividualAuditController;
 use App\Http\Controllers\Tenant\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Tenant\Auth\NewPasswordController;
@@ -38,7 +39,6 @@ use App\Http\Controllers\Tenant\Store\LocationController;
 use App\Http\Controllers\Tenant\Store\SwitchStoreController;
 use App\Http\Controllers\Tenant\UserController as TenantUserController;
 use App\Http\Livewire\Dealer\Settings\FrontEndComplianceForm;
-use App\Http\Livewire\Tenant\Audit\Fit\Index;
 use App\Routing\ViolationAuditRoutes;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Route;
@@ -371,7 +371,10 @@ Route::name('dealer.')->middleware([
                 ->name('destroy');
         });
 
-        Route::get('fit-tests', Index::class)->name('fit-tests.index');
+        Route::get('fit-tests', [FitTestController::class, 'index'])->name('fit-tests.index');
+        Route::post('fit-tests', [FitTestController::class, 'store'])->name('fit-tests.store');
+        Route::get('fit-tests/{fitTestDoc}/download', [FitTestController::class, 'download'])->name('fit-tests.download');
+        Route::delete('fit-tests/{fitTestDoc}', [FitTestController::class, 'destroy'])->name('fit-tests.destroy');
 
     });
 
