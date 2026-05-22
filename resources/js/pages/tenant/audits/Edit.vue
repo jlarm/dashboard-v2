@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { computed, onMounted, reactive, ref, watch } from 'vue';
+import { computed, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue';
 import { Head, Link, router, usePage } from '@inertiajs/vue3';
-import { AlertTriangle, ImagePlus, MessageSquarePlus, Minus, Pencil, Plus, Search, Trash2, X } from 'lucide-vue-next';
+import { AlertCircle, AlertTriangle, Check, ImagePlus, Loader2, MessageSquarePlus, Minus, Pencil, Plus, Search, Trash2, X } from 'lucide-vue-next';
 import AppLayout from '@/layouts/tenant/AppLayout.vue';
 import {
     Accordion,
@@ -104,8 +104,24 @@ const violations = reactive<EditableViolation[]>(
     props.audit.violations.map((v) => ({ ...v, newPhotos: [] as File[] })),
 );
 const date = ref(props.audit.date);
-const submitting = ref(false);
 const openItem = ref<string>('');
+
+type SaveState = 'idle' | 'saving' | 'saved' | 'error';
+const saveState = ref<SaveState>('idle');
+let saveTimer: ReturnType<typeof setTimeout> | null = null;
+
+const saveLabel = computed<string>(() => {
+    switch (saveState.value) {
+        case 'saving':
+            return 'Saving…';
+        case 'saved':
+            return 'All changes saved';
+        case 'error':
+            return 'Couldn’t save changes';
+        default:
+            return '';
+    }
+});
 
 const priorOpen = ref(false);
 
@@ -330,10 +346,14 @@ const onPickFiles = async (violation: EditableViolation, event: Event): Promise<
     }
     violation.newPhotos.push(...processed);
     input.value = '';
+    if (processed.length > 0) {
+        scheduleSave();
+    }
 };
 
 const removeNewPhoto = (violation: EditableViolation, index: number): void => {
     violation.newPhotos.splice(index, 1);
+    scheduleSave();
 };
 
 const objectUrl = (file: File): string => URL.createObjectURL(file);
@@ -350,28 +370,100 @@ const removeExistingPhoto = (violation: Violation, photo: Photo): void => {
     );
 };
 
-const submit = (): void => {
-    submitting.value = true;
+const buildPayload = (): Record<string, unknown> => {
     const data: Record<string, unknown> = { date: date.value };
     violations.forEach((violation, index) => {
         data[`violations[${index}][id]`] = violation.id;
         data[`violations[${index}][comment]`] = violation.comment;
         data[`violations[${index}][violation_date]`] = violation.violation_date ?? '';
         data[`violations[${index}][risk]`] = violation.risk ? 1 : 0;
-        data[`violations[${index}][severity]`] = violation.severity ?? '';
+        data[`violations[${index}][severity]`] = violation.severity ?? 0;
         data[`violations[${index}][show_reference_image]`] = violation.show_reference_image ? 1 : 0;
         violation.newPhotos.forEach((file, fileIndex) => {
             data[`violations[${index}][images][${fileIndex}]`] = file;
         });
     });
-    router.post(routes.update.url({ audit: props.audit.uuid }), data as never, {
+    return data;
+};
+
+const persist = (): void => {
+    if (saveTimer) {
+        clearTimeout(saveTimer);
+        saveTimer = null;
+    }
+    saveState.value = 'saving';
+    router.post(routes.update.url({ audit: props.audit.uuid }), buildPayload() as never, {
         forceFormData: true,
         headers: { 'X-HTTP-Method-Override': 'PATCH' },
         preserveScroll: true,
-        onFinish: () => {
-            submitting.value = false;
+        preserveState: true,
+        onSuccess: () => {
+            // Photos are now persisted server-side; drop the local copies so a
+            // later auto-save doesn't re-upload them.
+            violations.forEach((violation) => {
+                violation.newPhotos.splice(0);
+            });
+            saveState.value = 'saved';
+        },
+        onError: () => {
+            saveState.value = 'error';
         },
     });
+};
+
+const scheduleSave = (): void => {
+    saveState.value = 'saving';
+    if (saveTimer) {
+        clearTimeout(saveTimer);
+    }
+    saveTimer = setTimeout(persist, 600);
+};
+
+// Auto-save whenever a savable field changes. The getter rebuilds a snapshot
+// on every tracked change; photo additions/removals call scheduleSave directly
+// since File objects aren't tracked here.
+watch(
+    () => [
+        date.value,
+        violations.map((violation) => ({
+            id: violation.id,
+            comment: violation.comment,
+            violation_date: violation.violation_date,
+            risk: violation.risk,
+            severity: violation.severity,
+            show_reference_image: violation.show_reference_image,
+        })),
+    ],
+    () => scheduleSave(),
+);
+
+onBeforeUnmount(() => {
+    if (saveTimer) {
+        clearTimeout(saveTimer);
+        saveTimer = null;
+    }
+});
+
+const exit = (): void => {
+    // Flush any pending or in-flight save before leaving so trailing edits
+    // aren't lost; only navigate once the save succeeds.
+    if (saveTimer || saveState.value === 'saving') {
+        if (saveTimer) {
+            clearTimeout(saveTimer);
+            saveTimer = null;
+        }
+        saveState.value = 'saving';
+        router.post(routes.update.url({ audit: props.audit.uuid }), buildPayload() as never, {
+            forceFormData: true,
+            headers: { 'X-HTTP-Method-Override': 'PATCH' },
+            onSuccess: () => router.visit(routes.index.url()),
+            onError: () => {
+                saveState.value = 'error';
+            },
+        });
+        return;
+    }
+    router.visit(routes.index.url());
 };
 
 const removeViolation = (violation: Violation): void => {
@@ -423,6 +515,17 @@ const addViolation = (statementId: number): void => {
     <Head :title="`Edit ${label} audit`" />
     <AppLayout :breadcrumbs="breadcrumbs">
         <template #actions>
+            <span
+                v-if="saveState !== 'idle'"
+                class="inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap text-xs font-medium"
+                :class="saveState === 'error' ? 'text-destructive' : 'text-muted-foreground'"
+                aria-live="polite"
+            >
+                <Loader2 v-if="saveState === 'saving'" class="size-3.5 shrink-0 animate-spin" />
+                <Check v-else-if="saveState === 'saved'" class="size-3.5 shrink-0 text-emerald-600" />
+                <AlertCircle v-else class="size-3.5 shrink-0" />
+                <span class="hidden sm:inline">{{ saveLabel }}</span>
+            </span>
             <button
                 v-if="previous_audit"
                 type="button"
@@ -442,7 +545,7 @@ const addViolation = (statementId: number): void => {
             </Button>
         </template>
 
-        <form class="mx-auto flex max-w-2xl flex-col gap-4 px-3 pb-8 pt-4 sm:px-6" @submit.prevent="submit">
+        <form class="mx-auto flex max-w-2xl flex-col gap-4 px-3 pb-8 pt-4 sm:px-6" @submit.prevent>
             <Field>
                 <FieldLabel for="audit-date" class="text-xs uppercase tracking-wider text-muted-foreground">
                     Audit date
@@ -739,17 +842,20 @@ const addViolation = (statementId: number): void => {
                 <p class="text-xs text-muted-foreground">
                     {{ violationCount }} violation{{ violationCount === 1 ? '' : 's' }}
                 </p>
-                <div class="flex items-center gap-2">
-                    <Link :href="routes.index.url()">
-                        <Button type="button" variant="outline" size="sm">Exit</Button>
-                    </Link>
-                    <Button
-                        type="button"
-                        size="sm"
-                        :disabled="submitting"
-                        @click="submit"
+                <div class="flex items-center gap-3">
+                    <span
+                        v-if="saveState !== 'idle'"
+                        class="flex items-center gap-1.5 text-xs font-medium"
+                        :class="saveState === 'error' ? 'text-destructive' : 'text-muted-foreground'"
+                        aria-live="polite"
                     >
-                        {{ submitting ? 'Saving…' : 'Update' }}
+                        <Loader2 v-if="saveState === 'saving'" class="size-3.5 animate-spin" />
+                        <Check v-else-if="saveState === 'saved'" class="size-3.5 text-emerald-600" />
+                        <AlertCircle v-else class="size-3.5" />
+                        {{ saveLabel }}
+                    </span>
+                    <Button type="button" variant="outline" size="sm" @click="exit">
+                        Done
                     </Button>
                 </div>
             </div>

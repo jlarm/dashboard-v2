@@ -151,7 +151,7 @@ class ViolationAuditController extends Controller
 
         $updateAudit->handle($model, $request->toData());
 
-        return back()->with('success', 'Audit updated.');
+        return back();
     }
 
     public function destroy(

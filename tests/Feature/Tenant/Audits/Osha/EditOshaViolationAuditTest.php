@@ -177,3 +177,32 @@ it('allows updates with an empty violation comment', function (): void {
 
     expect(Violation::query()->find($violation->id)->comment)->toBe('');
 });
+
+it('redirects back to the edit page so auto-saves keep the user in place', function (): void {
+    $violation = $this->audit->violations()->create([
+        'uuid' => (string) Str::uuid(),
+        'statement_id' => 1,
+        'statement' => 'Aisle blocked.',
+        'comment' => 'Initial.',
+    ]);
+
+    $editUrl = route('dealer.audit.osha.edit', $this->audit->uuid);
+
+    $this->from($editUrl)
+        ->patch(route('dealer.audit.osha.update', $this->audit->uuid), [
+            'date' => '2026-04-14',
+            'violations' => [
+                [
+                    'id' => $violation->id,
+                    'comment' => 'Auto-saved while editing.',
+                    'risk' => 0,
+                    'severity' => 0,
+                    'show_reference_image' => 0,
+                ],
+            ],
+        ])
+        ->assertRedirect($editUrl)
+        ->assertSessionMissing('success');
+
+    expect(Violation::query()->find($violation->id)->comment)->toBe('Auto-saved while editing.');
+});
