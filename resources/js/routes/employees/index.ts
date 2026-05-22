@@ -268,7 +268,7 @@ index.form = indexForm
 
 /**
 * @see \App\Http\Controllers\Central\InviteController::invites
-* @see app/Http/Controllers/Central/InviteController.php:25
+* @see app/Http/Controllers/Central/InviteController.php:26
 * @route '//dashboard.test/employees/invites'
 */
 export const invites = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -283,7 +283,7 @@ invites.definition = {
 
 /**
 * @see \App\Http\Controllers\Central\InviteController::invites
-* @see app/Http/Controllers/Central/InviteController.php:25
+* @see app/Http/Controllers/Central/InviteController.php:26
 * @route '//dashboard.test/employees/invites'
 */
 invites.url = (options?: RouteQueryOptions) => {
@@ -292,7 +292,7 @@ invites.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Central\InviteController::invites
-* @see app/Http/Controllers/Central/InviteController.php:25
+* @see app/Http/Controllers/Central/InviteController.php:26
 * @route '//dashboard.test/employees/invites'
 */
 invites.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -302,7 +302,7 @@ invites.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Central\InviteController::invites
-* @see app/Http/Controllers/Central/InviteController.php:25
+* @see app/Http/Controllers/Central/InviteController.php:26
 * @route '//dashboard.test/employees/invites'
 */
 invites.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -312,7 +312,7 @@ invites.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Central\InviteController::invites
-* @see app/Http/Controllers/Central/InviteController.php:25
+* @see app/Http/Controllers/Central/InviteController.php:26
 * @route '//dashboard.test/employees/invites'
 */
 const invitesForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -322,7 +322,7 @@ const invitesForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> =>
 
 /**
 * @see \App\Http\Controllers\Central\InviteController::invites
-* @see app/Http/Controllers/Central/InviteController.php:25
+* @see app/Http/Controllers/Central/InviteController.php:26
 * @route '//dashboard.test/employees/invites'
 */
 invitesForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -332,7 +332,7 @@ invitesForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 
 /**
 * @see \App\Http\Controllers\Central\InviteController::invites
-* @see app/Http/Controllers/Central/InviteController.php:25
+* @see app/Http/Controllers/Central/InviteController.php:26
 * @route '//dashboard.test/employees/invites'
 */
 invitesForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

@@ -137,7 +137,7 @@ class AuditFinanceManagerCoursesCommand extends Command
     private function getExpectedFinanceManagerCourses(User $user): array
     {
         $financeDeptId = $user->department_id;
-        $managerRoleId = Role::query()->where('name', 'Manager')->first()->id;
+        $managerRoleId = Role::query()->where('name', 'Manager')->first()?->id;
 
         $courseWithRole = Course::query()
             ->whereHas('roles', fn (Builder $q) => $q->where('id', $managerRoleId))

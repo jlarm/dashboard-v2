@@ -112,7 +112,7 @@ class CourseReminderCommand extends Command
     {
         $this->info("Tenant {$tenant->id} doesn't have locations enabled, processing all users");
 
-        if (! Store::query()->first()->courses_not_taken_notification) {
+        if (! Store::query()->first()?->courses_not_taken_notification) {
             return;
         }
 

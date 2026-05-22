@@ -9,6 +9,7 @@ use App\Domain\Tenant\Vendor\Support\RiskAssessmentQuestions;
 use App\Models\Dealer\VendorForm;
 use App\Models\User;
 use App\Notifications\VendorSignedNotification;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -17,7 +18,7 @@ class SubmitVendorForm
 {
     public function handle(VendorForm $vendorForm, SubmitVendorFormData $data): VendorForm
     {
-        if ($data->isDocumentUpload()) {
+        if ($data->isDocumentUpload() && $data->document instanceof UploadedFile) {
             $path = $data->document->store(
                 tenant('id').'/vendor-documents',
                 'do-manuals',

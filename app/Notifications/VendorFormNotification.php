@@ -40,10 +40,10 @@ class VendorFormNotification extends Notification
         $user = User::query()->role('Qualified Individual')->select('name', 'email')->first();
 
         return (new MailMessage)
-            ->greeting('Hello '.$this->vendor->vendor->name.',')
+            ->greeting('Hello '.$this->vendor->vendor?->name.',')
             ->line('Please click the button below to fill out our 3rd party service provider form for '.tenant('name').'.')
             ->action('Click Here', url($url))
-            ->line('If you have any questions, please contact '.$user->name.' at '.$user->email)
+            ->line('If you have any questions, please contact '.$user?->name.' at '.$user?->email)
             ->line('Thank you for your time!')
             ->salutation(tenant('name'))
             ->withSymfonyMessage(function (Email $message): void {

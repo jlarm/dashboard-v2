@@ -18,7 +18,7 @@ class CourseExpiredNotification extends Notification
     public function __construct(string $tenantDomain, public string $userName, protected int $courseId, CarbonInterface $expireDate)
     {
         $this->course = Course::query()->where('id', $this->courseId)->first();
-        $this->domain = 'https://'.$tenantDomain.'/courses/'.$this->course->slug;
+        $this->domain = 'https://'.$tenantDomain.'/courses/'.$this->course?->slug;
         $this->expireDate = $expireDate->format('F d, Y');
     }
 
@@ -34,7 +34,7 @@ class CourseExpiredNotification extends Notification
     {
         return (new MailMessage)
             ->greeting($this->userName)
-            ->line('The course '.$this->course->name.' expired on '.$this->expireDate.'. Click the link below to take the course.')
+            ->line('The course '.$this->course?->name.' expired on '.$this->expireDate.'. Click the link below to take the course.')
             ->action('Take the Course', url($this->domain));
     }
 

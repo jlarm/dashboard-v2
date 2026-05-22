@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\UserController::update
-* @see app/Http/Controllers/Tenant/UserController.php:391
+* @see app/Http/Controllers/Tenant/UserController.php:394
 * @route '/employees/{user}/course-overrides/{course}'
 */
 export const update = (args: { user: string | { slug: string }, course: number | { id: number } } | [user: string | { slug: string }, course: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -16,7 +16,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\UserController::update
-* @see app/Http/Controllers/Tenant/UserController.php:391
+* @see app/Http/Controllers/Tenant/UserController.php:394
 * @route '/employees/{user}/course-overrides/{course}'
 */
 update.url = (args: { user: string | { slug: string }, course: number | { id: number } } | [user: string | { slug: string }, course: number | { id: number } ], options?: RouteQueryOptions) => {
@@ -46,7 +46,7 @@ update.url = (args: { user: string | { slug: string }, course: number | { id: nu
 
 /**
 * @see \App\Http\Controllers\Tenant\UserController::update
-* @see app/Http/Controllers/Tenant/UserController.php:391
+* @see app/Http/Controllers/Tenant/UserController.php:394
 * @route '/employees/{user}/course-overrides/{course}'
 */
 update.patch = (args: { user: string | { slug: string }, course: number | { id: number } } | [user: string | { slug: string }, course: number | { id: number } ], options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -56,7 +56,7 @@ update.patch = (args: { user: string | { slug: string }, course: number | { id: 
 
 /**
 * @see \App\Http\Controllers\Tenant\UserController::update
-* @see app/Http/Controllers/Tenant/UserController.php:391
+* @see app/Http/Controllers/Tenant/UserController.php:394
 * @route '/employees/{user}/course-overrides/{course}'
 */
 const updateForm = (args: { user: string | { slug: string }, course: number | { id: number } } | [user: string | { slug: string }, course: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -71,7 +71,7 @@ const updateForm = (args: { user: string | { slug: string }, course: number | { 
 
 /**
 * @see \App\Http\Controllers\Tenant\UserController::update
-* @see app/Http/Controllers/Tenant/UserController.php:391
+* @see app/Http/Controllers/Tenant/UserController.php:394
 * @route '/employees/{user}/course-overrides/{course}'
 */
 updateForm.patch = (args: { user: string | { slug: string }, course: number | { id: number } } | [user: string | { slug: string }, course: number | { id: number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

@@ -47,7 +47,11 @@ class GenerateBodyShopPdfJob implements ShouldBeEncrypted, ShouldQueue
 
     public function failed(?Throwable $exception): void
     {
-        report_if($exception instanceof Throwable, $exception);
+        if (! $exception instanceof Throwable) {
+            return;
+        }
+
+        report($exception);
     }
 
     private function rating(): string
@@ -102,9 +106,9 @@ class GenerateBodyShopPdfJob implements ShouldBeEncrypted, ShouldQueue
     private function createFileName(): string
     {
         if (Store::query()->count() > 1) {
-            $dealerName = str_replace(' ', '-', $this->bodyShopViolationAudit->store->name);
+            $dealerName = str_replace(' ', '-', (string) $this->bodyShopViolationAudit->store?->name);
         } else {
-            $dealerName = str_replace(' ', '-', tenant('name'));
+            $dealerName = str_replace(' ', '-', (string) tenant('name'));
         }
 
         return $this->bodyShopViolationAudit->uuid.'-'.$dealerName.'-'.now()->format('Ymd').'-bodyshop-violation-audit.pdf';

@@ -27,6 +27,10 @@ class SendQueueEmailJob implements ShouldQueue
 
     public function failed(?Throwable $exception): void
     {
-        report_if($exception instanceof Throwable, $exception);
+        if (! $exception instanceof Throwable) {
+            return;
+        }
+
+        report($exception);
     }
 }

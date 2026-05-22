@@ -97,7 +97,7 @@ class VerifyCourseVideos extends Command
         ];
 
         // Get video data
-        $videoData = $this->vimeoService->getVideo($videoId);
+        $videoData = $this->vimeoService->getVideo((string) $videoId);
 
         if (! $videoData) {
             $result['has_issues'] = true;
@@ -113,7 +113,7 @@ class VerifyCourseVideos extends Command
         }
 
         // Get privacy settings
-        $privacyData = $this->vimeoService->getVideoPrivacySettings($videoId);
+        $privacyData = $this->vimeoService->getVideoPrivacySettings((string) $videoId);
 
         if ($privacyData) {
             // Check if video is playable

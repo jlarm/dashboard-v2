@@ -659,6 +659,6 @@ class GenerateCyrismaReportJob implements ShouldQueue
             return;
         }
 
-        $user->notify(new ScanReportReadyNotification($this->type, $store->name));
+        $user->notify(new ScanReportReadyNotification($this->type, (string) $store->name));
     }
 }

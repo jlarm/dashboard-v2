@@ -14,7 +14,7 @@ class DownloadVendorForm
 {
     public function handle(VendorForm $vendorForm): ?StreamedResponse
     {
-        $pdfName = Str::replace(' ', '', (string) $vendorForm->vendor->name).'.pdf';
+        $pdfName = Str::replace(' ', '', (string) $vendorForm->vendor?->name).'.pdf';
 
         if ($vendorForm->document_path) {
             return $this->downloadUploadedDocument($vendorForm->document_path, $pdfName);

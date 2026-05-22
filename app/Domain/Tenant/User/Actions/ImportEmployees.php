@@ -69,6 +69,10 @@ class ImportEmployees
                     continue;
                 }
 
+                if ($email === null) {
+                    continue;
+                }
+
                 $stores = $item['Stores'] ?? null;
                 $position = is_string($item['Position'] ?? null) && $item['Position'] !== ''
                     ? $item['Position']

@@ -34,7 +34,6 @@ class SearchSdsRecords
     {
         $sortDirection = $direction === 'desc' ? 'desc' : 'asc';
 
-        /** @phpstan-ignore return.type */
         return tenancy()->central(fn (): LengthAwarePaginator => Sds::query()
             ->where(function (Builder $query) use ($search): void {
                 $query->where('name', 'like', "%{$search}%")

@@ -51,7 +51,7 @@ class SendComplianceSummaryJob implements ShouldQueue
 
         try {
             $tenantName = (string) tenant('name');
-            $reportTitle = $stores->count() === 1 ? $stores->first()->name : $tenantName;
+            $reportTitle = $stores->count() === 1 ? (string) $stores->first()?->name : $tenantName;
 
             Mail::to($this->recipientEmails)->send(
                 new ComplianceSummaryMail($reportTitle, $this->reportPeriod, $pdfPath)
@@ -63,6 +63,10 @@ class SendComplianceSummaryJob implements ShouldQueue
 
     public function failed(?Throwable $exception): void
     {
-        report_if($exception instanceof Throwable, $exception);
+        if (! $exception instanceof Throwable) {
+            return;
+        }
+
+        report($exception);
     }
 }

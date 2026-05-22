@@ -31,6 +31,9 @@ class UploadBodyShopAuditToDigitalOceanJob implements ShouldQueue
     public function handle(): void
     {
         $pdf = Storage::get('/body-shop-audits/'.$this->bodyShopAudit->pdf_path);
+        if ($pdf === null) {
+            return;
+        }
         $moved = Storage::disk('do-audits')->put(tenant('id').'/body-shop/'.$this->bodyShopAudit->pdf_path, $pdf);
         if ($moved) {
             Storage::delete('/body-shop-audits/'.$this->bodyShopAudit->pdf_path);
@@ -39,6 +42,10 @@ class UploadBodyShopAuditToDigitalOceanJob implements ShouldQueue
 
     public function failed(?Throwable $exception): void
     {
-        report_if($exception instanceof Throwable, $exception);
+        if (! $exception instanceof Throwable) {
+            return;
+        }
+
+        report($exception);
     }
 }

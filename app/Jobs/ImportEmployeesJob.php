@@ -44,6 +44,10 @@ class ImportEmployeesJob implements ShouldQueue
     {
         Storage::disk('local')->delete($this->payloadPath);
 
-        report_if($exception instanceof Throwable, $exception);
+        if (! $exception instanceof Throwable) {
+            return;
+        }
+
+        report($exception);
     }
 }

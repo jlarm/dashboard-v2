@@ -12,6 +12,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Central\Dealership\CreateRequest;
 use App\Http\Resources\Central\DealershipResource;
 use App\Models\Dealership;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -27,6 +28,7 @@ class DealershipController extends Controller
     ): Response {
         $this->authorize('viewAny', Dealership::class);
 
+        /** @var User $user */
         $user = $request->user();
         $search = $request->string('search')->toString() ?: null;
 
@@ -43,7 +45,10 @@ class DealershipController extends Controller
         CreateRequest $request,
         CreateDealership $createDealership,
     ): RedirectResponse {
-        $createDealership->handle($request->user(), new DealershipData(
+        /** @var User $user */
+        $user = $request->user();
+
+        $createDealership->handle($user, new DealershipData(
             $request->validated('name'),
             $request->validated('consultant_ids', []),
         ));

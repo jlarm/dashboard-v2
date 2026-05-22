@@ -8,6 +8,7 @@ use Exception;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Sleep;
+use RuntimeException;
 use Vimeo\Exceptions\VimeoRequestException;
 use Vimeo\Vimeo;
 
@@ -315,7 +316,7 @@ class VimeoService
             }
         }
 
-        throw $lastException;
+        throw $lastException ?? new RuntimeException('Vimeo request failed after exhausting retries.');
     }
 
     /**

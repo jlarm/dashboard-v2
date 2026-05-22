@@ -50,7 +50,7 @@ class TrainingComplianceService
 
         foreach ($normalizedUsers as $user) {
             $courseIds = collect($this->userCourseService->getCourseIds($user))
-                ->map(static fn (mixed $id): int => (int) $id)
+                ->map(static fn (mixed $id): int => $id)
                 ->filter()
                 ->unique()
                 ->values();
@@ -177,6 +177,10 @@ class TrainingComplianceService
         $latestResults = [];
 
         foreach ($results as $result) {
+            if ($result->created_at === null) {
+                continue;
+            }
+
             $latestResults[(int) $result->user_id][(int) $result->course_id] = $result->created_at;
         }
 

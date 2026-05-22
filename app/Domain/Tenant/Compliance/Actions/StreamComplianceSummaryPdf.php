@@ -59,7 +59,7 @@ class StreamComplianceSummaryPdf
     private function buildFilename(Collection $stores): string
     {
         $slug = $stores->count() === 1
-            ? str($stores->first()->name)->slug()->toString()
+            ? str($stores->first()?->name)->slug()->toString()
             : 'overview';
 
         return now()->format('Ymd').'-'.$slug.'-audit-report.pdf';

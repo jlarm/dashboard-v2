@@ -222,7 +222,7 @@ class DashboardController extends Controller
     {
         $user = auth()->user();
 
-        abort_unless($user?->hasAnyRole(self::DOWNLOAD_AUTHORIZED_ROLES), 403);
+        abort_unless((bool) $user?->hasAnyRole(self::DOWNLOAD_AUTHORIZED_ROLES), 403);
 
         $stores = $this->resolveScopedStores();
 
@@ -300,8 +300,8 @@ class DashboardController extends Controller
 
         dispatch_sync(new GenerateDealJacketReportJob($group, $user));
 
-        $storeName = str_replace(' ', '-', (string) $group->store->name);
-        $fileName = $group->created_at->format('Ymd-His')."-{$storeName}-deal-jacket-report.pdf";
+        $storeName = str_replace(' ', '-', (string) $group->store?->name);
+        $fileName = ($group->created_at?->format('Ymd-His') ?? '')."-{$storeName}-deal-jacket-report.pdf";
         $filePath = "deal-jacket-reports/{$fileName}";
 
         abort_unless(Storage::exists($filePath), 404, 'Report not found or has expired.');
@@ -518,7 +518,12 @@ class DashboardController extends Controller
             ->latest('scored_on')
             ->get(['store_id', 'scored_on', 'score'])
             ->groupBy('store_id')
-            ->map(static fn (Collection $group) => $group->first()->score);
+            ->map(static function (Collection $group) {
+                $snapshot = $group->first();
+                assert($snapshot instanceof ComplianceScoreSnapshot);
+
+                return $snapshot->score;
+            });
 
         if ($rows->isEmpty()) {
             return null;
@@ -603,7 +608,12 @@ class DashboardController extends Controller
             ->latest('scored_on')
             ->get(['store_id', 'scored_on', 'overdue_count'])
             ->groupBy('store_id')
-            ->map(static fn (Collection $group): int => (int) $group->first()->overdue_count);
+            ->map(static function (Collection $group): int {
+                $snapshot = $group->first();
+                assert($snapshot instanceof ComplianceScoreSnapshot);
+
+                return (int) $snapshot->overdue_count;
+            });
 
         if ($rows->isEmpty()) {
             return null;
@@ -701,8 +711,10 @@ class DashboardController extends Controller
     {
         $now = CarbonImmutable::now();
 
-        $data = $stores->count() === 1
-            ? $vulnerabilitiesQuery->handleForStore($stores->first(), $now)
+        $firstStore = $stores->first();
+
+        $data = $firstStore !== null && $stores->count() === 1
+            ? $vulnerabilitiesQuery->handleForStore($firstStore, $now)
             : $vulnerabilitiesQuery->handleForStores($stores, $now);
 
         return $data?->toArray();

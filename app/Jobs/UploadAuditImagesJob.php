@@ -29,6 +29,9 @@ class UploadAuditImagesJob implements ShouldQueue
             if (Storage::disk('public')->exists($path)) {
                 // Retrieve the file using the path
                 $file = Storage::disk('public')->get($path);
+                if ($file === null) {
+                    continue;
+                }
                 $this->violation->addMediaFromDisk($file, 'public')
                     ->toMediaCollection('violation_files');
                 // Delete the temporary file
@@ -39,6 +42,10 @@ class UploadAuditImagesJob implements ShouldQueue
 
     public function failed(?Throwable $exception): void
     {
-        report_if($exception instanceof Throwable, $exception);
+        if (! $exception instanceof Throwable) {
+            return;
+        }
+
+        report($exception);
     }
 }

@@ -22,7 +22,7 @@ final readonly class VendorPublicFormData implements Arrayable
     {
         return new self(
             id: (int) $form->id,
-            vendorName: (string) $form->vendor->name,
+            vendorName: (string) $form->vendor?->name,
             contactName: (string) $form->name,
         );
     }

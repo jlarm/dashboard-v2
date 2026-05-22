@@ -31,6 +31,9 @@ class UploadToDigitalOceanJob implements ShouldQueue
     public function handle(): void
     {
         $pdf = Storage::get('contracts/'.$this->contract->pdf_path);
+        if ($pdf === null) {
+            return;
+        }
         $move = Storage::disk('armpcon')->put($this->contract->uuid.'/'.$this->contract->pdf_path, $pdf);
         if ($move) {
             Storage::delete('contracts/'.$this->contract->pdf_path);
@@ -44,6 +47,10 @@ class UploadToDigitalOceanJob implements ShouldQueue
 
     public function failed(?Throwable $exception): void
     {
-        report_if($exception instanceof Throwable, $exception);
+        if (! $exception instanceof Throwable) {
+            return;
+        }
+
+        report($exception);
     }
 }

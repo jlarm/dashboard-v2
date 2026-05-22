@@ -25,11 +25,11 @@ class GenerateOshaAuditJob implements ShouldQueue
     {
         $path = storage_path('app/osha');
         if ($this->oshaAudit->store !== null && Store::query()->count() > 1) {
-            $dealerName = str_replace(' ', '-', $this->oshaAudit->store->name);
+            $dealerName = str_replace(' ', '-', (string) $this->oshaAudit->store->name);
         } else {
-            $dealerName = str_replace(' ', '-', tenant('name'));
+            $dealerName = str_replace(' ', '-', (string) tenant('name'));
         }
-        $fileName = $this->oshaAudit->audit_date->format('Ymd').'-'.$this->oshaAudit->created_at->format('his').'-'.$dealerName.'-osha-audit.pdf';
+        $fileName = ($this->oshaAudit->audit_date?->format('Ymd') ?? '').'-'.($this->oshaAudit->created_at?->format('his') ?? '').'-'.$dealerName.'-osha-audit.pdf';
 
         if (! File::isDirectory($path)) {
             File::makeDirectory($path, $mode = 0777, true, true);
@@ -59,7 +59,11 @@ class GenerateOshaAuditJob implements ShouldQueue
 
     public function failed(?Throwable $exception): void
     {
-        report_if($exception instanceof Throwable, $exception);
+        if (! $exception instanceof Throwable) {
+            return;
+        }
+
+        report($exception);
     }
 
     private function rating(): float

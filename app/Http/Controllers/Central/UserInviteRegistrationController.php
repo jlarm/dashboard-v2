@@ -58,7 +58,9 @@ class UserInviteRegistrationController extends Controller
                 'email_verified_at' => now(),
             ]);
 
-            $user->assignRole($invite->role);
+            if ($invite->role !== null) {
+                $user->assignRole($invite->role);
+            }
 
             $invite->update([
                 'accepted_at' => now(),

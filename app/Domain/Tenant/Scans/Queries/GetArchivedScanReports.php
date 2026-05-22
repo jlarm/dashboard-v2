@@ -35,7 +35,12 @@ class GetArchivedScanReports
             ->groupBy(static fn (ScanReport $report): string => $report->created_at?->format('F d, Y') ?? 'Unknown')
             ->map(static fn (Collection $reports): array => $reports
                 ->groupBy('type')
-                ->map(static fn (Collection $byType): array => ArchivedScanReportData::fromModel($byType->first())->toArray())
+                ->map(static function (Collection $byType): array {
+                    $report = $byType->first();
+                    assert($report instanceof ScanReport);
+
+                    return ArchivedScanReportData::fromModel($report)->toArray();
+                })
                 ->all()
             )
             ->all();

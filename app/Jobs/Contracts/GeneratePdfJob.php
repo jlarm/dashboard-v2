@@ -58,7 +58,11 @@ class GeneratePdfJob implements ShouldQueue
 
     public function failed(?Throwable $exception): void
     {
-        report_if($exception instanceof Throwable, $exception);
+        if (! $exception instanceof Throwable) {
+            return;
+        }
+
+        report($exception);
     }
 
     protected function reviewLabel(string $service): string
@@ -74,6 +78,6 @@ class GeneratePdfJob implements ShouldQueue
 
     private function createFileName(): string
     {
-        return mb_strtolower(str_replace(' ', '-', $this->contract->dealer_name)).'-armp-contract-'.$this->contract->created_at->format('Y-m-d').'.pdf';
+        return mb_strtolower(str_replace(' ', '-', $this->contract->dealer_name)).'-armp-contract-'.($this->contract->created_at?->format('Y-m-d') ?? '').'.pdf';
     }
 }

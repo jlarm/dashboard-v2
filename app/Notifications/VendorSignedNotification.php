@@ -29,7 +29,7 @@ class VendorSignedNotification extends Notification implements ShouldQueue
     public function toDatabase(mixed $notifiable): array
     {
         return [
-            'message' => $this->vendor->vendor->name.' signed the vendor form.',
+            'message' => $this->vendor->vendor?->name.' signed the vendor form.',
         ];
     }
 

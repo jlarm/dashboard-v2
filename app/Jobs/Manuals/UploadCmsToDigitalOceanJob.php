@@ -31,6 +31,9 @@ class UploadCmsToDigitalOceanJob implements ShouldQueue
     public function handle(): void
     {
         $pdf = Storage::get('/'.$this->manual->pdf_path);
+        if ($pdf === null) {
+            return;
+        }
         $moved = Storage::disk('do-manuals')->put(tenant('id').'/cms/'.$this->manual->pdf_path, $pdf);
         if ($moved) {
             Storage::delete('/'.$this->manual->pdf_path);
@@ -39,6 +42,10 @@ class UploadCmsToDigitalOceanJob implements ShouldQueue
 
     public function failed(?Throwable $exception): void
     {
-        report_if($exception instanceof Throwable, $exception);
+        if (! $exception instanceof Throwable) {
+            return;
+        }
+
+        report($exception);
     }
 }

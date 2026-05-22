@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\Settings\PasswordController::edit
-* @see app/Http/Controllers/Tenant/Settings/PasswordController.php:15
+* @see app/Http/Controllers/Tenant/Settings/PasswordController.php:16
 * @route '/password'
 */
 export const edit = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ edit.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\PasswordController::edit
-* @see app/Http/Controllers/Tenant/Settings/PasswordController.php:15
+* @see app/Http/Controllers/Tenant/Settings/PasswordController.php:16
 * @route '/password'
 */
 edit.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ edit.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\PasswordController::edit
-* @see app/Http/Controllers/Tenant/Settings/PasswordController.php:15
+* @see app/Http/Controllers/Tenant/Settings/PasswordController.php:16
 * @route '/password'
 */
 edit.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ edit.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\PasswordController::edit
-* @see app/Http/Controllers/Tenant/Settings/PasswordController.php:15
+* @see app/Http/Controllers/Tenant/Settings/PasswordController.php:16
 * @route '/password'
 */
 edit.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ edit.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\PasswordController::edit
-* @see app/Http/Controllers/Tenant/Settings/PasswordController.php:15
+* @see app/Http/Controllers/Tenant/Settings/PasswordController.php:16
 * @route '/password'
 */
 const editForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -55,7 +55,7 @@ const editForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\PasswordController::edit
-* @see app/Http/Controllers/Tenant/Settings/PasswordController.php:15
+* @see app/Http/Controllers/Tenant/Settings/PasswordController.php:16
 * @route '/password'
 */
 editForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -65,7 +65,7 @@ editForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\PasswordController::edit
-* @see app/Http/Controllers/Tenant/Settings/PasswordController.php:15
+* @see app/Http/Controllers/Tenant/Settings/PasswordController.php:16
 * @route '/password'
 */
 editForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

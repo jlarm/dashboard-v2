@@ -30,11 +30,15 @@ class ContractResource extends JsonResource
             'id' => $this->id,
             'uuid' => $this->uuid,
             'user_id' => $this->user_id,
-            'user' => $this->whenLoaded('user', fn (): array => [
-                'id' => $this->user->id,
-                'name' => $this->user->name,
-                'email' => $this->user->email,
-            ]),
+            'user' => $this->whenLoaded('user', function (): ?array {
+                $user = $this->user;
+
+                return $user === null ? null : [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                ];
+            }),
             'contract_type' => $this->contract_type,
             'agreement_date' => $this->agreement_date?->toDateString(),
             'commence_date' => $this->commence_date?->toDateString(),

@@ -67,14 +67,18 @@ class GenerateOshaRemediationPdfJob implements ShouldBeEncrypted, ShouldQueue
 
     public function failed(?Throwable $exception): void
     {
-        report_if($exception instanceof Throwable, $exception);
+        if (! $exception instanceof Throwable) {
+            return;
+        }
+
+        report($exception);
     }
 
     private function createFileName(): string
     {
         $dealerName = Store::query()->count() > 1
-            ? str_replace(' ', '-', $this->oshaViolationAudit->store->name)
-            : str_replace(' ', '-', tenant('name'));
+            ? str_replace(' ', '-', (string) $this->oshaViolationAudit->store?->name)
+            : str_replace(' ', '-', (string) tenant('name'));
 
         return mb_strtolower($dealerName).'-'.now()->format('Ymd').'-osha-violation-audit-remediation.pdf';
     }

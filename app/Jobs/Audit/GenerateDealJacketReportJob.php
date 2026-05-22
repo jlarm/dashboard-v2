@@ -38,7 +38,7 @@ class GenerateDealJacketReportJob implements ShouldBeEncrypted, ShouldQueue
     public function handle(): void
     {
         $path = $this->createDirectory();
-        $storeName = $this->dealJacketGroup->store->name;
+        $storeName = (string) $this->dealJacketGroup->store?->name;
         $fileNameStoreName = str_replace(' ', '-', $storeName);
         $fileName = $this->createFileName($fileNameStoreName);
         $this->createPdf($path, $fileName, $storeName);
@@ -46,7 +46,11 @@ class GenerateDealJacketReportJob implements ShouldBeEncrypted, ShouldQueue
 
     public function failed(?Throwable $exception): void
     {
-        report_if($exception instanceof Throwable, $exception);
+        if (! $exception instanceof Throwable) {
+            return;
+        }
+
+        report($exception);
     }
 
     private function createDirectory(): string
@@ -62,7 +66,7 @@ class GenerateDealJacketReportJob implements ShouldBeEncrypted, ShouldQueue
 
     private function createFileName(string $storeName): string
     {
-        $date = $this->dealJacketGroup->created_at->format('Ymd-His');
+        $date = $this->dealJacketGroup->created_at?->format('Ymd-His') ?? '';
 
         return "{$date}-{$storeName}-deal-jacket-report.pdf";
     }

@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Central\InviteController::index
-* @see app/Http/Controllers/Central/InviteController.php:25
+* @see app/Http/Controllers/Central/InviteController.php:26
 * @route '//dashboard.test/employees/invites'
 */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\Central\InviteController::index
-* @see app/Http/Controllers/Central/InviteController.php:25
+* @see app/Http/Controllers/Central/InviteController.php:26
 * @route '//dashboard.test/employees/invites'
 */
 index.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ index.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Central\InviteController::index
-* @see app/Http/Controllers/Central/InviteController.php:25
+* @see app/Http/Controllers/Central/InviteController.php:26
 * @route '//dashboard.test/employees/invites'
 */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Central\InviteController::index
-* @see app/Http/Controllers/Central/InviteController.php:25
+* @see app/Http/Controllers/Central/InviteController.php:26
 * @route '//dashboard.test/employees/invites'
 */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Central\InviteController::index
-* @see app/Http/Controllers/Central/InviteController.php:25
+* @see app/Http/Controllers/Central/InviteController.php:26
 * @route '//dashboard.test/employees/invites'
 */
 const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -55,7 +55,7 @@ const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 
 /**
 * @see \App\Http\Controllers\Central\InviteController::index
-* @see app/Http/Controllers/Central/InviteController.php:25
+* @see app/Http/Controllers/Central/InviteController.php:26
 * @route '//dashboard.test/employees/invites'
 */
 indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -65,7 +65,7 @@ indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Central\InviteController::index
-* @see app/Http/Controllers/Central/InviteController.php:25
+* @see app/Http/Controllers/Central/InviteController.php:26
 * @route '//dashboard.test/employees/invites'
 */
 indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -82,7 +82,7 @@ index.form = indexForm
 
 /**
 * @see \App\Http\Controllers\Central\InviteController::store
-* @see app/Http/Controllers/Central/InviteController.php:32
+* @see app/Http/Controllers/Central/InviteController.php:33
 * @route '//dashboard.test/employees/invites'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -97,7 +97,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\Central\InviteController::store
-* @see app/Http/Controllers/Central/InviteController.php:32
+* @see app/Http/Controllers/Central/InviteController.php:33
 * @route '//dashboard.test/employees/invites'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -106,7 +106,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Central\InviteController::store
-* @see app/Http/Controllers/Central/InviteController.php:32
+* @see app/Http/Controllers/Central/InviteController.php:33
 * @route '//dashboard.test/employees/invites'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -116,7 +116,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\Central\InviteController::store
-* @see app/Http/Controllers/Central/InviteController.php:32
+* @see app/Http/Controllers/Central/InviteController.php:33
 * @route '//dashboard.test/employees/invites'
 */
 const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -126,7 +126,7 @@ const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => 
 
 /**
 * @see \App\Http\Controllers\Central\InviteController::store
-* @see app/Http/Controllers/Central/InviteController.php:32
+* @see app/Http/Controllers/Central/InviteController.php:33
 * @route '//dashboard.test/employees/invites'
 */
 storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -138,7 +138,7 @@ store.form = storeForm
 
 /**
 * @see \App\Http\Controllers\Central\InviteController::destroy
-* @see app/Http/Controllers/Central/InviteController.php:51
+* @see app/Http/Controllers/Central/InviteController.php:55
 * @route '//dashboard.test/employees/invites/{invite}'
 */
 export const destroy = (args: { invite: number | { id: number } } | [invite: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -153,7 +153,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\Central\InviteController::destroy
-* @see app/Http/Controllers/Central/InviteController.php:51
+* @see app/Http/Controllers/Central/InviteController.php:55
 * @route '//dashboard.test/employees/invites/{invite}'
 */
 destroy.url = (args: { invite: number | { id: number } } | [invite: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -186,7 +186,7 @@ destroy.url = (args: { invite: number | { id: number } } | [invite: number | { i
 
 /**
 * @see \App\Http\Controllers\Central\InviteController::destroy
-* @see app/Http/Controllers/Central/InviteController.php:51
+* @see app/Http/Controllers/Central/InviteController.php:55
 * @route '//dashboard.test/employees/invites/{invite}'
 */
 destroy.delete = (args: { invite: number | { id: number } } | [invite: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -196,7 +196,7 @@ destroy.delete = (args: { invite: number | { id: number } } | [invite: number | 
 
 /**
 * @see \App\Http\Controllers\Central\InviteController::destroy
-* @see app/Http/Controllers/Central/InviteController.php:51
+* @see app/Http/Controllers/Central/InviteController.php:55
 * @route '//dashboard.test/employees/invites/{invite}'
 */
 const destroyForm = (args: { invite: number | { id: number } } | [invite: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -211,7 +211,7 @@ const destroyForm = (args: { invite: number | { id: number } } | [invite: number
 
 /**
 * @see \App\Http\Controllers\Central\InviteController::destroy
-* @see app/Http/Controllers/Central/InviteController.php:51
+* @see app/Http/Controllers/Central/InviteController.php:55
 * @route '//dashboard.test/employees/invites/{invite}'
 */
 destroyForm.delete = (args: { invite: number | { id: number } } | [invite: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

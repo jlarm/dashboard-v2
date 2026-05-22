@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\Auth\EmailVerificationPromptController::__invoke
-* @see app/Http/Controllers/Auth/EmailVerificationPromptController.php:18
+* @see app/Http/Controllers/Auth/EmailVerificationPromptController.php:19
 * @route '//dashboard.test/verify-email'
 */
 export const notice = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ notice.definition = {
 
 /**
 * @see \App\Http\Controllers\Auth\EmailVerificationPromptController::__invoke
-* @see app/Http/Controllers/Auth/EmailVerificationPromptController.php:18
+* @see app/Http/Controllers/Auth/EmailVerificationPromptController.php:19
 * @route '//dashboard.test/verify-email'
 */
 notice.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ notice.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Auth\EmailVerificationPromptController::__invoke
-* @see app/Http/Controllers/Auth/EmailVerificationPromptController.php:18
+* @see app/Http/Controllers/Auth/EmailVerificationPromptController.php:19
 * @route '//dashboard.test/verify-email'
 */
 notice.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ notice.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Auth\EmailVerificationPromptController::__invoke
-* @see app/Http/Controllers/Auth/EmailVerificationPromptController.php:18
+* @see app/Http/Controllers/Auth/EmailVerificationPromptController.php:19
 * @route '//dashboard.test/verify-email'
 */
 notice.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ notice.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Auth\EmailVerificationPromptController::__invoke
-* @see app/Http/Controllers/Auth/EmailVerificationPromptController.php:18
+* @see app/Http/Controllers/Auth/EmailVerificationPromptController.php:19
 * @route '//dashboard.test/verify-email'
 */
 const noticeForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -55,7 +55,7 @@ const noticeForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => 
 
 /**
 * @see \App\Http\Controllers\Auth\EmailVerificationPromptController::__invoke
-* @see app/Http/Controllers/Auth/EmailVerificationPromptController.php:18
+* @see app/Http/Controllers/Auth/EmailVerificationPromptController.php:19
 * @route '//dashboard.test/verify-email'
 */
 noticeForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -65,7 +65,7 @@ noticeForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Auth\EmailVerificationPromptController::__invoke
-* @see app/Http/Controllers/Auth/EmailVerificationPromptController.php:18
+* @see app/Http/Controllers/Auth/EmailVerificationPromptController.php:19
 * @route '//dashboard.test/verify-email'
 */
 noticeForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -180,7 +180,7 @@ verify.form = verifyForm
 
 /**
 * @see \App\Http\Controllers\Auth\EmailVerificationNotificationController::send
-* @see app/Http/Controllers/Auth/EmailVerificationNotificationController.php:17
+* @see app/Http/Controllers/Auth/EmailVerificationNotificationController.php:18
 * @route '//dashboard.test/email/verification-notification'
 */
 export const send = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -195,7 +195,7 @@ send.definition = {
 
 /**
 * @see \App\Http\Controllers\Auth\EmailVerificationNotificationController::send
-* @see app/Http/Controllers/Auth/EmailVerificationNotificationController.php:17
+* @see app/Http/Controllers/Auth/EmailVerificationNotificationController.php:18
 * @route '//dashboard.test/email/verification-notification'
 */
 send.url = (options?: RouteQueryOptions) => {
@@ -204,7 +204,7 @@ send.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Auth\EmailVerificationNotificationController::send
-* @see app/Http/Controllers/Auth/EmailVerificationNotificationController.php:17
+* @see app/Http/Controllers/Auth/EmailVerificationNotificationController.php:18
 * @route '//dashboard.test/email/verification-notification'
 */
 send.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -214,7 +214,7 @@ send.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\Auth\EmailVerificationNotificationController::send
-* @see app/Http/Controllers/Auth/EmailVerificationNotificationController.php:17
+* @see app/Http/Controllers/Auth/EmailVerificationNotificationController.php:18
 * @route '//dashboard.test/email/verification-notification'
 */
 const sendForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -224,7 +224,7 @@ const sendForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => (
 
 /**
 * @see \App\Http\Controllers\Auth\EmailVerificationNotificationController::send
-* @see app/Http/Controllers/Auth/EmailVerificationNotificationController.php:17
+* @see app/Http/Controllers/Auth/EmailVerificationNotificationController.php:18
 * @route '//dashboard.test/email/verification-notification'
 */
 sendForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

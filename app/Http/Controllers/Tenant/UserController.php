@@ -247,7 +247,7 @@ class UserController extends Controller
     public function restoreEmployee(Request $request, User $user, RestoreEmployee $action): RedirectResponse
     {
         abort_unless(
-            $request->user()?->hasAnyRole(Role::values(Role::employeeAdminRoles())),
+            (bool) $request->user()?->hasAnyRole(Role::values(Role::employeeAdminRoles())),
             403,
         );
 
@@ -266,6 +266,9 @@ class UserController extends Controller
 
     public function import(ImportEmployeesRequest $request): RedirectResponse
     {
+        /** @var User $importer */
+        $importer = $request->user();
+
         $tenantId = (string) (tenant('id') ?? 'central');
         $payloadPath = "imports/employees/{$tenantId}/".str()->ulid().'.json';
 
@@ -276,7 +279,7 @@ class UserController extends Controller
                 ['disk' => 'local'],
             );
 
-            dispatch(new ImportEmployeesJob($request->user(), $payloadPath));
+            dispatch(new ImportEmployeesJob($importer, $payloadPath));
         } catch (Throwable $e) {
             report($e);
 

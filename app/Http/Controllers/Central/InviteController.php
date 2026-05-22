@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Central\User\StoreInviteRequest;
 use App\Http\Resources\Central\UserInviteResource;
 use App\Models\Central\UserInvite;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -35,12 +36,15 @@ class InviteController extends Controller
     ): RedirectResponse {
         $validated = $request->validated();
 
+        /** @var User $user */
+        $user = $request->user();
+
         $createInvite->execute(
             data: new CreateInviteData(
                 name: $validated['name'],
                 email: $validated['email'],
             ),
-            inviterId: $request->user()->id,
+            inviterId: $user->id,
         );
 
         Inertia::flash('success', 'Invite sent successfully.');

@@ -643,7 +643,10 @@ class CyrismaService
      */
     public function getStoreReport(string $endpoint, array $params = []): ?array
     {
-        if (! $this->store || ! $this->store->cyrisma) {
+        $store = $this->store;
+        $cyrisma = $store?->cyrisma;
+
+        if (! $store || ! $cyrisma) {
             Log::error('No store context or Cyrisma configuration set for Cyrisma report');
 
             return null;
@@ -651,20 +654,20 @@ class CyrismaService
 
         $cacheKey = sprintf(
             'cyrisma_report_%s_v%s_%s_%s',
-            $this->store->id,
+            $store->id,
             $this->getCacheVersion(),
             str_replace('/', '_', $endpoint),
             md5(serialize($params))
         );
 
-        return Cache::remember($cacheKey, now()->addHours(24), function () use ($endpoint, $params) {
+        return Cache::remember($cacheKey, now()->addHours(24), function () use ($endpoint, $params, $store, $cyrisma) {
             if (! $this->ensureAuthenticated()) {
                 return null;
             }
 
-            $this->authenticateInstance($this->store->cyrisma->instance_id);
+            $this->authenticateInstance($cyrisma->instance_id);
 
-            $url = "https://{$this->store->cyrisma->instance_url}/app/partner/{$endpoint}";
+            $url = "https://{$cyrisma->instance_url}/app/partner/{$endpoint}";
 
             try {
                 $request = $this->authorizedRequest();
@@ -680,7 +683,7 @@ class CyrismaService
                     'url' => $url,
                     'status' => $response->status(),
                     'body' => $response->body(),
-                    'store_id' => $this->store->id,
+                    'store_id' => $store->id,
                 ]);
 
                 return null;
@@ -688,7 +691,7 @@ class CyrismaService
                 Log::error('Failed to get Cyrisma store report', [
                     'message' => $e->getMessage(),
                     'endpoint' => $endpoint,
-                    'store_id' => $this->store->id,
+                    'store_id' => $store->id,
                 ]);
 
                 return null;

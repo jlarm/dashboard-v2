@@ -66,7 +66,7 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
 
         $this->issueCountByManager = $this->audits
             ->sortBy('manager.name')
-            ->groupBy(fn (IndividualAudit $item): string => (string) $item->manager->name)
+            ->groupBy(fn (IndividualAudit $item): string => (string) $item->manager?->name)
             ->map(function (Collection $item): int {
                 $this->array = [];
                 $item->each(function (IndividualAudit $item, int|string $key): void {
@@ -89,7 +89,7 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
 
         $this->issuesByManager = $this->audits
             ->sortBy('manager.name')
-            ->groupBy(fn (IndividualAudit $item): string => (string) $item->manager->name)
+            ->groupBy(fn (IndividualAudit $item): string => (string) $item->manager?->name)
             ->map(function (Collection $item): Collection {
                 $this->array = [];
                 $item->each(function (IndividualAudit $item, int|string $key): void {
@@ -116,7 +116,7 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
 
         $this->managerIssueCount = $this->audits
             ->sortBy('manager.name')
-            ->groupBy(fn (IndividualAudit $item): string => (string) $item->manager->name)
+            ->groupBy(fn (IndividualAudit $item): string => (string) $item->manager?->name)
             ->map(function (Collection $item): array {
                 $this->array = [];
                 $item->each(function (IndividualAudit $item, int|string $key): void {
@@ -191,12 +191,12 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
         }
 
         if ($this->individualAudit->store !== null && Store::query()->count() > 1) {
-            $dealerName = str_replace(' ', '-', $this->individualAudit->store->name);
+            $dealerName = str_replace(' ', '-', (string) $this->individualAudit->store->name);
         } else {
-            $dealerName = str_replace(' ', '-', tenant('name'));
+            $dealerName = str_replace(' ', '-', (string) tenant('name'));
         }
 
-        $fileName = $this->individualAudit->audit_date->format('Ymd').'-'.$this->individualAudit->created_at->format('his').'-'.$dealerName.'-deal-jacket-audit.pdf';
+        $fileName = ($this->individualAudit->audit_date?->format('Ymd') ?? '').'-'.($this->individualAudit->created_at?->format('his') ?? '').'-'.$dealerName.'-deal-jacket-audit.pdf';
 
         $html = view('dealer.audit.individual.download', [
             'audit' => $this->parent,
@@ -224,7 +224,11 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
 
     public function failed(?Throwable $exception): void
     {
-        report_if($exception instanceof Throwable, $exception);
+        if (! $exception instanceof Throwable) {
+            return;
+        }
+
+        report($exception);
     }
 
     private function rating(): void

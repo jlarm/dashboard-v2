@@ -111,6 +111,8 @@ class GetEmployeeCourses
             ];
         }
 
+        assert($latest->created_at !== null);
+
         $yearsExpires = (int) ($course->years_expires ?? 1);
         $expirationDate = $latest->created_at->copy()->addYears($yearsExpires);
         $percentage = (int) $latest->percentage;

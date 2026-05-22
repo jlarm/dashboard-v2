@@ -54,12 +54,14 @@ class CourseExpiringEmailCommand extends Command
         $this->info($results->toJson());
 
         foreach ($results as $result) {
+            assert($result->created_at !== null);
+
             if ($result->created_at->addYear()->subDays(15)->isSameDay(Date::now())) {
-                $user->notify(new CourseExpiringSoonNotification($tenant->domain, $user->name, $result->course_id, $result->created_at->addYear()));
+                $user->notify(new CourseExpiringSoonNotification((string) $tenant->domain, $user->name, $result->course_id, $result->created_at->addYear()));
             }
 
             if ($result->created_at->addYear()->addDays(15)->isSameDay(Date::now()) || $result->created_at->addYear()->addDays(30)->isSameDay(Date::now())) {
-                $user->notify(new CourseExpiredNotification($tenant->domain, $user->name, $result->course_id, $result->created_at->addYear()));
+                $user->notify(new CourseExpiredNotification((string) $tenant->domain, $user->name, $result->course_id, $result->created_at->addYear()));
             }
         }
     }

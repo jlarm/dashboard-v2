@@ -36,6 +36,12 @@ class AuthController extends Controller
 
             $user = User::query()->where('email', $request->email)->first();
 
+            if ($user === null) {
+                return response()->json([
+                    'message' => 'Invalid credentials',
+                ], 401);
+            }
+
             return response()->json([
                 'status' => true,
                 'user' => $user,

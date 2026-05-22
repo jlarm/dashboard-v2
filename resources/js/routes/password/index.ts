@@ -293,7 +293,7 @@ store.form = storeForm
 
 /**
 * @see \App\Http\Controllers\Auth\ConfirmablePasswordController::confirm
-* @see app/Http/Controllers/Auth/ConfirmablePasswordController.php:20
+* @see app/Http/Controllers/Auth/ConfirmablePasswordController.php:21
 * @route '//dashboard.test/confirm-password'
 */
 export const confirm = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -308,7 +308,7 @@ confirm.definition = {
 
 /**
 * @see \App\Http\Controllers\Auth\ConfirmablePasswordController::confirm
-* @see app/Http/Controllers/Auth/ConfirmablePasswordController.php:20
+* @see app/Http/Controllers/Auth/ConfirmablePasswordController.php:21
 * @route '//dashboard.test/confirm-password'
 */
 confirm.url = (options?: RouteQueryOptions) => {
@@ -317,7 +317,7 @@ confirm.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Auth\ConfirmablePasswordController::confirm
-* @see app/Http/Controllers/Auth/ConfirmablePasswordController.php:20
+* @see app/Http/Controllers/Auth/ConfirmablePasswordController.php:21
 * @route '//dashboard.test/confirm-password'
 */
 confirm.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -327,7 +327,7 @@ confirm.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Auth\ConfirmablePasswordController::confirm
-* @see app/Http/Controllers/Auth/ConfirmablePasswordController.php:20
+* @see app/Http/Controllers/Auth/ConfirmablePasswordController.php:21
 * @route '//dashboard.test/confirm-password'
 */
 confirm.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -337,7 +337,7 @@ confirm.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Auth\ConfirmablePasswordController::confirm
-* @see app/Http/Controllers/Auth/ConfirmablePasswordController.php:20
+* @see app/Http/Controllers/Auth/ConfirmablePasswordController.php:21
 * @route '//dashboard.test/confirm-password'
 */
 const confirmForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -347,7 +347,7 @@ const confirmForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> =>
 
 /**
 * @see \App\Http\Controllers\Auth\ConfirmablePasswordController::confirm
-* @see app/Http/Controllers/Auth/ConfirmablePasswordController.php:20
+* @see app/Http/Controllers/Auth/ConfirmablePasswordController.php:21
 * @route '//dashboard.test/confirm-password'
 */
 confirmForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -357,7 +357,7 @@ confirmForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 
 /**
 * @see \App\Http\Controllers\Auth\ConfirmablePasswordController::confirm
-* @see app/Http/Controllers/Auth/ConfirmablePasswordController.php:20
+* @see app/Http/Controllers/Auth/ConfirmablePasswordController.php:21
 * @route '//dashboard.test/confirm-password'
 */
 confirmForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -374,7 +374,7 @@ confirm.form = confirmForm
 
 /**
 * @see \App\Http\Controllers\Auth\PasswordController::update
-* @see app/Http/Controllers/Auth/PasswordController.php:18
+* @see app/Http/Controllers/Auth/PasswordController.php:19
 * @route '//dashboard.test/password'
 */
 export const update = (options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -389,7 +389,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\Auth\PasswordController::update
-* @see app/Http/Controllers/Auth/PasswordController.php:18
+* @see app/Http/Controllers/Auth/PasswordController.php:19
 * @route '//dashboard.test/password'
 */
 update.url = (options?: RouteQueryOptions) => {
@@ -398,7 +398,7 @@ update.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Auth\PasswordController::update
-* @see app/Http/Controllers/Auth/PasswordController.php:18
+* @see app/Http/Controllers/Auth/PasswordController.php:19
 * @route '//dashboard.test/password'
 */
 update.put = (options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -408,7 +408,7 @@ update.put = (options?: RouteQueryOptions): RouteDefinition<'put'> => ({
 
 /**
 * @see \App\Http\Controllers\Auth\PasswordController::update
-* @see app/Http/Controllers/Auth/PasswordController.php:18
+* @see app/Http/Controllers/Auth/PasswordController.php:19
 * @route '//dashboard.test/password'
 */
 const updateForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -423,7 +423,7 @@ const updateForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> =>
 
 /**
 * @see \App\Http\Controllers\Auth\PasswordController::update
-* @see app/Http/Controllers/Auth/PasswordController.php:18
+* @see app/Http/Controllers/Auth/PasswordController.php:19
 * @route '//dashboard.test/password'
 */
 updateForm.put = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

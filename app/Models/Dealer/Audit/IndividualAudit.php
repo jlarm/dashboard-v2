@@ -91,7 +91,7 @@ class IndividualAudit extends Model implements HasMedia
 
     protected function getQuarterNameAttribute(): string
     {
-        $month = (int) $this->audit_date->format('n');
+        $month = (int) $this->audit_date?->format('n');
 
         return match (true) {
             $month <= 3 => 'Q1',

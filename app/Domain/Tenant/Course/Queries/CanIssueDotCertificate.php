@@ -29,7 +29,7 @@ class CanIssueDotCertificate
 
         $expires = (int) ($course->years_expires ?? DotCertificate::DEFAULT_YEARS_EXPIRES);
 
-        return $latest->created_at->gte(now()->subYears($expires));
+        return $latest->created_at?->gte(now()->subYears($expires)) ?? false;
     }
 
     public function latestPassedResult(User $user): ?CourseResults

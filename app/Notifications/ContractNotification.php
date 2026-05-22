@@ -20,8 +20,8 @@ class ContractNotification extends Notification implements ShouldQueue
 
     public function __construct(protected Contract $contract)
     {
-        $this->name = (string) $this->contract->user->name;
-        $this->email = (string) $this->contract->user->email;
+        $this->name = (string) $this->contract->user?->name;
+        $this->email = (string) $this->contract->user?->email;
     }
 
     /**
