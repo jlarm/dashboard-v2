@@ -327,7 +327,7 @@ class CyrismaService
                 $scanTypeName = mb_strtolower($scan['scan_type_name'] ?? '');
 
                 return match ($assetType) {
-                    'internal' => $scanType === 5 || str_contains($scanTypeName, 'internal authenticated'),
+                    'internal' => in_array($scanType, [5, 10], true) || str_contains($scanTypeName, 'internal'),
                     'external_ip' => $scanType === 9 || (str_contains($scanTypeName, 'external') && str_contains($scanTypeName, 'ip') && ! str_contains($scanTypeName, 'web')),
                     'external_web' => $scanType === 11 || (str_contains($scanTypeName, 'external') && str_contains($scanTypeName, 'web')),
                     default => true,

@@ -20,8 +20,20 @@ final readonly class RiskGradeData
      */
     public static function fromOverallDashboard(array $payload, string $prefix): self
     {
-        $current = self::stringOrNull($payload, "current_{$prefix}_grade");
-        $previous = self::stringOrNull($payload, "previous_{$prefix}_grade");
+        return self::make(
+            self::stringOrNull($payload, "current_{$prefix}_grade"),
+            self::stringOrNull($payload, "previous_{$prefix}_grade"),
+        );
+    }
+
+    /**
+     * Build from explicit current/previous letter grades (e.g. a scan's
+     * `grade_alpha`), normalising empty strings to null.
+     */
+    public static function make(?string $current, ?string $previous): self
+    {
+        $current = self::normalize($current);
+        $previous = self::normalize($previous);
 
         return new self(
             current: $current,
@@ -52,6 +64,11 @@ final readonly class RiskGradeData
         }
 
         return $payload[$key];
+    }
+
+    private static function normalize(?string $value): ?string
+    {
+        return $value === null || $value === '' ? null : $value;
     }
 
     private static function computeTrend(?string $current, ?string $previous): string

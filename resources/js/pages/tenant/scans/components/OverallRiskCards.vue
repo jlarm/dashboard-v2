@@ -20,6 +20,23 @@ const trendArrow = (trend: Trend): string => (trend === 'improved' ? '↗' : tre
 const trendTone = (trend: Trend): 'positive' | 'negative' | 'neutral' =>
     trend === 'improved' ? 'positive' : trend === 'declined' ? 'negative' : 'neutral';
 
+// Colour the grade by its own quality, not the trend — a B should not look
+// alarming just because it slipped from a B+.
+const gradeTone = (grade: string | null): 'positive' | 'warning' | 'negative' | 'neutral' => {
+    switch (grade?.charAt(0).toUpperCase()) {
+        case 'A':
+        case 'B':
+            return 'positive';
+        case 'C':
+            return 'warning';
+        case 'D':
+        case 'F':
+            return 'negative';
+        default:
+            return 'neutral';
+    }
+};
+
 const cards = computed(() => [
     { label: 'Overall Risk', grade: props.overall },
     { label: 'Vulnerabilities', grade: props.vulnerability },
@@ -34,7 +51,8 @@ const cards = computed(() => [
             :label="card.label"
             :value="card.grade.current ?? '—'"
             :delta="trendArrow(card.grade.trend)"
-            :tone="trendTone(card.grade.trend)"
+            :tone="gradeTone(card.grade.current)"
+            :delta-tone="trendTone(card.grade.trend)"
             :caption="`Previous: ${card.grade.previous ?? '—'}`"
         />
     </section>

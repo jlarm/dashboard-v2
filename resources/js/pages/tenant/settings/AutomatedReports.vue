@@ -3,7 +3,6 @@ import { computed } from 'vue';
 import { Head, router, useForm } from '@inertiajs/vue3';
 import { Loader2, Send } from 'lucide-vue-next';
 import AppLayout from '@/layouts/tenant/AppLayout.vue';
-import Heading from '@/components/Heading.vue';
 import InputError from '@/components/InputError.vue';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -87,11 +86,6 @@ const sendNow = (): void => {
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="mx-auto w-full max-w-3xl space-y-6 px-4 py-6">
-            <Heading
-                title="Automated Reports"
-                description="Configure the automated compliance summary email."
-            />
-
             <form class="space-y-8 rounded-md border bg-card p-6" @submit.prevent="submit">
                 <div class="space-y-1">
                     <h2 class="text-base font-medium">Automated Compliance Summary Email</h2>

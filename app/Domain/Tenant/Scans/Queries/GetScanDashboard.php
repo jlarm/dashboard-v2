@@ -38,7 +38,13 @@ class GetScanDashboard
 
         $vulnerabilityScans = $service->getVulnerabilityScans();
         $scans = $vulnerabilityScans['vulnerability_scans'] ?? [];
-        $latestScan = $scans[0] ?? null;
+
+        $scansByRecency = collect($scans)
+            ->sortByDesc('scan_finished')
+            ->values();
+
+        $latestScan = $scansByRecency->first();
+        $previousScan = $scansByRecency->get(1);
 
         $overallDashboard = $service->getOverallDashboard() ?? [];
 
@@ -48,11 +54,43 @@ class GetScanDashboard
             hasScanData: $scans !== [],
             hasExternalScans: $service->getExternalIpScanData() !== null,
             hasInternalScans: $service->hasInternalScans(),
-            overallRisk: RiskGradeData::fromOverallDashboard($overallDashboard, 'or'),
-            vulnerabilityRisk: RiskGradeData::fromOverallDashboard($overallDashboard, 'vn'),
+            overallRisk: $this->resolveGrade($overallDashboard, 'or', $latestScan, $previousScan),
+            vulnerabilityRisk: $this->resolveGrade($overallDashboard, 'vn', $latestScan, $previousScan),
             issueCounts: is_array($latestScan) ? IssueCountsData::fromScan($latestScan) : IssueCountsData::empty(),
             lastScanDate: $this->resolveLastScanDate($scans),
         );
+    }
+
+    /**
+     * Resolve a risk grade, preferring the Cyrisma overall-dashboard payload
+     * and falling back to the latest vulnerability scan's letter grade when
+     * the dashboard has no computed grade for this instance.
+     *
+     * @param  array<string, mixed>  $overallDashboard
+     */
+    private function resolveGrade(array $overallDashboard, string $prefix, mixed $latestScan, mixed $previousScan): RiskGradeData
+    {
+        $fromDashboard = RiskGradeData::fromOverallDashboard($overallDashboard, $prefix);
+
+        if ($fromDashboard->current !== null) {
+            return $fromDashboard;
+        }
+
+        return RiskGradeData::make(
+            $this->scanGrade($latestScan),
+            $this->scanGrade($previousScan),
+        );
+    }
+
+    private function scanGrade(mixed $scan): ?string
+    {
+        if (! is_array($scan)) {
+            return null;
+        }
+
+        $grade = $scan['grade_alpha'] ?? null;
+
+        return is_string($grade) && $grade !== '' ? $grade : null;
     }
 
     /**

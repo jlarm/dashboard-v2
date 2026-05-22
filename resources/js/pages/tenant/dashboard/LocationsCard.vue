@@ -10,16 +10,16 @@ const locations = useNullablePageProp<LocationGradeRow[]>('location_grades');
 const gradePill = (grade: string | null): string => {
     switch (grade) {
         case 'A':
-            return 'bg-emerald-50 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-300';
+            return 'bg-emerald-50 text-emerald-700 ring-emerald-600/20 dark:bg-emerald-500/15 dark:text-emerald-300 dark:ring-emerald-400/25';
         case 'B':
-            return 'bg-sky-50 text-sky-700 dark:bg-sky-500/15 dark:text-sky-300';
+            return 'bg-sky-50 text-sky-700 ring-sky-600/20 dark:bg-sky-500/15 dark:text-sky-300 dark:ring-sky-400/25';
         case 'C':
-            return 'bg-amber-50 text-amber-700 dark:bg-amber-500/15 dark:text-amber-300';
+            return 'bg-amber-50 text-amber-700 ring-amber-600/25 dark:bg-amber-500/15 dark:text-amber-300 dark:ring-amber-400/25';
         case 'D':
         case 'F':
-            return 'bg-rose-50 text-rose-700 dark:bg-rose-500/15 dark:text-rose-300';
+            return 'bg-rose-50 text-rose-700 ring-rose-600/25 dark:bg-rose-500/15 dark:text-rose-300 dark:ring-rose-400/25';
         default:
-            return 'bg-muted text-muted-foreground';
+            return 'bg-muted text-muted-foreground ring-border';
     }
 };
 
@@ -68,12 +68,12 @@ function viewStore(storeId: number): void {
                         <td v-for="key in (['overall', 'deal_jacket', 'osha', 'glba', 'body_shop'] as const)" :key="key" class="py-4 text-center">
                             <span
                                 v-if="row[key]"
-                                class="inline-flex size-7 items-center justify-center rounded-full text-sm font-semibold"
+                                class="inline-flex size-6 items-center justify-center rounded-full text-xs font-bold leading-none ring-1 ring-inset"
                                 :class="gradePill(row[key])"
                             >
                                 {{ row[key] }}
                             </span>
-                            <span v-else class="text-muted-foreground">-</span>
+                            <span v-else class="inline-flex size-6 items-center justify-center text-xs text-muted-foreground/50" aria-label="No grade">–</span>
                         </td>
                         <td class="py-4 pr-5 text-right">
                             <ChevronRight class="ml-auto size-4 text-muted-foreground" aria-hidden="true" />

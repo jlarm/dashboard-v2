@@ -4,7 +4,6 @@ import { Head, Link, router, useForm } from '@inertiajs/vue3';
 import { useDebounceFn } from '@vueuse/core';
 import { AlertTriangle, Loader2, Search } from 'lucide-vue-next';
 import AppLayout from '@/layouts/tenant/AppLayout.vue';
-import Heading from '@/components/Heading.vue';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
@@ -225,11 +224,6 @@ const confirmMessage = computed<string>(() =>
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="space-y-6 px-4 py-6">
-            <Heading
-                title="Global Settings"
-                description="Manage dealer-wide settings and course assignments."
-            />
-
             <div class="flex justify-center">
                 <nav class="inline-flex rounded-md border bg-muted/40 p-1" aria-label="Global Settings sections">
                     <Link

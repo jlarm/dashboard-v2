@@ -4,7 +4,6 @@ import { Head, Link, router, useForm } from '@inertiajs/vue3';
 import { useDebounceFn } from '@vueuse/core';
 import { Loader2, Search } from 'lucide-vue-next';
 import AppLayout from '@/layouts/tenant/AppLayout.vue';
-import Heading from '@/components/Heading.vue';
 import InputError from '@/components/InputError.vue';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -511,11 +510,6 @@ const confirmMessage = computed<string>(() =>
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="space-y-6 px-4 py-6">
-            <Heading
-                title="Settings"
-                :description="`Configure settings for ${store.name}.`"
-            />
-
             <div class="flex justify-center">
                 <nav class="inline-flex flex-wrap rounded-md border bg-muted/40 p-1" aria-label="Settings sections">
                     <Link

@@ -67,7 +67,6 @@ const remove = (manual: Manual): void => {
             <header class="flex justify-end gap-3">
                 <Button v-if="store" as-child size="sm">
                     <Link :href="isp.create.url()">
-                        <FileSignature class="size-3.5" />
                         Sign Manual
                     </Link>
                 </Button>
@@ -165,7 +164,6 @@ const remove = (manual: Manual): void => {
                                 <div v-if="store" class="mt-4">
                                     <Button as-child size="sm">
                                         <Link :href="isp.create.url()">
-                                            <FileSignature class="size-3.5" />
                                             Sign Manual
                                         </Link>
                                     </Button>

@@ -15,10 +15,10 @@ import { AUDIT_VIEWERS, AUTOMATED_REPORT_VIEWERS, COURSES_NAV_VIEWERS, DOCUMENT_
 import bodyShopAudit from '@/routes/dealer/audit/body-shop';
 import dealJacketsAudit from '@/routes/dealer/audit/deal-jackets';
 import financeAudit from '@/routes/dealer/audit/finance';
-import individualAudit from '@/routes/dealer/audit/individual';
 import oshaAudit from '@/routes/dealer/audit/osha';
 import doc from '@/routes/dealer/doc';
 import employees from '@/routes/dealer/employees';
+import fitTests from '@/routes/dealer/fit-tests';
 import locations from '@/routes/dealer/locations';
 import logs from '@/routes/dealer/logs';
 import isp from '@/routes/dealer/manual/isp';
@@ -103,7 +103,7 @@ const mainNavItems = computed<NavItem[]>(() => {
                 { title: 'Body Shop', href: bodyShopAudit.index.url() },
                 { title: 'GLBA', href: financeAudit.index.url() },
                 { title: 'Deal Jackets', href: dealJacketsAudit.index.url() },
-                { title: 'Deal Jackets Archived', href: individualAudit.index.url() },
+                { title: 'Fit Tests', href: fitTests.index.url() },
             ],
         });
 

@@ -23,6 +23,7 @@ type Props = {
     caption?: string;
     delta?: string;
     tone?: Tone;
+    deltaTone?: Tone;
     info?: InfoContent;
 };
 
@@ -46,7 +47,7 @@ const valueClass = computed(() => {
 });
 
 const pillClass = computed(() => {
-    switch (props.tone) {
+    switch (props.deltaTone ?? props.tone) {
         case 'positive':
             return 'bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400';
         case 'negative':

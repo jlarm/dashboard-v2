@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { Head, Link, router } from '@inertiajs/vue3';
-import { AlertOctagon, Download, FileSignature, Loader2, Trash2 } from 'lucide-vue-next';
+import { AlertOctagon, Download, Loader2, Trash2 } from 'lucide-vue-next';
 import AppLayout from '@/layouts/tenant/AppLayout.vue';
 import { Button } from '@/components/ui/button';
 import {
@@ -67,7 +67,6 @@ const remove = (manual: Manual): void => {
             <header class="flex justify-end gap-3">
                 <Button v-if="store" as-child size="sm">
                     <Link :href="redFlag.create.url()">
-                        <FileSignature class="size-3.5" />
                         Sign Manual
                     </Link>
                 </Button>
@@ -165,7 +164,6 @@ const remove = (manual: Manual): void => {
                                 <div v-if="store" class="mt-4">
                                     <Button as-child size="sm">
                                         <Link :href="redFlag.create.url()">
-                                            <FileSignature class="size-3.5" />
                                             Sign Manual
                                         </Link>
                                     </Button>
