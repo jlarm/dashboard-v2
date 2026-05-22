@@ -22,7 +22,7 @@ class UpdateViolationAuditRequest extends FormRequest
             'date' => ['required', 'date'],
             'violations' => ['required', 'array'],
             'violations.*.id' => ['required', 'integer'],
-            'violations.*.comment' => ['required', 'string'],
+            'violations.*.comment' => ['nullable', 'string'],
             'violations.*.violation_date' => ['nullable', 'date'],
             'violations.*.risk' => ['nullable', 'boolean'],
             'violations.*.severity' => ['nullable', 'integer', 'min:0', 'max:10'],
@@ -43,7 +43,7 @@ class UpdateViolationAuditRequest extends FormRequest
         $violations = collect((array) ($validated['violations'] ?? []))
             ->map(static fn (array $violation): array => [
                 'id' => (int) $violation['id'],
-                'comment' => (string) $violation['comment'],
+                'comment' => (string) ($violation['comment'] ?? ''),
                 'violation_date' => $violation['violation_date'] ?? null,
                 'risk' => (bool) ($violation['risk'] ?? false),
                 'severity' => isset($violation['severity']) ? (int) $violation['severity'] : null,

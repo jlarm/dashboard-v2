@@ -151,7 +151,7 @@ it('ignores incomplete audits when resolving the previous audit', function (): v
             ->where('previous_audit', null));
 });
 
-it('rejects updates that violate the comment requirement', function (): void {
+it('allows updates with an empty violation comment', function (): void {
     $violation = $this->audit->violations()->create([
         'uuid' => (string) Str::uuid(),
         'statement_id' => 1,
@@ -163,8 +163,17 @@ it('rejects updates that violate the comment requirement', function (): void {
         ->patch(route('dealer.audit.osha.update', $this->audit->uuid), [
             'date' => '2026-04-14',
             'violations' => [
-                ['id' => $violation->id, 'comment' => ''],
+                [
+                    'id' => $violation->id,
+                    'comment' => '',
+                    'risk' => 0,
+                    'severity' => 3,
+                    'show_reference_image' => 0,
+                ],
             ],
         ])
-        ->assertSessionHasErrors('violations.0.comment');
+        ->assertRedirect()
+        ->assertSessionHasNoErrors();
+
+    expect(Violation::query()->find($violation->id)->comment)->toBe('');
 });

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, reactive, ref, watch } from 'vue';
 import { Head, Link, router, usePage } from '@inertiajs/vue3';
-import { AlertCircle, AlertTriangle, ImagePlus, MessageSquarePlus, Minus, Pencil, Plus, Search, Trash2, X } from 'lucide-vue-next';
+import { AlertTriangle, ImagePlus, MessageSquarePlus, Minus, Pencil, Plus, Search, Trash2, X } from 'lucide-vue-next';
 import AppLayout from '@/layouts/tenant/AppLayout.vue';
 import {
     Accordion,
@@ -9,14 +9,12 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from '@/components/ui/accordion';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import DatePicker from '@/components/DatePicker.vue';
 import { FileUpload } from '@/components/ui/file-upload';
 import {
     Field,
     FieldDescription,
-    FieldError,
     FieldLabel,
 } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
@@ -154,7 +152,6 @@ watch(
 );
 
 const violationCount = computed(() => violations.length);
-const missingComments = computed(() => violations.some((v) => v.comment.trim() === ''));
 
 const page = usePage<{ auth: { user: { id: number; name: string } } }>();
 const currentUserId = computed(() => page.props.auth?.user?.id ?? 0);
@@ -446,14 +443,6 @@ const addViolation = (statementId: number): void => {
         </template>
 
         <form class="mx-auto flex max-w-2xl flex-col gap-4 px-3 pb-8 pt-4 sm:px-6" @submit.prevent="submit">
-            <Alert v-if="missingComments" variant="destructive" class="border-destructive/50">
-                <AlertCircle class="size-4" />
-                <AlertTitle class="text-sm">Missing comment</AlertTitle>
-                <AlertDescription class="text-xs">
-                    Indicates a missing comment. All violations require a comment.
-                </AlertDescription>
-            </Alert>
-
             <Field>
                 <FieldLabel for="audit-date" class="text-xs uppercase tracking-wider text-muted-foreground">
                     Audit date
@@ -466,20 +455,12 @@ const addViolation = (statementId: number): void => {
                     v-for="violation in violations"
                     :key="violation.id"
                     :value="`v-${violation.id}`"
-                    class="overflow-hidden rounded-lg border bg-card data-[state=open]:bg-card data-[state=open]:shadow-sm"
-                    :class="violation.comment.trim() === ''
-                        ? 'border-destructive/60'
-                        : 'border-border'"
+                    class="overflow-hidden rounded-lg border border-border bg-card data-[state=open]:bg-card data-[state=open]:shadow-sm"
                 >
                     <AccordionTrigger
                         class="px-3 py-3 text-left text-sm font-semibold leading-snug hover:no-underline"
                     >
                         <span class="flex items-start gap-2">
-                            <AlertCircle
-                                v-if="violation.comment.trim() === ''"
-                                class="mt-0.5 size-4 shrink-0 text-destructive"
-                                aria-label="Missing comment"
-                            />
                             <span>{{ violation.statement }}</span>
                         </span>
                         <template #icon>
@@ -490,29 +471,14 @@ const addViolation = (statementId: number): void => {
                     <AccordionContent class="space-y-3 px-3 pb-3 pt-1">
                         <Field>
                             <FieldLabel :for="`comment-${violation.id}`" class="text-xs uppercase tracking-wider text-muted-foreground">
-                                Comment <span class="text-destructive">*</span>
+                                Comment
                             </FieldLabel>
                             <Textarea
                                 :id="`comment-${violation.id}`"
                                 v-model="violation.comment"
                                 rows="4"
                                 class="resize-none text-base"
-                                :data-invalid="violation.comment.trim() === '' ? 'true' : undefined"
                                 placeholder="Describe the violation…"
-                            />
-                            <FieldError v-if="violation.comment.trim() === ''">
-                                A comment is required.
-                            </FieldError>
-                        </Field>
-
-                        <Field>
-                            <FieldLabel :for="`date-${violation.id}`" class="text-xs uppercase tracking-wider text-muted-foreground">
-                                Date of violation
-                            </FieldLabel>
-                            <DatePicker
-                                :id="`date-${violation.id}`"
-                                v-model="violation.violation_date"
-                                placeholder="Select date"
                             />
                         </Field>
 
@@ -780,7 +746,7 @@ const addViolation = (statementId: number): void => {
                     <Button
                         type="button"
                         size="sm"
-                        :disabled="submitting || missingComments"
+                        :disabled="submitting"
                         @click="submit"
                     >
                         {{ submitting ? 'Saving…' : 'Update' }}
