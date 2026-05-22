@@ -39,7 +39,7 @@ class GetScanDashboard
         $vulnerabilityScans = $service->getVulnerabilityScans();
         $scans = $vulnerabilityScans['vulnerability_scans'] ?? [];
 
-        $scansByRecency = collect($scans)
+        $scansByRecency = collect((array) $scans)
             ->sortByDesc('scan_finished')
             ->values();
 
