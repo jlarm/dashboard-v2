@@ -14,11 +14,12 @@ class GetCourses
      */
     public function handle(): array
     {
-        return Course::query()
-            ->orderBy('name')
-            ->get(['id', 'name', 'slug', 'optional'])
-            ->map(static fn (Course $course): CourseSettingData => CourseSettingData::fromModel($course))
-            ->values()
-            ->all();
+        return array_values(
+            Course::query()
+                ->orderBy('name')
+                ->get(['id', 'name', 'slug', 'optional'])
+                ->map(static fn (Course $course): CourseSettingData => CourseSettingData::fromModel($course))
+                ->all(),
+        );
     }
 }

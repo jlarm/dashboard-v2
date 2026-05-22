@@ -32,6 +32,8 @@ class SearchSdsRecords
      */
     public function handle(string $search, string $sort = 'name', string $direction = 'asc'): LengthAwarePaginator
     {
+        $sortDirection = $direction === 'desc' ? 'desc' : 'asc';
+
         /** @phpstan-ignore return.type */
         return tenancy()->central(fn (): LengthAwarePaginator => Sds::query()
             ->where(function (Builder $query) use ($search): void {
@@ -40,7 +42,7 @@ class SearchSdsRecords
                     ->orWhere('file_name', 'like', "%{$search}%")
                     ->orWhereJsonContains('keywords', $search);
             })
-            ->orderBy($sort, $direction)
+            ->orderBy($sort, $sortDirection)
             ->when($sort !== 'name', fn (Builder $query) => $query->orderBy('name'))
             ->paginate(perPage: self::PER_PAGE, columns: self::SELECT_COLUMNS)
             ->through(static fn (Sds $sds): array => SdsRecordData::fromModel($sds)->toArray())

@@ -48,6 +48,7 @@ class GetEmployees
     {
         $baseQuery = $this->baseQuery($viewer, $filters);
         $paginatedQuery = (clone $baseQuery)
+            // @phpstan-ignore argument.type (eager-load closure narrows Relation to its concrete HasMany)
             ->with(['results' => $this->constrainResultsQuery(...)]);
 
         if ($filters->hasComplianceFilter()) {
@@ -148,10 +149,12 @@ class GetEmployees
                 $scopedUsers = (clone $this->baseQuery($viewer, $filters))->without(['department'])->get();
                 $summaries = $this->summariesFor($scopedUsers);
 
-                return $summaries
-                    ->filter(fn (TrainingSummaryData $summary): bool => $this->passesComplianceFilter($summary, $filters))
-                    ->keys()
-                    ->all();
+                return array_values(
+                    $summaries
+                        ->filter(fn (TrainingSummaryData $summary): bool => $this->passesComplianceFilter($summary, $filters))
+                        ->keys()
+                        ->all(),
+                );
             },
         );
     }
@@ -253,13 +256,15 @@ class GetEmployees
      */
     private function applySorting(Builder $query, EmployeeFiltersData $filters): void
     {
+        $direction = $filters->sortDirection === 'desc' ? 'desc' : 'asc';
+
         match ($filters->sortField) {
             'department' => $query->orderBy(
                 DB::table('departments')
                     ->select('name')
                     ->whereColumn('departments.id', 'users.department_id')
                     ->limit(1),
-                $filters->sortDirection,
+                $direction,
             ),
             'role' => $query->orderBy(
                 DB::table('model_has_roles')
@@ -269,9 +274,9 @@ class GetEmployees
                     ->orderBy('roles.name')
                     ->limit(1)
                     ->select('roles.name'),
-                $filters->sortDirection,
+                $direction,
             ),
-            default => $query->orderBy('users.name', $filters->sortDirection),
+            default => $query->orderBy('users.name', $direction),
         };
     }
 

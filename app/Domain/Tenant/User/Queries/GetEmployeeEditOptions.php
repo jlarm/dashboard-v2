@@ -35,15 +35,16 @@ class GetEmployeeEditOptions
      */
     private function departments(): array
     {
-        return Department::query()
-            ->orderBy('name')
-            ->get(['id', 'name'])
-            ->map(static fn (Department $department): array => [
-                'id' => (int) $department->id,
-                'name' => (string) $department->name,
-            ])
-            ->values()
-            ->all();
+        return array_values(
+            Department::query()
+                ->orderBy('name')
+                ->get(['id', 'name'])
+                ->map(static fn (Department $department): array => [
+                    'id' => (int) $department->id,
+                    'name' => (string) $department->name,
+                ])
+                ->all(),
+        );
     }
 
     /**
@@ -51,20 +52,21 @@ class GetEmployeeEditOptions
      */
     private function roles(): array
     {
-        return Role::query()
-            ->whereNotIn('name', [
-                RoleEnum::SuperAdmin->value,
-                RoleEnum::Consultant->value,
-                RoleEnum::QualifiedIndividual->value,
-            ])
-            ->orderBy('name')
-            ->get(['id', 'name'])
-            ->map(static fn (Role $role): array => [
-                'id' => (int) $role->id,
-                'name' => (string) $role->name,
-            ])
-            ->values()
-            ->all();
+        return array_values(
+            Role::query()
+                ->whereNotIn('name', [
+                    RoleEnum::SuperAdmin->value,
+                    RoleEnum::Consultant->value,
+                    RoleEnum::QualifiedIndividual->value,
+                ])
+                ->orderBy('name')
+                ->get(['id', 'name'])
+                ->map(static fn (Role $role): array => [
+                    'id' => (int) $role->id,
+                    'name' => (string) $role->name,
+                ])
+                ->all(),
+        );
     }
 
     /**
@@ -80,13 +82,14 @@ class GetEmployeeEditOptions
             return null;
         }
 
-        return $stores
-            ->map(static fn (Store $store): array => [
-                'id' => (int) $store->id,
-                'name' => (string) $store->name,
-            ])
-            ->values()
-            ->all();
+        return array_values(
+            $stores
+                ->map(static fn (Store $store): array => [
+                    'id' => (int) $store->id,
+                    'name' => (string) $store->name,
+                ])
+                ->all(),
+        );
     }
 
     /**

@@ -16,6 +16,7 @@ use App\Models\Document;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Inertia\Inertia;
 use Inertia\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -51,10 +52,12 @@ class DocumentController extends Controller
     ): RedirectResponse {
         $this->authorize('create', Document::class);
 
+        $file = $request->file('file');
+
         $action->handle(new DocumentData(
             title: $request->validated('title'),
             url: $request->validated('url') ?: null,
-            file: $request->file('file') ?: null,
+            file: $file instanceof UploadedFile ? $file : null,
         ));
 
         return back()->with('flash.success', 'Document uploaded successfully.');

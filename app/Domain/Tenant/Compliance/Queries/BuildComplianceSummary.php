@@ -53,9 +53,11 @@ class BuildComplianceSummary
      */
     public function handle(Collection $stores, string $reportPeriod): array
     {
-        $storesData = $stores
-            ->map(fn (Store $store): array => $this->collectStoreData($store))
-            ->all();
+        $storesData = array_values(
+            $stores
+                ->map(fn (Store $store): array => $this->collectStoreData($store))
+                ->all(),
+        );
 
         return [
             'storesData' => $storesData,
@@ -76,9 +78,11 @@ class BuildComplianceSummary
      */
     public function gradeForStores(Collection $stores): string
     {
-        $storesData = $stores
-            ->map(fn (Store $store): array => $this->collectStoreData($store))
-            ->all();
+        $storesData = array_values(
+            $stores
+                ->map(fn (Store $store): array => $this->collectStoreData($store))
+                ->all(),
+        );
 
         return $this->groupGrade($storesData);
     }

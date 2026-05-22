@@ -60,6 +60,7 @@ class CalculateViolationsOverview
     }
 
     /**
+     * @param  'monthly'|'quarterly'|'yearly'  $granularity
      * @return list<array{label:string, opened:int, closed:int}>
      */
     private function emptyBuckets(CarbonImmutable $now, string $granularity): array

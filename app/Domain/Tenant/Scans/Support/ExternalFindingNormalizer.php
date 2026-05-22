@@ -26,29 +26,30 @@ final class ExternalFindingNormalizer
         $vulnerabilities = is_array($asset['vulnerabilities'] ?? null) ? $asset['vulnerabilities'] : [];
         $flaws = is_array($asset['flaws'] ?? null) ? $asset['flaws'] : [];
 
-        return collect($vulnerabilities)
-            ->filter(static fn (mixed $entry): bool => is_array($entry))
-            ->map(static fn (array $entry): array => self::normalize($entry, 'vulnerability')->toArray())
-            ->merge(
-                collect($flaws)
-                    ->filter(static fn (mixed $entry): bool => is_array($entry))
-                    ->map(static fn (array $entry): array => self::normalize($entry, 'flaw')->toArray()),
-            )
-            ->sort(static function (array $a, array $b): int {
-                $byRisk = self::severityWeight($b['risk_level']) <=> self::severityWeight($a['risk_level']);
-                if ($byRisk !== 0) {
-                    return $byRisk;
-                }
+        return array_values(
+            collect($vulnerabilities)
+                ->filter(static fn (mixed $entry): bool => is_array($entry))
+                ->map(static fn (array $entry): array => self::normalize($entry, 'vulnerability')->toArray())
+                ->merge(
+                    collect($flaws)
+                        ->filter(static fn (mixed $entry): bool => is_array($entry))
+                        ->map(static fn (array $entry): array => self::normalize($entry, 'flaw')->toArray()),
+                )
+                ->sort(static function (array $a, array $b): int {
+                    $byRisk = self::severityWeight($b['risk_level']) <=> self::severityWeight($a['risk_level']);
+                    if ($byRisk !== 0) {
+                        return $byRisk;
+                    }
 
-                $byAffected = ($b['affected_urls']) <=> ($a['affected_urls']);
-                if ($byAffected !== 0) {
-                    return $byAffected;
-                }
+                    $byAffected = ($b['affected_urls']) <=> ($a['affected_urls']);
+                    if ($byAffected !== 0) {
+                        return $byAffected;
+                    }
 
-                return strcmp($a['name'], $b['name']);
-            })
-            ->values()
-            ->all();
+                    return strcmp($a['name'], $b['name']);
+                })
+                ->all(),
+        );
     }
 
     /**
@@ -132,32 +133,34 @@ final class ExternalFindingNormalizer
         if (is_string($references)) {
             $cleaned = self::sanitizeText($references);
 
-            return collect(preg_split('/[\r\n,]+/', $cleaned) ?: [])
-                ->map(static fn (string $value): string => mb_trim($value))
-                ->filter(static fn (string $value): bool => $value !== '')
-                ->values()
-                ->all();
+            return array_values(
+                collect(preg_split('/[\r\n,]+/', $cleaned) ?: [])
+                    ->map(static fn (string $value): string => mb_trim($value))
+                    ->filter(static fn (string $value): bool => $value !== '')
+                    ->all(),
+            );
         }
 
         if (! is_array($references)) {
             return [];
         }
 
-        return collect($references)
-            ->map(static function (mixed $reference): string {
-                if (is_scalar($reference)) {
-                    return self::sanitizeText((string) $reference);
-                }
+        return array_values(
+            collect($references)
+                ->map(static function (mixed $reference): string {
+                    if (is_scalar($reference)) {
+                        return self::sanitizeText((string) $reference);
+                    }
 
-                if (! is_array($reference)) {
-                    return '';
-                }
+                    if (! is_array($reference)) {
+                        return '';
+                    }
 
-                return self::sanitizeText((string) ($reference['url'] ?? $reference['link'] ?? $reference['href'] ?? $reference['reference'] ?? ''));
-            })
-            ->filter(static fn (string $value): bool => $value !== '')
-            ->values()
-            ->all();
+                    return self::sanitizeText((string) ($reference['url'] ?? $reference['link'] ?? $reference['href'] ?? $reference['reference'] ?? ''));
+                })
+                ->filter(static fn (string $value): bool => $value !== '')
+                ->all(),
+        );
     }
 
     /**
@@ -182,16 +185,17 @@ final class ExternalFindingNormalizer
             return [];
         }
 
-        return collect($sources)
-            ->flatMap(static fn (mixed $source): array => self::normalizeInstanceSource($source))
-            ->map(static fn (mixed $instance): ?array => self::normalizeInstanceRow($instance))
-            ->filter(static fn (?array $instance): bool => $instance !== null)
-            ->filter(static fn (array $instance): bool => $instance['url'] !== '-'
-                || $instance['parameters'] !== '-'
-                || $instance['attack'] !== '-'
-                || $instance['evidence'] !== '-')
-            ->values()
-            ->all();
+        return array_values(
+            collect($sources)
+                ->flatMap(static fn (mixed $source): array => self::normalizeInstanceSource($source))
+                ->map(static fn (mixed $instance): ?array => self::normalizeInstanceRow($instance))
+                ->filter(static fn (?array $instance): bool => $instance !== null)
+                ->filter(static fn (array $instance): bool => $instance['url'] !== '-'
+                    || $instance['parameters'] !== '-'
+                    || $instance['attack'] !== '-'
+                    || $instance['evidence'] !== '-')
+                ->all(),
+        );
     }
 
     /**

@@ -31,18 +31,19 @@ class GetManageCoursesOptions
 
         $assignedCourseIds = array_flip($this->courseService->getCourseIds($user));
 
-        return Course::query()
-            ->select(['id', 'name', 'optional'])
-            ->orderBy('name')
-            ->get()
-            ->map(fn (Course $course): array => [
-                'id' => (int) $course->id,
-                'name' => (string) $course->name,
-                'required_for_user' => ! $course->optional && isset($assignedCourseIds[(int) $course->id]),
-                'state' => $this->stateFor($overrides, (int) $course->id),
-            ])
-            ->values()
-            ->all();
+        return array_values(
+            Course::query()
+                ->select(['id', 'name', 'optional'])
+                ->orderBy('name')
+                ->get()
+                ->map(fn (Course $course): array => [
+                    'id' => (int) $course->id,
+                    'name' => (string) $course->name,
+                    'required_for_user' => ! $course->optional && isset($assignedCourseIds[(int) $course->id]),
+                    'state' => $this->stateFor($overrides, (int) $course->id),
+                ])
+                ->all(),
+        );
     }
 
     /**

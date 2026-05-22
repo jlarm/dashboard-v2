@@ -35,24 +35,27 @@ class GetCveList
             ])
             ->all();
 
-        $availableAssetTypes = collect($vulnsByType)
-            ->filter(static fn (array $vulns): bool => count($vulns) > 0)
-            ->keys()
-            ->values()
-            ->all();
+        $availableAssetTypes = array_values(
+            collect($vulnsByType)
+                ->filter(static fn (array $vulns): bool => count($vulns) > 0)
+                ->keys()
+                ->all(),
+        );
 
         $selectedVulns = $assetType !== null && $assetType !== ''
             ? ($vulnsByType[$assetType] ?? [])
             : array_merge(...array_values($vulnsByType));
 
-        $items = collect((array) $selectedVulns)
-            ->sortByDesc(static fn (array $item): array => [
-                self::riskRank((string) ($item['cve_risk'] ?? '')),
-                (float) ($item['cve_score'] ?? 0),
-            ])
-            ->values()
-            ->map(static fn (array $item): array => CveItemData::fromPayload($item)->toArray())
-            ->all();
+        $items = array_values(
+            collect((array) $selectedVulns)
+                ->sortByDesc(static fn (array $item): array => [
+                    self::riskRank((string) ($item['cve_risk'] ?? '')),
+                    (float) ($item['cve_score'] ?? 0),
+                ])
+                ->values()
+                ->map(static fn (array $item): array => CveItemData::fromPayload($item)->toArray())
+                ->all(),
+        );
 
         return [
             'items' => $items,

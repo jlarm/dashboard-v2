@@ -45,9 +45,10 @@ class MigrateViolationStatementsCommand extends Command
             foreach ($rows as $row) {
                 $key = $this->normalizeStatement($row->statement);
 
-                if ($merged->has($key)) {
+                $existing = $merged->get($key);
+
+                if ($existing !== null) {
                     // Merge category into existing entry.
-                    $existing = $merged->get($key);
                     if (! in_array($category->value, $existing['categories'], strict: true)) {
                         $existing['categories'][] = $category->value;
                         $merged->put($key, $existing);

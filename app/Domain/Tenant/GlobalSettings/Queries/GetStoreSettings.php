@@ -14,12 +14,13 @@ class GetStoreSettings
      */
     public function handle(): array
     {
-        return Store::query()
-            ->with('remediationSettings:id,store_id,active')
-            ->orderBy('name')
-            ->get(['id', 'name', 'courses_not_taken_notification'])
-            ->map(static fn (Store $store): StoreSettingData => StoreSettingData::fromModel($store))
-            ->values()
-            ->all();
+        return array_values(
+            Store::query()
+                ->with('remediationSettings:id,store_id,active')
+                ->orderBy('name')
+                ->get(['id', 'name', 'courses_not_taken_notification'])
+                ->map(static fn (Store $store): StoreSettingData => StoreSettingData::fromModel($store))
+                ->all(),
+        );
     }
 }

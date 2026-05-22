@@ -26,10 +26,11 @@ class GetVendorDetail
 
         return [
             'detail' => VendorDetailData::fromModel($vendor),
-            'forms' => $forms
-                ->map(static fn (VendorForm $form): VendorFormData => VendorFormData::fromModel($form))
-                ->values()
-                ->all(),
+            'forms' => array_values(
+                $forms
+                    ->map(static fn (VendorForm $form): VendorFormData => VendorFormData::fromModel($form))
+                    ->all(),
+            ),
         ];
     }
 }

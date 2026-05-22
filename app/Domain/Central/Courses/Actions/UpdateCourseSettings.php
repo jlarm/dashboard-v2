@@ -36,7 +36,7 @@ class UpdateCourseSettings
                 foreach ($tenants as $tenant) {
                     /** @var Dealership $tenant */
                     tenancy()->initialize($tenant);
-                    $this->reconcileTenantCourse($tenant->id, $course, $data, $attributes, $roleNames);
+                    $this->reconcileTenantCourse((string) $tenant->id, $course, $data, $attributes, $roleNames);
                     DepartmentCompletionStats::flushCacheForCurrentTenant();
                     tenancy()->end();
                 }

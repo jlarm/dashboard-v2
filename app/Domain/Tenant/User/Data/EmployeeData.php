@@ -47,14 +47,15 @@ final readonly class EmployeeData implements Arrayable
             ->values()
             ->all();
 
-        $stores = $user->stores
-            ->sortBy('name')
-            ->map(static fn (Store $store): array => [
-                'id' => (int) $store->id,
-                'name' => (string) $store->name,
-            ])
-            ->values()
-            ->all();
+        $stores = array_values(
+            $user->stores
+                ->sortBy('name')
+                ->map(static fn (Store $store): array => [
+                    'id' => (int) $store->id,
+                    'name' => (string) $store->name,
+                ])
+                ->all(),
+        );
 
         return new self(
             id: (int) $user->id,

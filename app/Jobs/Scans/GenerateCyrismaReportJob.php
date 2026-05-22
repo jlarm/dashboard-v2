@@ -125,6 +125,9 @@ class GenerateCyrismaReportJob implements ShouldQueue
             for ($i = 1; $i <= $pageCount; $i++) {
                 $template = $fpdi->importPage($i);
                 $size = $fpdi->getTemplateSize($template);
+                if (! is_array($size)) {
+                    continue;
+                }
                 $orientation = $size['orientation'] ?? ($size['width'] > $size['height'] ? 'L' : 'P');
                 $fpdi->AddPage($orientation, [$size['width'], $size['height']]);
                 $fpdi->useTemplate($template);

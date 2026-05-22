@@ -26,21 +26,22 @@ class GetEmployeeCertificates
     {
         $tenantId = (string) (tenant('id') ?? '');
 
-        return $user->certificates()
-            ->select(['id', 'user_id', 'course_name', 'file_name', 'created_at'])
-            ->latest()
-            ->get()
-            ->map(fn (Certificate $cert): array => [
-                'id' => (int) $cert->id,
-                'course_name' => (string) $cert->course_name,
-                'issued_on' => $cert->created_at?->format('F d, Y') ?? '',
-                'download_url' => Storage::disk(DotCertificate::STORAGE_DISK)->temporaryUrl(
-                    "{$tenantId}/{$user->id}/{$cert->file_name}",
-                    now()->addMinutes(2),
-                ),
-            ])
-            ->values()
-            ->all();
+        return array_values(
+            $user->certificates()
+                ->select(['id', 'user_id', 'course_name', 'file_name', 'created_at'])
+                ->latest()
+                ->get()
+                ->map(fn (Certificate $cert): array => [
+                    'id' => (int) $cert->id,
+                    'course_name' => (string) $cert->course_name,
+                    'issued_on' => $cert->created_at?->format('F d, Y') ?? '',
+                    'download_url' => Storage::disk(DotCertificate::STORAGE_DISK)->temporaryUrl(
+                        "{$tenantId}/{$user->id}/{$cert->file_name}",
+                        now()->addMinutes(2),
+                    ),
+                ])
+                ->all(),
+        );
     }
 
     public function canGenerateDotCertificate(User $user): bool

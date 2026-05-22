@@ -61,7 +61,7 @@ class CalculateExpiredTraining
             return ['count' => 0, 'expiring_soon_count' => 0];
         }
 
-        return $this->summarize($this->scopedUsers(null, $ids->all()));
+        return $this->summarize($this->scopedUsers(null, array_values($ids->all())));
     }
 
     /**

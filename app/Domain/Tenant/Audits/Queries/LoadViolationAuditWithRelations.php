@@ -32,18 +32,20 @@ class LoadViolationAuditWithRelations
                 ->toArray()
             );
 
-        $violationsData = $violations
-            ->map(fn (Violation $violation): ViolationData => ViolationData::fromModel($violation, $referenceImages))
-            ->values()
-            ->all();
+        $violationsData = array_values(
+            $violations
+                ->map(fn (Violation $violation): ViolationData => ViolationData::fromModel($violation, $referenceImages))
+                ->all(),
+        );
 
-        $comments = $audit->auditComments()
-            ->with('user:id,name')
-            ->latest()
-            ->get()
-            ->map(fn (AuditComment $comment): AuditCommentData => AuditCommentData::fromModel($comment))
-            ->values()
-            ->all();
+        $comments = array_values(
+            $audit->auditComments()
+                ->with('user:id,name')
+                ->latest()
+                ->get()
+                ->map(fn (AuditComment $comment): AuditCommentData => AuditCommentData::fromModel($comment))
+                ->all(),
+        );
 
         $audit->loadMissing('store:id,name');
 

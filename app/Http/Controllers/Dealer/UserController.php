@@ -59,11 +59,13 @@ class UserController extends Controller
             return [];
         }
 
-        return Store::query()
-            ->whereIn('id', $storeIds)
-            ->orderBy('name')
-            ->pluck('name')
-            ->map(static fn (mixed $name): string => (string) $name)
-            ->all();
+        return array_values(
+            Store::query()
+                ->whereIn('id', $storeIds)
+                ->orderBy('name')
+                ->pluck('name')
+                ->map(static fn (mixed $name): string => (string) $name)
+                ->all(),
+        );
     }
 }

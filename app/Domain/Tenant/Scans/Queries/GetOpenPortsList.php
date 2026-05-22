@@ -33,20 +33,22 @@ class GetOpenPortsList
             ])
             ->all();
 
-        $availableAssetTypes = collect($portsByType)
-            ->filter(static fn (array $ports): bool => count($ports) > 0)
-            ->keys()
-            ->values()
-            ->all();
+        $availableAssetTypes = array_values(
+            collect($portsByType)
+                ->filter(static fn (array $ports): bool => count($ports) > 0)
+                ->keys()
+                ->all(),
+        );
 
         $selectedPorts = $assetType !== null && $assetType !== ''
             ? ($portsByType[$assetType] ?? [])
             : $service->getOpenPortsByAssetType('');
 
-        $items = collect($selectedPorts)
-            ->map(static fn (array $port): array => OpenPortData::fromPayload($port)->toArray())
-            ->values()
-            ->all();
+        $items = array_values(
+            collect($selectedPorts)
+                ->map(static fn (array $port): array => OpenPortData::fromPayload($port)->toArray())
+                ->all(),
+        );
 
         return [
             'items' => $items,

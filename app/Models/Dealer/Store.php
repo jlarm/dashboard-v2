@@ -327,7 +327,10 @@ class Store extends Model implements HasMedia
     protected function getPhoneNumberAttribute(): string
     {
         $cleaned = preg_replace('/[^[:digit:]]/', '', (string) $this->phone);
-        preg_match('/(\d{3})(\d{3})(\d{4})/', (string) $cleaned, $matches);
+
+        if (preg_match('/(\d{3})(\d{3})(\d{4})/', (string) $cleaned, $matches) !== 1) {
+            return (string) $this->phone;
+        }
 
         return "({$matches[1]}) {$matches[2]}-{$matches[3]}";
     }

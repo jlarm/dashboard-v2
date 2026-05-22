@@ -23,10 +23,10 @@ class GetVendorIndexOptions
 
         return [
             'stores' => $multipleStoresExist
-                ? $stores->map(static fn (Store $store): array => [
+                ? array_values($stores->map(static fn (Store $store): array => [
                     'id' => (int) $store->id,
                     'name' => (string) $store->name,
-                ])->values()->all()
+                ])->all())
                 : [],
             'multipleStoresExist' => $multipleStoresExist,
             'hasQualifiedIndividual' => User::query()->role('Qualified Individual')->exists(),

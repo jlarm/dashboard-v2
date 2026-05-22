@@ -26,10 +26,11 @@ class GetExternalIpExposure
         $rawAssets = is_array($payload['assets'] ?? null) ? $payload['assets'] : [];
         $scanInfo = is_array($payload['scan_info'] ?? null) ? $payload['scan_info'] : [];
 
-        $assets = collect($rawAssets)
-            ->map(static fn (array $asset): array => self::buildAsset($asset))
-            ->values()
-            ->all();
+        $assets = array_values(
+            collect($rawAssets)
+                ->map(static fn (array $asset): array => self::buildAsset($asset))
+                ->all(),
+        );
 
         return new ExternalIpExposureData(
             lastScanFinished: isset($scanInfo['scan_finished']) && is_string($scanInfo['scan_finished'])
@@ -86,16 +87,17 @@ class GetExternalIpExposure
             return [];
         }
 
-        return collect($rawPorts)
-            ->filter(static fn (mixed $port): bool => is_array($port))
-            ->map(static fn (array $port): array => [
-                'port_number' => (string) ($port['portNumber'] ?? '-'),
-                'port_description' => isset($port['portDescription']) && $port['portDescription'] !== ''
-                    ? (string) $port['portDescription']
-                    : null,
-                'risk_level' => (string) ($port['riskLevel'] ?? 'Unknown'),
-            ])
-            ->values()
-            ->all();
+        return array_values(
+            collect($rawPorts)
+                ->filter(static fn (mixed $port): bool => is_array($port))
+                ->map(static fn (array $port): array => [
+                    'port_number' => (string) ($port['portNumber'] ?? '-'),
+                    'port_description' => isset($port['portDescription']) && $port['portDescription'] !== ''
+                        ? (string) $port['portDescription']
+                        : null,
+                    'risk_level' => (string) ($port['riskLevel'] ?? 'Unknown'),
+                ])
+                ->all(),
+        );
     }
 }

@@ -29,8 +29,8 @@ class ImportCourses
             Dealership::query()->chunkById(50, function (Collection $tenants) use ($courses): void {
                 foreach ($tenants as $tenant) {
                     /** @var Dealership $tenant */
-                    $assignedCourses = $this->coursesAssignedToTenant($courses, $tenant->id);
-                    $unassignedSlugs = $this->slugsUnassignedFromTenant($courses, $tenant->id);
+                    $assignedCourses = $this->coursesAssignedToTenant($courses, (string) $tenant->id);
+                    $unassignedSlugs = $this->slugsUnassignedFromTenant($courses, (string) $tenant->id);
 
                     tenancy()->initialize($tenant);
                     $this->upsertTenantCourses($assignedCourses);

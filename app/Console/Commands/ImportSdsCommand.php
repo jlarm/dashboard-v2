@@ -126,7 +126,7 @@ class ImportSdsCommand extends Command
      */
     private function importData(array $data): void
     {
-        $chunkSize = (int) $this->option('chunkSize');
+        $chunkSize = max(1, (int) $this->option('chunkSize'));
         $chunks = array_chunk($data, $chunkSize);
         $totalChunks = count($chunks);
 
@@ -292,7 +292,7 @@ class ImportSdsCommand extends Command
      */
     private function performDryRun(array $data): int
     {
-        $chunkSize = (int) $this->option('chunkSize');
+        $chunkSize = max(1, (int) $this->option('chunkSize'));
         $chunks = array_chunk($data, $chunkSize);
 
         $stats = [

@@ -104,16 +104,18 @@ class HandleInertiaRequests extends Middleware
             ->get();
 
         return [
-            'items' => $notifications
-                ->map(static fn (DatabaseNotification $notification): array => [
-                    'id' => $notification->id,
-                    'type' => $notification->type,
-                    'data' => $notification->data,
-                    'read_at' => $notification->read_at?->toIso8601String(),
-                    'created_at' => $notification->created_at?->toIso8601String(),
-                    'created_at_relative' => $notification->created_at?->diffForHumans(),
-                ])
-                ->all(),
+            'items' => array_values(
+                $notifications
+                    ->map(static fn (DatabaseNotification $notification): array => [
+                        'id' => $notification->id,
+                        'type' => $notification->type,
+                        'data' => $notification->data,
+                        'read_at' => $notification->read_at?->toIso8601String(),
+                        'created_at' => $notification->created_at?->toIso8601String(),
+                        'created_at_relative' => $notification->created_at?->diffForHumans(),
+                    ])
+                    ->all(),
+            ),
             'unread_count' => $user->unreadNotifications()->count(),
         ];
     }

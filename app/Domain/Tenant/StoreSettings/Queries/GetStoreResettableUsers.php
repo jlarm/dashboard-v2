@@ -23,11 +23,12 @@ class GetStoreResettableUsers
      */
     public function handle(Store $store, string $search = ''): array
     {
-        return $this->baseQuery($store, $search)
-            ->get()
-            ->map(static fn (User $user): ResettableUserData => ResettableUserData::fromModel($user))
-            ->values()
-            ->all();
+        return array_values(
+            $this->baseQuery($store, $search)
+                ->get()
+                ->map(static fn (User $user): ResettableUserData => ResettableUserData::fromModel($user))
+                ->all(),
+        );
     }
 
     /**

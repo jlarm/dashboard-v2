@@ -28,10 +28,11 @@ final readonly class VendorFormData implements Arrayable
     public static function fromModel(VendorForm $form): self
     {
         $emailLogs = $form->relationLoaded('emailLogs')
-            ? $form->emailLogs
-                ->map(static fn (VendorEmailLog $log): VendorEmailLogData => VendorEmailLogData::fromModel($log))
-                ->values()
-                ->all()
+            ? array_values(
+                $form->emailLogs
+                    ->map(static fn (VendorEmailLog $log): VendorEmailLogData => VendorEmailLogData::fromModel($log))
+                    ->all(),
+            )
             : [];
 
         return new self(

@@ -122,6 +122,10 @@ class AppServiceProvider extends ServiceProvider
         Collection::macro('toCSV', function (): string|false {
             $output = fopen('php://temp', 'r+');
 
+            if ($output === false) {
+                return false;
+            }
+
             // Write the header
             if ($this->count() > 0) {
                 $first = $this->first();

@@ -103,7 +103,9 @@ class GenerateIndividualAuditPdfJob implements ShouldQueue
                         if ($value !== 2) {
                             continue;
                         }
-                        preg_match('/^[^_]*_q\K[^_]+/', $key, $matches);
+                        if (preg_match('/^[^_]*_q\K[^_]+/', $key, $matches) !== 1) {
+                            continue;
+                        }
                         $comment = $item->getAttributes()['individual_q'.$matches[0].'_comment'];
                         $this->array[] = [$key, $item->customer_number, $key, $comment];
                     }

@@ -61,13 +61,15 @@ class GetInviteEmployeeOptions
             $query->where('id', $viewer->department_id);
         }
 
-        return $query
-            ->get(['id', 'name'])
-            ->map(static fn (Department $department): array => [
-                'id' => (int) $department->id,
-                'name' => (string) $department->name,
-            ])
-            ->all();
+        return array_values(
+            $query
+                ->get(['id', 'name'])
+                ->map(static fn (Department $department): array => [
+                    'id' => (int) $department->id,
+                    'name' => (string) $department->name,
+                ])
+                ->all(),
+        );
     }
 
     /**
@@ -83,10 +85,12 @@ class GetInviteEmployeeOptions
             $query->whereNotIn('name', self::EXCLUDED_ROLE_VALUES);
         }
 
-        return $query
-            ->get(['name'])
-            ->map(static fn (Role $role): array => ['name' => (string) $role->name])
-            ->all();
+        return array_values(
+            $query
+                ->get(['name'])
+                ->map(static fn (Role $role): array => ['name' => (string) $role->name])
+                ->all(),
+        );
     }
 
     /**
@@ -94,14 +98,16 @@ class GetInviteEmployeeOptions
      */
     private function courses(): array
     {
-        return Course::query()
-            ->orderBy('name')
-            ->get(['id', 'name'])
-            ->map(static fn (Course $course): array => [
-                'id' => (int) $course->id,
-                'name' => (string) $course->name,
-            ])
-            ->all();
+        return array_values(
+            Course::query()
+                ->orderBy('name')
+                ->get(['id', 'name'])
+                ->map(static fn (Course $course): array => [
+                    'id' => (int) $course->id,
+                    'name' => (string) $course->name,
+                ])
+                ->all(),
+        );
     }
 
     /**
@@ -109,12 +115,14 @@ class GetInviteEmployeeOptions
      */
     private function stores(User $viewer, bool $managerOnly): array
     {
-        return $this->storesQuery($viewer, $managerOnly)
-            ->map(static fn (Store $store): array => [
-                'id' => (int) $store->id,
-                'name' => (string) $store->name,
-            ])
-            ->all();
+        return array_values(
+            $this->storesQuery($viewer, $managerOnly)
+                ->map(static fn (Store $store): array => [
+                    'id' => (int) $store->id,
+                    'name' => (string) $store->name,
+                ])
+                ->all(),
+        );
     }
 
     /**

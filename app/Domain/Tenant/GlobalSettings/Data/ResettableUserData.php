@@ -35,7 +35,7 @@ final readonly class ResettableUserData implements Arrayable
             id: (int) $user->id,
             name: (string) $user->name,
             email: (string) $user->email,
-            stores: $user->stores->pluck('name')->map(static fn (mixed $name): string => (string) $name)->all(),
+            stores: array_values($user->stores->pluck('name')->map(static fn (mixed $name): string => (string) $name)->all()),
             status: self::deriveStatus($user),
         );
     }

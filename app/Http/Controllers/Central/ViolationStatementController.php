@@ -19,6 +19,7 @@ use App\Models\ViolationStatement;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -98,6 +99,8 @@ class ViolationStatementController extends Controller
         /** @var array{statement: string, weight: int, categories: list<string>, keywords?: list<string>|null} $validated */
         $validated = $request->validated();
 
+        $image = $request->file('image');
+
         return new ViolationStatementData(
             statement: $validated['statement'],
             weight: (int) $validated['weight'],
@@ -106,7 +109,7 @@ class ViolationStatementController extends Controller
                 $validated['categories'],
             ),
             keywords: $validated['keywords'] ?? null,
-            image: $request->file('image') ?: null,
+            image: $image instanceof UploadedFile ? $image : null,
         );
     }
 

@@ -44,7 +44,7 @@ class UpdateRemediations
             $hasPhoto = false;
             if ($newPhoto instanceof UploadedFile) {
                 if ($isNew) {
-                    $remediation->user_id = $user->id;
+                    $remediation->user_id = max(0, $user->id);
                     $remediation->save();
                     $isNew = false;
                 }
@@ -62,7 +62,7 @@ class UpdateRemediations
 
             if ($isNew) {
                 if ($hasContent) {
-                    $remediation->user_id = $user->id;
+                    $remediation->user_id = max(0, $user->id);
                     $remediation->save();
                 }
 
@@ -70,7 +70,7 @@ class UpdateRemediations
             }
 
             if ($hasContent) {
-                $remediation->user_id = $user->id;
+                $remediation->user_id = max(0, $user->id);
                 $remediation->save();
             } else {
                 $remediation->delete();

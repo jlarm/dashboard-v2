@@ -112,7 +112,7 @@ trait HasCourses
                 $this->load('roles');
             }
 
-            $this->userCourses = resolve(UserCourseService::class)->getCourseIds($this);
+            $this->userCourses = array_values(resolve(UserCourseService::class)->getCourseIds($this));
         }
 
         return $this->userCourses;

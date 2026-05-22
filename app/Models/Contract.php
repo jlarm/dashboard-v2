@@ -95,7 +95,7 @@ class Contract extends Model
     {
         static::creating(static function (self $contract): void {
             if (! $contract->user_id) {
-                $contract->user_id = auth()->id();
+                $contract->user_id = max(0, (int) auth()->id());
             }
 
             if (! $contract->uuid) {

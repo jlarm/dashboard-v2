@@ -89,7 +89,7 @@ class GetTrainingComplianceSnapshot
      */
     private function buildAlerts(Collection $users, Collection $summaries): array
     {
-        return $users
+        return array_values($users
             ->map(function (User $user) use ($summaries): ?array {
                 $summary = $summaries->get($user->id);
 
@@ -134,8 +134,7 @@ class GetTrainingComplianceSnapshot
                 total_required: $row['summary']['total_required'],
                 status: $row['summary']['status'],
             ))
-            ->values()
-            ->all();
+            ->all());
     }
 
     private function emptySnapshot(): TrainingComplianceSnapshotData

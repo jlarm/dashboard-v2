@@ -154,13 +154,15 @@ class GetOpenInvites
             $query->where('id', $viewer->department_id);
         }
 
-        return $query
-            ->get(['id', 'name'])
-            ->map(static fn (Department $department): array => [
-                'id' => (int) $department->id,
-                'name' => (string) $department->name,
-            ])
-            ->all();
+        return array_values(
+            $query
+                ->get(['id', 'name'])
+                ->map(static fn (Department $department): array => [
+                    'id' => (int) $department->id,
+                    'name' => (string) $department->name,
+                ])
+                ->all(),
+        );
     }
 
     /**
@@ -215,11 +217,12 @@ class GetOpenInvites
      */
     private function normalizeInviteStoreIds(array $stores): array
     {
-        return collect(Arr::flatten($stores))
-            ->map(static fn (mixed $storeId): int => (int) $storeId)
-            ->filter(static fn (int $storeId): bool => $storeId > 0)
-            ->unique()
-            ->values()
-            ->all();
+        return array_values(
+            collect(Arr::flatten($stores))
+                ->map(static fn (mixed $storeId): int => (int) $storeId)
+                ->filter(static fn (int $storeId): bool => $storeId > 0)
+                ->unique()
+                ->all(),
+        );
     }
 }

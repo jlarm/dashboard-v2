@@ -56,11 +56,12 @@ class GetEmployeeCourses
 
         $storeState = $this->currentStoreState();
 
-        return $courses
-            ->filter(fn (Course $course): bool => $this->isApplicableToStore($course, $storeState))
-            ->map(fn (Course $course): array => $this->toRow($course, $latestResults->get($course->id)))
-            ->values()
-            ->all();
+        return array_values(
+            $courses
+                ->filter(fn (Course $course): bool => $this->isApplicableToStore($course, $storeState))
+                ->map(fn (Course $course): array => $this->toRow($course, $latestResults->get($course->id)))
+                ->all(),
+        );
     }
 
     private function currentStoreState(): ?string

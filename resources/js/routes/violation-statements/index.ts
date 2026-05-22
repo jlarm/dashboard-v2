@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\Central\ViolationStatementController::index
-* @see app/Http/Controllers/Central/ViolationStatementController.php:27
+* @see app/Http/Controllers/Central/ViolationStatementController.php:28
 * @route '//dashboard.test/violation-statements'
 */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\Central\ViolationStatementController::index
-* @see app/Http/Controllers/Central/ViolationStatementController.php:27
+* @see app/Http/Controllers/Central/ViolationStatementController.php:28
 * @route '//dashboard.test/violation-statements'
 */
 index.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ index.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Central\ViolationStatementController::index
-* @see app/Http/Controllers/Central/ViolationStatementController.php:27
+* @see app/Http/Controllers/Central/ViolationStatementController.php:28
 * @route '//dashboard.test/violation-statements'
 */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Central\ViolationStatementController::index
-* @see app/Http/Controllers/Central/ViolationStatementController.php:27
+* @see app/Http/Controllers/Central/ViolationStatementController.php:28
 * @route '//dashboard.test/violation-statements'
 */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Central\ViolationStatementController::index
-* @see app/Http/Controllers/Central/ViolationStatementController.php:27
+* @see app/Http/Controllers/Central/ViolationStatementController.php:28
 * @route '//dashboard.test/violation-statements'
 */
 const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -55,7 +55,7 @@ const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 
 /**
 * @see \App\Http\Controllers\Central\ViolationStatementController::index
-* @see app/Http/Controllers/Central/ViolationStatementController.php:27
+* @see app/Http/Controllers/Central/ViolationStatementController.php:28
 * @route '//dashboard.test/violation-statements'
 */
 indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -65,7 +65,7 @@ indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Central\ViolationStatementController::index
-* @see app/Http/Controllers/Central/ViolationStatementController.php:27
+* @see app/Http/Controllers/Central/ViolationStatementController.php:28
 * @route '//dashboard.test/violation-statements'
 */
 indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -82,7 +82,7 @@ index.form = indexForm
 
 /**
 * @see \App\Http\Controllers\Central\ViolationStatementController::store
-* @see app/Http/Controllers/Central/ViolationStatementController.php:56
+* @see app/Http/Controllers/Central/ViolationStatementController.php:57
 * @route '//dashboard.test/violation-statements'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -97,7 +97,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\Central\ViolationStatementController::store
-* @see app/Http/Controllers/Central/ViolationStatementController.php:56
+* @see app/Http/Controllers/Central/ViolationStatementController.php:57
 * @route '//dashboard.test/violation-statements'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -106,7 +106,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Central\ViolationStatementController::store
-* @see app/Http/Controllers/Central/ViolationStatementController.php:56
+* @see app/Http/Controllers/Central/ViolationStatementController.php:57
 * @route '//dashboard.test/violation-statements'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -116,7 +116,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\Central\ViolationStatementController::store
-* @see app/Http/Controllers/Central/ViolationStatementController.php:56
+* @see app/Http/Controllers/Central/ViolationStatementController.php:57
 * @route '//dashboard.test/violation-statements'
 */
 const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -126,7 +126,7 @@ const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => 
 
 /**
 * @see \App\Http\Controllers\Central\ViolationStatementController::store
-* @see app/Http/Controllers/Central/ViolationStatementController.php:56
+* @see app/Http/Controllers/Central/ViolationStatementController.php:57
 * @route '//dashboard.test/violation-statements'
 */
 storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -138,7 +138,7 @@ store.form = storeForm
 
 /**
 * @see \App\Http\Controllers\Central\ViolationStatementController::update
-* @see app/Http/Controllers/Central/ViolationStatementController.php:68
+* @see app/Http/Controllers/Central/ViolationStatementController.php:69
 * @route '//dashboard.test/violation-statements/{violationStatement}'
 */
 export const update = (args: { violationStatement: number | { id: number } } | [violationStatement: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -153,7 +153,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\Central\ViolationStatementController::update
-* @see app/Http/Controllers/Central/ViolationStatementController.php:68
+* @see app/Http/Controllers/Central/ViolationStatementController.php:69
 * @route '//dashboard.test/violation-statements/{violationStatement}'
 */
 update.url = (args: { violationStatement: number | { id: number } } | [violationStatement: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -186,7 +186,7 @@ update.url = (args: { violationStatement: number | { id: number } } | [violation
 
 /**
 * @see \App\Http\Controllers\Central\ViolationStatementController::update
-* @see app/Http/Controllers/Central/ViolationStatementController.php:68
+* @see app/Http/Controllers/Central/ViolationStatementController.php:69
 * @route '//dashboard.test/violation-statements/{violationStatement}'
 */
 update.patch = (args: { violationStatement: number | { id: number } } | [violationStatement: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
@@ -196,7 +196,7 @@ update.patch = (args: { violationStatement: number | { id: number } } | [violati
 
 /**
 * @see \App\Http\Controllers\Central\ViolationStatementController::update
-* @see app/Http/Controllers/Central/ViolationStatementController.php:68
+* @see app/Http/Controllers/Central/ViolationStatementController.php:69
 * @route '//dashboard.test/violation-statements/{violationStatement}'
 */
 const updateForm = (args: { violationStatement: number | { id: number } } | [violationStatement: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -211,7 +211,7 @@ const updateForm = (args: { violationStatement: number | { id: number } } | [vio
 
 /**
 * @see \App\Http\Controllers\Central\ViolationStatementController::update
-* @see app/Http/Controllers/Central/ViolationStatementController.php:68
+* @see app/Http/Controllers/Central/ViolationStatementController.php:69
 * @route '//dashboard.test/violation-statements/{violationStatement}'
 */
 updateForm.patch = (args: { violationStatement: number | { id: number } } | [violationStatement: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -228,7 +228,7 @@ update.form = updateForm
 
 /**
 * @see \App\Http\Controllers\Central\ViolationStatementController::destroy
-* @see app/Http/Controllers/Central/ViolationStatementController.php:84
+* @see app/Http/Controllers/Central/ViolationStatementController.php:85
 * @route '//dashboard.test/violation-statements/{violationStatement}'
 */
 export const destroy = (args: { violationStatement: number | { id: number } } | [violationStatement: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -243,7 +243,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\Central\ViolationStatementController::destroy
-* @see app/Http/Controllers/Central/ViolationStatementController.php:84
+* @see app/Http/Controllers/Central/ViolationStatementController.php:85
 * @route '//dashboard.test/violation-statements/{violationStatement}'
 */
 destroy.url = (args: { violationStatement: number | { id: number } } | [violationStatement: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -276,7 +276,7 @@ destroy.url = (args: { violationStatement: number | { id: number } } | [violatio
 
 /**
 * @see \App\Http\Controllers\Central\ViolationStatementController::destroy
-* @see app/Http/Controllers/Central/ViolationStatementController.php:84
+* @see app/Http/Controllers/Central/ViolationStatementController.php:85
 * @route '//dashboard.test/violation-statements/{violationStatement}'
 */
 destroy.delete = (args: { violationStatement: number | { id: number } } | [violationStatement: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -286,7 +286,7 @@ destroy.delete = (args: { violationStatement: number | { id: number } } | [viola
 
 /**
 * @see \App\Http\Controllers\Central\ViolationStatementController::destroy
-* @see app/Http/Controllers/Central/ViolationStatementController.php:84
+* @see app/Http/Controllers/Central/ViolationStatementController.php:85
 * @route '//dashboard.test/violation-statements/{violationStatement}'
 */
 const destroyForm = (args: { violationStatement: number | { id: number } } | [violationStatement: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -301,7 +301,7 @@ const destroyForm = (args: { violationStatement: number | { id: number } } | [vi
 
 /**
 * @see \App\Http\Controllers\Central\ViolationStatementController::destroy
-* @see app/Http/Controllers/Central/ViolationStatementController.php:84
+* @see app/Http/Controllers/Central/ViolationStatementController.php:85
 * @route '//dashboard.test/violation-statements/{violationStatement}'
 */
 destroyForm.delete = (args: { violationStatement: number | { id: number } } | [violationStatement: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

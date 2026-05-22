@@ -18,7 +18,10 @@ class CreateFirstStoreController extends Controller
             return to_route('dealer.dashboard');
         }
 
-        $storeCreator->create($request->validated());
+        /** @var array{name: string, address: string, city: string, state: string, postal_code: string, phone: string, website: string} $attributes */
+        $attributes = $request->validated();
+
+        $storeCreator->create($attributes);
 
         session()->flash('flash.type', 'success');
         session()->flash('flash.title', 'Store Created');

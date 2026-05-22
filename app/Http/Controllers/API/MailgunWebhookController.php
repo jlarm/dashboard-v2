@@ -63,7 +63,7 @@ class MailgunWebhookController extends Controller
 
         $index = tenancy()->central(fn () => VendorEmailLogIndex::query()->where('message_id', $normalizedMessageId)->first());
         if ($index) {
-            $foundTenant = Dealership::query()->find($index->tenant_id);
+            $foundTenant = Dealership::query()->find((string) $index->tenant_id);
             if ($foundTenant) {
                 $foundTenant->run(function () use ($messageIdVariants, &$emailLog): void {
                     $emailLog = VendorEmailLog::query()->whereIn('message_id', $messageIdVariants)->first();

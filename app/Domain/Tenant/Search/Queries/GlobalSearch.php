@@ -96,24 +96,26 @@ class GlobalSearch
      */
     private function employeeResults(User $viewer, string $term): array
     {
-        return $this->employees
-            ->buildScopedQuery($viewer, EmployeeFiltersData::empty())
-            ->where(function (Builder $query) use ($term): void {
-                $query->where('users.name', 'like', "%{$term}%")
-                    ->orWhere('users.email', 'like', "%{$term}%");
-            })
-            ->limit(self::PER_GROUP)
-            ->get()
-            ->map(static fn (User $user): SearchResultData => new SearchResultData(
-                type: 'employee',
-                id: (string) $user->id,
-                title: (string) $user->name,
-                subtitle: (string) $user->email,
-                url: $user->slug !== null
-                    ? route('dealer.employees.show', $user->slug, false)
-                    : route('dealer.employees.index', absolute: false),
-            ))
-            ->all();
+        return array_values(
+            $this->employees
+                ->buildScopedQuery($viewer, EmployeeFiltersData::empty())
+                ->where(function (Builder $query) use ($term): void {
+                    $query->where('users.name', 'like', "%{$term}%")
+                        ->orWhere('users.email', 'like', "%{$term}%");
+                })
+                ->limit(self::PER_GROUP)
+                ->get()
+                ->map(static fn (User $user): SearchResultData => new SearchResultData(
+                    type: 'employee',
+                    id: (string) $user->id,
+                    title: (string) $user->name,
+                    subtitle: (string) $user->email,
+                    url: $user->slug !== null
+                        ? route('dealer.employees.show', $user->slug, false)
+                        : route('dealer.employees.index', absolute: false),
+                ))
+                ->all(),
+        );
     }
 
     /**
@@ -126,30 +128,32 @@ class GlobalSearch
     {
         $scopedStoreIds = $this->storeScopeService->scopedStoreIds($viewer);
 
-        return Vendor::query()
-            ->where(function (Builder $query) use ($scopedStoreIds): void {
-                if ($scopedStoreIds->isNotEmpty()) {
-                    $query->whereIn('store_id', $scopedStoreIds);
-                }
+        return array_values(
+            Vendor::query()
+                ->where(function (Builder $query) use ($scopedStoreIds): void {
+                    if ($scopedStoreIds->isNotEmpty()) {
+                        $query->whereIn('store_id', $scopedStoreIds);
+                    }
 
-                $query->orWhereNull('store_id');
-            })
-            ->where(function (Builder $query) use ($term): void {
-                $query->where('name', 'like', "%{$term}%")
-                    ->orWhere('contact_name', 'like', "%{$term}%")
-                    ->orWhere('contact_email', 'like', "%{$term}%");
-            })
-            ->orderBy('name')
-            ->limit(self::PER_GROUP)
-            ->get(['id', 'name', 'contact_name', 'contact_email'])
-            ->map(static fn (Vendor $vendor): SearchResultData => new SearchResultData(
-                type: 'vendor',
-                id: (string) $vendor->id,
-                title: (string) $vendor->name,
-                subtitle: self::vendorSubtitle($vendor),
-                url: route('dealer.vendor.show', $vendor->id, false),
-            ))
-            ->all();
+                    $query->orWhereNull('store_id');
+                })
+                ->where(function (Builder $query) use ($term): void {
+                    $query->where('name', 'like', "%{$term}%")
+                        ->orWhere('contact_name', 'like', "%{$term}%")
+                        ->orWhere('contact_email', 'like', "%{$term}%");
+                })
+                ->orderBy('name')
+                ->limit(self::PER_GROUP)
+                ->get(['id', 'name', 'contact_name', 'contact_email'])
+                ->map(static fn (Vendor $vendor): SearchResultData => new SearchResultData(
+                    type: 'vendor',
+                    id: (string) $vendor->id,
+                    title: (string) $vendor->name,
+                    subtitle: self::vendorSubtitle($vendor),
+                    url: route('dealer.vendor.show', $vendor->id, false),
+                ))
+                ->all(),
+        );
     }
 
     /**
@@ -189,11 +193,12 @@ class GlobalSearch
             ))
             ->all());
 
-        return collect([...$dealerDocs, ...$sharedDocs])
-            ->sortBy(static fn (SearchResultData $result): string => Str::lower($result->title))
-            ->take(self::PER_GROUP)
-            ->values()
-            ->all();
+        return array_values(
+            collect([...$dealerDocs, ...$sharedDocs])
+                ->sortBy(static fn (SearchResultData $result): string => Str::lower($result->title))
+                ->take(self::PER_GROUP)
+                ->all(),
+        );
     }
 
     /**
@@ -231,18 +236,20 @@ class GlobalSearch
      */
     private function courseResults(string $term): array
     {
-        return Course::query()
-            ->where('name', 'like', "%{$term}%")
-            ->orderBy('name')
-            ->limit(self::PER_GROUP)
-            ->get(['id', 'name', 'slug'])
-            ->map(static fn (Course $course): SearchResultData => new SearchResultData(
-                type: 'course',
-                id: (string) $course->id,
-                title: (string) $course->name,
-                subtitle: 'Course',
-                url: route('dealer.courses.show', $course->slug, false),
-            ))
-            ->all();
+        return array_values(
+            Course::query()
+                ->where('name', 'like', "%{$term}%")
+                ->orderBy('name')
+                ->limit(self::PER_GROUP)
+                ->get(['id', 'name', 'slug'])
+                ->map(static fn (Course $course): SearchResultData => new SearchResultData(
+                    type: 'course',
+                    id: (string) $course->id,
+                    title: (string) $course->name,
+                    subtitle: 'Course',
+                    url: route('dealer.courses.show', $course->slug, false),
+                ))
+                ->all(),
+        );
     }
 }

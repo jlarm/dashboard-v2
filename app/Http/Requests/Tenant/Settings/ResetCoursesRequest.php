@@ -44,12 +44,13 @@ class ResetCoursesRequest extends FormRequest
         /** @var array{mode: string, user_ids?: list<int|string>} $validated */
         $validated = $this->validated();
 
-        $userIds = collect($validated['user_ids'] ?? [])
-            ->map(static fn (mixed $userId): int => (int) $userId)
-            ->filter()
-            ->unique()
-            ->values()
-            ->all();
+        $userIds = array_values(
+            collect($validated['user_ids'] ?? [])
+                ->map(static fn (mixed $userId): int => (int) $userId)
+                ->filter()
+                ->unique()
+                ->all(),
+        );
 
         return new ResetCoursesData(
             mode: $validated['mode'],

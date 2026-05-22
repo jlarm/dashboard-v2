@@ -28,11 +28,12 @@ class GetLocations
      */
     public function handle(): array
     {
-        return Store::query()
-            ->orderBy('name')
-            ->get(self::SELECT_COLUMNS)
-            ->map(static fn (Store $store): LocationData => LocationData::fromModel($store))
-            ->values()
-            ->all();
+        return array_values(
+            Store::query()
+                ->orderBy('name')
+                ->get(self::SELECT_COLUMNS)
+                ->map(static fn (Store $store): LocationData => LocationData::fromModel($store))
+                ->all(),
+        );
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Tenant\Audits\Queries;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
 class BuildAuditChartData
@@ -11,8 +12,8 @@ class BuildAuditChartData
     private const array GRADE_MAP = ['A' => 4, 'B' => 3, 'C' => 2, 'D' => 1, 'F' => 0];
 
     /**
-     * @param  iterable<object>  $violationAudits  Models exposing date, grade, violation_count, remediation_count
-     * @param  iterable<object>  $legacyAudits  Legacy *Audit models exposing audit_date, grade; Osha exposes a violations() morph, BodyShop/Finance do not
+     * @param  iterable<Model>  $violationAudits  Models exposing date, grade, violation_count, remediation_count
+     * @param  iterable<Model>  $legacyAudits  Legacy *Audit models exposing audit_date, grade; Osha exposes a violations() morph, BodyShop/Finance do not
      * @return array{labels: array<string>, gradesNumeric: array<int>, gradesLetters: array<string>, violations: array<int>, remediations: array<int>}
      */
     public function handle(iterable $violationAudits, iterable $legacyAudits): array
@@ -20,21 +21,27 @@ class BuildAuditChartData
         $points = collect();
 
         foreach ($violationAudits as $audit) {
-            if ($audit->date && $audit->grade) {
+            $date = $audit->getAttribute('date');
+            $grade = $audit->getAttribute('grade');
+
+            if ($date && $grade) {
                 $points->push([
-                    'date' => $audit->date,
-                    'grade' => $audit->grade,
-                    'violations' => (int) ($audit->violation_count ?? 0),
-                    'remediations' => (int) ($audit->remediation_count ?? 0),
+                    'date' => $date,
+                    'grade' => $grade,
+                    'violations' => (int) ($audit->getAttribute('violation_count') ?? 0),
+                    'remediations' => (int) ($audit->getAttribute('remediation_count') ?? 0),
                 ]);
             }
         }
 
         foreach ($legacyAudits as $audit) {
-            if ($audit->audit_date && $audit->grade !== null) {
+            $date = $audit->getAttribute('audit_date');
+            $grade = $audit->getAttribute('grade');
+
+            if ($date && $grade !== null) {
                 $points->push([
-                    'date' => $audit->audit_date,
-                    'grade' => $audit->grade,
+                    'date' => $date,
+                    'grade' => $grade,
                     'violations' => $this->legacyViolationCount($audit),
                     'remediations' => 0,
                 ]);
@@ -52,14 +59,14 @@ class BuildAuditChartData
         ];
     }
 
-    private function legacyViolationCount(object $audit): int
+    private function legacyViolationCount(Model $audit): int
     {
         if (! method_exists($audit, 'violations')) {
             return 0;
         }
 
-        if (method_exists($audit, 'relationLoaded') && $audit->relationLoaded('violations')) {
-            $loaded = $audit->violations;
+        if ($audit->relationLoaded('violations')) {
+            $loaded = $audit->getAttribute('violations');
 
             return ($loaded instanceof Collection ? $loaded->count() : is_countable($loaded)) ? count($loaded) : 0;
         }

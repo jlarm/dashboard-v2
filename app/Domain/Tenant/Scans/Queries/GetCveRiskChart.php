@@ -38,7 +38,7 @@ class GetCveRiskChart
             $scanDate = $scan['scan_finished'] ?? $scan['scan_started'] ?? null;
 
             if (is_string($scanDate) && $scanDate !== '') {
-                $categories[] = date('M Y', strtotime($scanDate));
+                $categories[] = date('M Y', strtotime($scanDate) ?: null);
             } else {
                 $categories[] = (string) ($scan['scan_name'] ?? 'Scan '.($index + 1));
             }

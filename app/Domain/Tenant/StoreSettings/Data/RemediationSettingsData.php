@@ -75,17 +75,18 @@ class RemediationSettingsData
         $groups = [];
 
         foreach (AuditTypes::cases() as $type) {
-            $entries = $preferences->get($type->value, collect())
-                ->map(static fn (RemediationReminderPreference $preference): ?array => $relevantUsers->get($preference->user_id) instanceof User
-                    ? [
-                        'id' => (int) $relevantUsers->get($preference->user_id)->id,
-                        'name' => (string) $relevantUsers->get($preference->user_id)->name,
-                        'slug' => $relevantUsers->get($preference->user_id)->slug,
-                    ]
-                    : null)
-                ->filter()
-                ->values()
-                ->all();
+            $entries = array_values(
+                $preferences->get($type->value, collect())
+                    ->map(static fn (RemediationReminderPreference $preference): ?array => $relevantUsers->get($preference->user_id) instanceof User
+                        ? [
+                            'id' => (int) $relevantUsers->get($preference->user_id)->id,
+                            'name' => (string) $relevantUsers->get($preference->user_id)->name,
+                            'slug' => $relevantUsers->get($preference->user_id)->slug,
+                        ]
+                        : null)
+                    ->filter()
+                    ->all(),
+            );
 
             $groups[$type->value] = $entries;
         }

@@ -62,7 +62,7 @@ class GetLocationGrades
             ])
             ->get(['id', 'name']);
 
-        return $stores->map(function (Store $store): LocationGradeRowData {
+        return array_values($stores->map(function (Store $store): LocationGradeRowData {
             $osha = $this->normalizeGrade($store->getAttribute('osha_grade'));
             $glba = $this->normalizeGrade($store->getAttribute('glba_grade'));
             $bodyShop = $this->normalizeGrade($store->getAttribute('body_shop_grade'));
@@ -77,7 +77,7 @@ class GetLocationGrades
                 glba: $glba,
                 body_shop: $bodyShop,
             );
-        })->values()->all();
+        })->all());
     }
 
     /**

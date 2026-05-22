@@ -6,6 +6,7 @@ namespace App\Domain\Central\ViolationStatements\Support;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use RuntimeException;
 
 class ViolationStatementImageStorage
 {
@@ -16,6 +17,8 @@ class ViolationStatementImageStorage
     public function store(UploadedFile $file): string
     {
         $path = $file->storePublicly(self::DIRECTORY, self::DISK);
+
+        throw_if($path === false, RuntimeException::class, 'Failed to store violation statement image.');
 
         return Storage::disk(self::DISK)->url($path);
     }

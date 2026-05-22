@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\Central\SharedDocumentController::index
-* @see app/Http/Controllers/Central/SharedDocumentController.php:25
+* @see app/Http/Controllers/Central/SharedDocumentController.php:26
 * @route '//dashboard.test/shared-documents'
 */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\Central\SharedDocumentController::index
-* @see app/Http/Controllers/Central/SharedDocumentController.php:25
+* @see app/Http/Controllers/Central/SharedDocumentController.php:26
 * @route '//dashboard.test/shared-documents'
 */
 index.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ index.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Central\SharedDocumentController::index
-* @see app/Http/Controllers/Central/SharedDocumentController.php:25
+* @see app/Http/Controllers/Central/SharedDocumentController.php:26
 * @route '//dashboard.test/shared-documents'
 */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Central\SharedDocumentController::index
-* @see app/Http/Controllers/Central/SharedDocumentController.php:25
+* @see app/Http/Controllers/Central/SharedDocumentController.php:26
 * @route '//dashboard.test/shared-documents'
 */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Central\SharedDocumentController::index
-* @see app/Http/Controllers/Central/SharedDocumentController.php:25
+* @see app/Http/Controllers/Central/SharedDocumentController.php:26
 * @route '//dashboard.test/shared-documents'
 */
 const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -55,7 +55,7 @@ const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 
 /**
 * @see \App\Http\Controllers\Central\SharedDocumentController::index
-* @see app/Http/Controllers/Central/SharedDocumentController.php:25
+* @see app/Http/Controllers/Central/SharedDocumentController.php:26
 * @route '//dashboard.test/shared-documents'
 */
 indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -65,7 +65,7 @@ indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Central\SharedDocumentController::index
-* @see app/Http/Controllers/Central/SharedDocumentController.php:25
+* @see app/Http/Controllers/Central/SharedDocumentController.php:26
 * @route '//dashboard.test/shared-documents'
 */
 indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -82,7 +82,7 @@ index.form = indexForm
 
 /**
 * @see \App\Http\Controllers\Central\SharedDocumentController::store
-* @see app/Http/Controllers/Central/SharedDocumentController.php:48
+* @see app/Http/Controllers/Central/SharedDocumentController.php:49
 * @route '//dashboard.test/shared-documents'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -97,7 +97,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\Central\SharedDocumentController::store
-* @see app/Http/Controllers/Central/SharedDocumentController.php:48
+* @see app/Http/Controllers/Central/SharedDocumentController.php:49
 * @route '//dashboard.test/shared-documents'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -106,7 +106,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Central\SharedDocumentController::store
-* @see app/Http/Controllers/Central/SharedDocumentController.php:48
+* @see app/Http/Controllers/Central/SharedDocumentController.php:49
 * @route '//dashboard.test/shared-documents'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -116,7 +116,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\Central\SharedDocumentController::store
-* @see app/Http/Controllers/Central/SharedDocumentController.php:48
+* @see app/Http/Controllers/Central/SharedDocumentController.php:49
 * @route '//dashboard.test/shared-documents'
 */
 const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -126,7 +126,7 @@ const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => 
 
 /**
 * @see \App\Http\Controllers\Central\SharedDocumentController::store
-* @see app/Http/Controllers/Central/SharedDocumentController.php:48
+* @see app/Http/Controllers/Central/SharedDocumentController.php:49
 * @route '//dashboard.test/shared-documents'
 */
 storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -138,7 +138,7 @@ store.form = storeForm
 
 /**
 * @see \App\Http\Controllers\Central\SharedDocumentController::download
-* @see app/Http/Controllers/Central/SharedDocumentController.php:63
+* @see app/Http/Controllers/Central/SharedDocumentController.php:66
 * @route '//dashboard.test/shared-documents/{sharedDocument}/download'
 */
 export const download = (args: { sharedDocument: number | { id: number } } | [sharedDocument: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -153,7 +153,7 @@ download.definition = {
 
 /**
 * @see \App\Http\Controllers\Central\SharedDocumentController::download
-* @see app/Http/Controllers/Central/SharedDocumentController.php:63
+* @see app/Http/Controllers/Central/SharedDocumentController.php:66
 * @route '//dashboard.test/shared-documents/{sharedDocument}/download'
 */
 download.url = (args: { sharedDocument: number | { id: number } } | [sharedDocument: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -186,7 +186,7 @@ download.url = (args: { sharedDocument: number | { id: number } } | [sharedDocum
 
 /**
 * @see \App\Http\Controllers\Central\SharedDocumentController::download
-* @see app/Http/Controllers/Central/SharedDocumentController.php:63
+* @see app/Http/Controllers/Central/SharedDocumentController.php:66
 * @route '//dashboard.test/shared-documents/{sharedDocument}/download'
 */
 download.get = (args: { sharedDocument: number | { id: number } } | [sharedDocument: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -196,7 +196,7 @@ download.get = (args: { sharedDocument: number | { id: number } } | [sharedDocum
 
 /**
 * @see \App\Http\Controllers\Central\SharedDocumentController::download
-* @see app/Http/Controllers/Central/SharedDocumentController.php:63
+* @see app/Http/Controllers/Central/SharedDocumentController.php:66
 * @route '//dashboard.test/shared-documents/{sharedDocument}/download'
 */
 download.head = (args: { sharedDocument: number | { id: number } } | [sharedDocument: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -206,7 +206,7 @@ download.head = (args: { sharedDocument: number | { id: number } } | [sharedDocu
 
 /**
 * @see \App\Http\Controllers\Central\SharedDocumentController::download
-* @see app/Http/Controllers/Central/SharedDocumentController.php:63
+* @see app/Http/Controllers/Central/SharedDocumentController.php:66
 * @route '//dashboard.test/shared-documents/{sharedDocument}/download'
 */
 const downloadForm = (args: { sharedDocument: number | { id: number } } | [sharedDocument: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -216,7 +216,7 @@ const downloadForm = (args: { sharedDocument: number | { id: number } } | [share
 
 /**
 * @see \App\Http\Controllers\Central\SharedDocumentController::download
-* @see app/Http/Controllers/Central/SharedDocumentController.php:63
+* @see app/Http/Controllers/Central/SharedDocumentController.php:66
 * @route '//dashboard.test/shared-documents/{sharedDocument}/download'
 */
 downloadForm.get = (args: { sharedDocument: number | { id: number } } | [sharedDocument: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -226,7 +226,7 @@ downloadForm.get = (args: { sharedDocument: number | { id: number } } | [sharedD
 
 /**
 * @see \App\Http\Controllers\Central\SharedDocumentController::download
-* @see app/Http/Controllers/Central/SharedDocumentController.php:63
+* @see app/Http/Controllers/Central/SharedDocumentController.php:66
 * @route '//dashboard.test/shared-documents/{sharedDocument}/download'
 */
 downloadForm.head = (args: { sharedDocument: number | { id: number } } | [sharedDocument: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -243,7 +243,7 @@ download.form = downloadForm
 
 /**
 * @see \App\Http\Controllers\Central\SharedDocumentController::destroy
-* @see app/Http/Controllers/Central/SharedDocumentController.php:74
+* @see app/Http/Controllers/Central/SharedDocumentController.php:77
 * @route '//dashboard.test/shared-documents/{sharedDocument}'
 */
 export const destroy = (args: { sharedDocument: number | { id: number } } | [sharedDocument: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -258,7 +258,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\Central\SharedDocumentController::destroy
-* @see app/Http/Controllers/Central/SharedDocumentController.php:74
+* @see app/Http/Controllers/Central/SharedDocumentController.php:77
 * @route '//dashboard.test/shared-documents/{sharedDocument}'
 */
 destroy.url = (args: { sharedDocument: number | { id: number } } | [sharedDocument: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -291,7 +291,7 @@ destroy.url = (args: { sharedDocument: number | { id: number } } | [sharedDocume
 
 /**
 * @see \App\Http\Controllers\Central\SharedDocumentController::destroy
-* @see app/Http/Controllers/Central/SharedDocumentController.php:74
+* @see app/Http/Controllers/Central/SharedDocumentController.php:77
 * @route '//dashboard.test/shared-documents/{sharedDocument}'
 */
 destroy.delete = (args: { sharedDocument: number | { id: number } } | [sharedDocument: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -301,7 +301,7 @@ destroy.delete = (args: { sharedDocument: number | { id: number } } | [sharedDoc
 
 /**
 * @see \App\Http\Controllers\Central\SharedDocumentController::destroy
-* @see app/Http/Controllers/Central/SharedDocumentController.php:74
+* @see app/Http/Controllers/Central/SharedDocumentController.php:77
 * @route '//dashboard.test/shared-documents/{sharedDocument}'
 */
 const destroyForm = (args: { sharedDocument: number | { id: number } } | [sharedDocument: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -316,7 +316,7 @@ const destroyForm = (args: { sharedDocument: number | { id: number } } | [shared
 
 /**
 * @see \App\Http\Controllers\Central\SharedDocumentController::destroy
-* @see app/Http/Controllers/Central/SharedDocumentController.php:74
+* @see app/Http/Controllers/Central/SharedDocumentController.php:77
 * @route '//dashboard.test/shared-documents/{sharedDocument}'
 */
 destroyForm.delete = (args: { sharedDocument: number | { id: number } } | [sharedDocument: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

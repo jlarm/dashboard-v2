@@ -74,7 +74,10 @@ class StreamAuditPdf
             }
         }
 
-        $home = (string) (Request::server('HOME') ?: getenv('HOME') ?: '');
+        $serverHome = Request::server('HOME');
+        $home = is_string($serverHome) && $serverHome !== ''
+            ? $serverHome
+            : (string) (getenv('HOME') ?: '');
         if ($home !== '') {
             $herdNvm = $home.'/Library/Application Support/Herd/config/nvm/versions/node';
             if (is_dir($herdNvm)) {

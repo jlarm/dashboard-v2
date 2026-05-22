@@ -20,14 +20,15 @@ class GetScanOverview
             return [];
         }
 
-        return Store::query()
-            ->whereIn('id', $storeIds)
-            ->withCount('scanReports')
-            ->with('latestScanReportDate')
-            ->orderBy('name')
-            ->get()
-            ->map(static fn (Store $store): array => StoreScanOverviewData::fromStore($store)->toArray())
-            ->values()
-            ->all();
+        return array_values(
+            Store::query()
+                ->whereIn('id', $storeIds)
+                ->withCount('scanReports')
+                ->with('latestScanReportDate')
+                ->orderBy('name')
+                ->get()
+                ->map(static fn (Store $store): array => StoreScanOverviewData::fromStore($store)->toArray())
+                ->all(),
+        );
     }
 }

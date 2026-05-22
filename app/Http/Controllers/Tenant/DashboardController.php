@@ -103,10 +103,10 @@ class DashboardController extends Controller
             : $this->buildCriticalVulnerabilitiesProps($stores, $vulnerabilitiesQuery);
 
         $violationsOverview = $violationsOverviewQuery
-            ->handleForStores($stores->pluck('id')->all())
+            ->handleForStores($this->storeIdList($stores))
             ->toArray();
 
-        $auditTrackerRows = collect($auditTrackerQuery->handleForStores($stores->pluck('id')->all()))
+        $auditTrackerRows = collect($auditTrackerQuery->handleForStores($this->storeIdList($stores)))
             ->filter(static fn (AuditTrackerRowData $row): bool => $row->last_audit_date !== null)
             ->values();
 
@@ -119,7 +119,7 @@ class DashboardController extends Controller
         // initial paint. The synchronous is_overview flag lets the Vue
         // layout pick the right card (Locations vs Audit Tracker) without
         // waiting on the deferred data.
-        $storeIds = $stores->pluck('id')->all();
+        $storeIds = $this->storeIdList($stores);
         $isOverview = $stores->count() > 1;
 
         $trainingCompletion = Inertia::defer(
@@ -249,7 +249,7 @@ class DashboardController extends Controller
 
         abort_if($stores->isEmpty(), 404);
 
-        $storeIds = $stores->pluck('id')->all();
+        $storeIds = $this->storeIdList($stores);
 
         return match ($type) {
             'osha' => $this->streamViolationAuditPdf(ViolationAuditType::Osha, $storeIds, $streamAuditPdf),
@@ -381,6 +381,17 @@ class DashboardController extends Controller
     }
 
     /**
+     * @param  EloquentCollection<int, Store>  $stores
+     * @return list<int>
+     */
+    private function storeIdList(EloquentCollection $stores): array
+    {
+        return array_values(
+            $stores->pluck('id')->map(static fn (mixed $id): int => (int) $id)->all(),
+        );
+    }
+
+    /**
      * @return array<string, mixed>
      */
     private function emptyComplianceProps(): array
@@ -413,7 +424,7 @@ class DashboardController extends Controller
         ]);
 
         $current = $this->aggregate($scores);
-        $previous = $this->previousScore($stores->pluck('id')->all(), $now);
+        $previous = $this->previousScore($this->storeIdList($stores), $now);
 
         $delta = $current === null || $previous === null ? null : round($current - $previous, 1);
 
@@ -563,7 +574,7 @@ class DashboardController extends Controller
             $highSeverityCount += $result['high_severity_count'];
         }
 
-        $previousCount = $this->previousOverdueCount($eligible->pluck('id')->all(), $now);
+        $previousCount = $this->previousOverdueCount($this->storeIdList($eligible), $now);
         $deltaPct = $this->deltaPercentage($count, $previousCount);
 
         return [
@@ -640,7 +651,7 @@ class DashboardController extends Controller
             $current = $trainingQuery->handleForStore($store);
             $previousCount = $this->previousStoreTrainingCount($store->id, $now);
         } else {
-            $current = $trainingQuery->handleForStores($stores->pluck('id')->all());
+            $current = $trainingQuery->handleForStores($this->storeIdList($stores));
             $previousCount = $this->previousTenantTrainingCount($now);
         }
 
