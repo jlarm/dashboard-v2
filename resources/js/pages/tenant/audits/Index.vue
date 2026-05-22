@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import { Head, Link, router, usePage } from '@inertiajs/vue3';
-import { CheckCircle2, ClipboardList, Eye, FileDown, MoreVertical, Pencil, Pencil as PencilIcon, RotateCcw, Trash2 } from 'lucide-vue-next';
+import { CheckCircle2, ClipboardList, Eye, FileDown, MoreVertical, Pencil, RotateCcw, Trash2 } from 'lucide-vue-next';
 import AppLayout from '@/layouts/tenant/AppLayout.vue';
 import { Button } from '@/components/ui/button';
 import {
@@ -18,6 +18,7 @@ import {
     TableRow,
 } from '@/components/ui/table';
 import AppPagination from '@/components/AppPagination.vue';
+import AuditGradePicker from './components/AuditGradePicker.vue';
 import GradesOverTimeChart from './components/GradesOverTimeChart.vue';
 import ViolationsRemediationsChart from './components/ViolationsRemediationsChart.vue';
 import { Role } from '@/constants/roles';
@@ -78,27 +79,6 @@ const canManageAudits = computed(() => {
     return roles.includes(Role.SuperAdmin) || roles.includes(Role.Consultant);
 });
 
-const gradeOptions = ['A', 'B', 'C', 'D', 'F'] as const;
-const gradePopoverFor = ref<number | null>(null);
-const savingGradeFor = ref<number | null>(null);
-
-const setGrade = (audit: Audit, grade: string): void => {
-    savingGradeFor.value = audit.id;
-    router.patch(
-        routes.grade.url({ audit: audit.uuid }),
-        { grade },
-        {
-            preserveScroll: true,
-            onSuccess: () => {
-                gradePopoverFor.value = null;
-            },
-            onFinish: () => {
-                savingGradeFor.value = null;
-            },
-        },
-    );
-};
-
 const deleteAudit = (audit: Audit): void => {
     if (!confirm(`Delete the audit from ${audit.date}? This cannot be undone.`)) return;
     router.delete(routes.destroy.url({ audit: audit.uuid }), { preserveScroll: true });
@@ -111,23 +91,6 @@ const markComplete = (audit: Audit): void => {
 const reopenAudit = (audit: Audit): void => {
     if (!confirm(`Reopen the audit from ${audit.date}?`)) return;
     router.delete(routes.reopen.url({ audit: audit.uuid }), { preserveScroll: true });
-};
-
-const gradeBadgeClass = (grade: string | null): string => {
-    switch (grade) {
-        case 'A':
-            return 'bg-emerald-100 text-emerald-700 ring-emerald-200 dark:bg-emerald-900/40 dark:text-emerald-300 dark:ring-emerald-900/60';
-        case 'B':
-            return 'bg-sky-100 text-sky-700 ring-sky-200 dark:bg-sky-900/40 dark:text-sky-300 dark:ring-sky-900/60';
-        case 'C':
-            return 'bg-yellow-100 text-yellow-700 ring-yellow-200 dark:bg-yellow-900/40 dark:text-yellow-300 dark:ring-yellow-900/60';
-        case 'D':
-            return 'bg-orange-100 text-orange-700 ring-orange-200 dark:bg-orange-900/40 dark:text-orange-300 dark:ring-orange-900/60';
-        case 'F':
-            return 'bg-red-100 text-red-700 ring-red-200 dark:bg-red-900/40 dark:text-red-300 dark:ring-red-900/60';
-        default:
-            return 'bg-muted text-muted-foreground ring-border';
-    }
 };
 </script>
 
@@ -174,48 +137,13 @@ const gradeBadgeClass = (grade: string | null): string => {
                                 <TableCell class="font-medium text-foreground">{{ audit.quarter }}</TableCell>
                                 <TableCell class="text-muted-foreground">{{ audit.date }}</TableCell>
                                 <TableCell>
-                                    <Popover
-                                        v-if="canManageAudits && audit.is_completed"
-                                        :open="gradePopoverFor === audit.id"
-                                        @update:open="(value) => gradePopoverFor = value ? audit.id : null"
-                                    >
-                                        <PopoverTrigger as-child>
-                                            <button
-                                                type="button"
-                                                class="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold ring-1 transition hover:opacity-80"
-                                                :class="gradeBadgeClass(audit.grade)"
-                                                :disabled="savingGradeFor === audit.id"
-                                            >
-                                                {{ audit.grade ?? 'Set grade' }}
-                                                <PencilIcon class="size-3 opacity-60" />
-                                            </button>
-                                        </PopoverTrigger>
-                                        <PopoverContent class="w-auto p-2" align="start">
-                                            <div class="flex gap-1">
-                                                <button
-                                                    v-for="option in gradeOptions"
-                                                    :key="option"
-                                                    type="button"
-                                                    class="grid size-9 place-items-center rounded-md text-sm font-semibold ring-1 transition hover:opacity-80"
-                                                    :class="[
-                                                        gradeBadgeClass(option),
-                                                        audit.grade === option ? 'ring-2 ring-foreground' : '',
-                                                    ]"
-                                                    :disabled="savingGradeFor === audit.id"
-                                                    @click="setGrade(audit, option)"
-                                                >
-                                                    {{ option }}
-                                                </button>
-                                            </div>
-                                        </PopoverContent>
-                                    </Popover>
-                                    <span
-                                        v-else
-                                        class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold ring-1"
-                                        :class="gradeBadgeClass(audit.grade)"
-                                    >
-                                        {{ audit.grade ?? '—' }}
-                                    </span>
+                                    <AuditGradePicker
+                                        :type="type"
+                                        :audit-uuid="audit.uuid"
+                                        :grade="audit.grade"
+                                        :editable="canManageAudits && audit.is_completed"
+                                        align="start"
+                                    />
                                 </TableCell>
                                 <TableCell class="text-muted-foreground">{{ audit.violation_count }}</TableCell>
                                 <TableCell class="text-muted-foreground">
@@ -333,48 +261,13 @@ const gradeBadgeClass = (grade: string | null): string => {
                                     <p class="text-xs text-muted-foreground">{{ audit.date }}</p>
                                 </div>
                                 <div class="flex shrink-0 items-center gap-2">
-                                    <Popover
-                                        v-if="canManageAudits && audit.is_completed"
-                                        :open="gradePopoverFor === audit.id"
-                                        @update:open="(value) => gradePopoverFor = value ? audit.id : null"
-                                    >
-                                        <PopoverTrigger as-child>
-                                            <button
-                                                type="button"
-                                                class="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold ring-1 transition hover:opacity-80"
-                                                :class="gradeBadgeClass(audit.grade)"
-                                                :disabled="savingGradeFor === audit.id"
-                                            >
-                                                {{ audit.grade ?? 'Set grade' }}
-                                                <PencilIcon class="size-3 opacity-60" />
-                                            </button>
-                                        </PopoverTrigger>
-                                        <PopoverContent class="w-auto p-2" align="end">
-                                            <div class="flex gap-1">
-                                                <button
-                                                    v-for="option in gradeOptions"
-                                                    :key="option"
-                                                    type="button"
-                                                    class="grid size-9 place-items-center rounded-md text-sm font-semibold ring-1 transition hover:opacity-80"
-                                                    :class="[
-                                                        gradeBadgeClass(option),
-                                                        audit.grade === option ? 'ring-2 ring-foreground' : '',
-                                                    ]"
-                                                    :disabled="savingGradeFor === audit.id"
-                                                    @click="setGrade(audit, option)"
-                                                >
-                                                    {{ option }}
-                                                </button>
-                                            </div>
-                                        </PopoverContent>
-                                    </Popover>
-                                    <span
-                                        v-else
-                                        class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold ring-1"
-                                        :class="gradeBadgeClass(audit.grade)"
-                                    >
-                                        {{ audit.grade ?? '—' }}
-                                    </span>
+                                    <AuditGradePicker
+                                        :type="type"
+                                        :audit-uuid="audit.uuid"
+                                        :grade="audit.grade"
+                                        :editable="canManageAudits && audit.is_completed"
+                                        align="end"
+                                    />
                                     <Popover>
                                         <PopoverTrigger as-child>
                                             <Button variant="outline" size="icon" aria-label="Open actions">
