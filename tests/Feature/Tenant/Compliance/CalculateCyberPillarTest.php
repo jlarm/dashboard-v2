@@ -26,9 +26,10 @@ it('scores 100 with no issues and a recent scan', function (): void {
     $store = cyberFixtureStore();
     $now = CarbonImmutable::create(2026, 5, 1);
 
-    mockScanDashboard(
+    mockCyberScanDashboard(
         hasScanData: true,
         issueCounts: new IssueCountsData(0, 0, 0, 0, 0, 'A'),
+        lastScanDate: $now->subDays(5)->toDateString(),
     );
 
     $pillar = resolve(CalculateCyberPillar::class)->handle($store, $now);
@@ -41,7 +42,7 @@ it('penalizes critical and high CVEs with the configured weights', function (): 
     $store = cyberFixtureStore();
     $now = CarbonImmutable::create(2026, 5, 1);
 
-    mockScanDashboard(
+    mockCyberScanDashboard(
         hasScanData: true,
         issueCounts: new IssueCountsData(10, 2, 1, 5, 2, 'C'),
     );
@@ -57,7 +58,7 @@ it('caps the issue penalty at 60 points', function (): void {
     $store = cyberFixtureStore();
     $now = CarbonImmutable::create(2026, 5, 1);
 
-    mockScanDashboard(
+    mockCyberScanDashboard(
         hasScanData: true,
         issueCounts: new IssueCountsData(100, 50, 0, 0, 0, 'F'),
     );
@@ -72,9 +73,11 @@ it('penalizes staleness when the last scan is older than 30 days', function (): 
     $store = cyberFixtureStore();
     $now = CarbonImmutable::create(2026, 5, 1);
 
-    mockScanDashboard(
+    mockCyberScanDashboard(
         hasScanData: true,
-        issueCounts: new IssueCountsData(0, 0, 0, 0, 0, 'A'), // 61 days before now → 31 days over threshold → ~31 pts (capped at 30)
+        issueCounts: new IssueCountsData(0, 0, 0, 0, 0, 'A'),
+        // 61 days before now → 31 days over threshold → ~31 pts (capped at 30)
+        lastScanDate: $now->subDays(61)->toDateString(),
     );
 
     $pillar = resolve(CalculateCyberPillar::class)->handle($store, $now);
@@ -87,7 +90,7 @@ it('penalizes staleness when the last scan is older than 30 days', function (): 
 it('returns a low baseline when Cyrisma is configured but has no scan data', function (): void {
     $store = cyberFixtureStore();
 
-    mockScanDashboard(
+    mockCyberScanDashboard(
         hasScanData: false,
         issueCounts: IssueCountsData::empty(),
     );
@@ -125,10 +128,10 @@ function cyberFixtureStore(): Store
     return $store->fresh()->load('cyrisma');
 }
 
-function mockScanDashboard(
+function mockCyberScanDashboard(
     bool $hasScanData,
     IssueCountsData $issueCounts,
-    ?string $lastScanDate,
+    ?string $lastScanDate = null,
 ): void {
     $dashboard = new ScanDashboardData(
         isConfigured: true,
