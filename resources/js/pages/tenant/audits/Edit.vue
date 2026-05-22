@@ -658,7 +658,7 @@ const addViolation = (statementId: number): void => {
                             <FieldLabel class="text-xs uppercase tracking-wider text-muted-foreground">
                                 Photos <span class="font-normal normal-case text-muted-foreground/70">({{ violation.photos.length + violation.newPhotos.length }}/3)</span>
                             </FieldLabel>
-                            <div class="grid grid-cols-3 gap-3">
+                            <div class="grid grid-cols-6 gap-3">
                                 <div v-for="photo in violation.photos" :key="`existing-${photo.id}`" class="space-y-1.5">
                                     <div class="aspect-square overflow-hidden rounded-md ring-1 ring-border">
                                         <img :src="photo.url" class="size-full object-cover" alt="" />
@@ -689,8 +689,8 @@ const addViolation = (statementId: number): void => {
                                     class="flex aspect-square flex-col items-center justify-center gap-1 rounded-md border border-dashed text-muted-foreground hover:border-primary hover:bg-muted/40 hover:text-primary"
                                     @click="triggerFilePicker(violation.id)"
                                 >
-                                    <ImagePlus class="size-5" />
-                                    <span class="text-xs">Add photo</span>
+                                    <ImagePlus class="size-4" />
+                                    <span class="text-[10px] leading-tight">Add photo</span>
                                 </button>
                             </div>
                             <input
