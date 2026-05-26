@@ -125,8 +125,8 @@ Source inventory (as of this snapshot): 73 controllers, 83 domain modules, 18 po
 | Create | `@store` | `tests/Feature/Central/ViolationStatement/StoreTest.php` | ✅ |
 | Update | `@update` | `tests/Feature/Central/ViolationStatement/UpdateTest.php` | ✅ |
 | Delete | `@destroy` | `tests/Feature/Central/ViolationStatement/DestroyTest.php` | ✅ |
-| Bulk migrate command | `Console/Commands/MigrateViolationStatementsCommand` | — | ❌ |
-| Repair keywords command | `Console/Commands/RepairViolationStatementKeywordsCommand` | — | ❌ |
+| Bulk migrate command | `Console/Commands/MigrateViolationStatementsCommand` | `tests/Feature/Central/ViolationStatement/MigrateViolationStatementsCommandTest.php` | ✅ |
+| Repair keywords command | `Console/Commands/RepairViolationStatementKeywordsCommand` | `tests/Feature/Central/ViolationStatement/RepairViolationStatementKeywordsCommandTest.php` | ✅ |
 
 ### Contracts (vendor/contractor agreements)
 | Feature | Source | Tests | Status |
@@ -419,11 +419,11 @@ Source inventory (as of this snapshot): 73 controllers, 83 domain modules, 18 po
 | `EnableVimeoSeek` | — | ❌ |
 | `ImportSdsCommand` | `tests/Feature/ImportSdsCommandTest.php` | ✅ |
 | `MigrateSharedDocumentsToCentralDocsCommand` | — | ❌ |
-| `MigrateViolationStatementsCommand` | — | ❌ |
+| `MigrateViolationStatementsCommand` | `tests/Feature/Central/ViolationStatement/MigrateViolationStatementsCommandTest.php` | ✅ |
 | `NewCourseNotificationCommand` | — | ❌ |
 | `ReconcileTenantCoursesCommand` | `tests/Feature/ReconcileTenantCoursesCommandTest.php` | ✅ |
 | `RemediationReminderCommand` | — | ❌ |
-| `RepairViolationStatementKeywordsCommand` | — | ❌ |
+| `RepairViolationStatementKeywordsCommand` | `tests/Feature/Central/ViolationStatement/RepairViolationStatementKeywordsCommandTest.php` | ✅ |
 | `ReportTenantSizeCommand` | — | ❌ |
 | `RevertCourseResetCommand` | — | ❌ |
 | `RunInvitesCommand` | `tests/Feature/Tenant/Console/RunInvitesCommandTest.php` | ✅ |
