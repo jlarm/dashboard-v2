@@ -238,14 +238,13 @@ Source inventory (as of this snapshot): 73 controllers, 83 domain modules, 18 po
 ### Audits — Individual / Fit Tests / Deal Jackets
 | Feature | Source | Tests | Status |
 | --- | --- | --- | --- |
-| Individual audit CRUD | `Tenant/Audit/IndividualAuditController` | — | ❌ |
-| Individual audit PDF | `Jobs/GenerateIndividualAuditPdfJob` | — | ❌ |
+| Individual audit CRUD | `Tenant/Audit/IndividualAuditController` | `tests/Feature/Tenant/Audit/IndividualAuditControllerTest.php` | ✅ |
+| Individual audit PDF | `Jobs/GenerateIndividualAuditPdfJob` | `tests/Feature/Tenant/Audits/GenerateIndividualAuditPdfJobTest.php` | ✅ |
 | Fit test CRUD | `Tenant/Audit/FitTestController` | `tests/Feature/Tenant/Audit/FitTestControllerTest.php` | ✅ |
-| Deal jacket CRUD | `Tenant/Audit/DealJacketController` | — | ❌ |
-| Deal jacket report download | `Tenant/Audit/DealJacketReportDownloadController` | — | ❌ |
-| Deal jacket report job | `Jobs/Audit/GenerateDealJacketReportJob` | — | ❌ |
-| Deal jacket cleanup commands | `Console/Commands/CleanupOldDealJacketReports`, `DeleteOldDealJacketReports` | — | ❌ |
-| Generate OSHA audit (legacy job) | `Jobs/GenerateOshaAuditJob` | — | ❌ |
+| Deal jacket CRUD | `Tenant/Audit/DealJacketController` | `tests/Feature/Tenant/Audit/DealJacketControllerTest.php` | ✅ |
+| Deal jacket report download | `Tenant/Audit/DealJacketReportDownloadController` | `tests/Feature/Tenant/Audit/DealJacketReportDownloadControllerTest.php` | ✅ |
+| Deal jacket report job | `Jobs/Audit/GenerateDealJacketReportJob` | `tests/Feature/Tenant/Audit/GenerateDealJacketReportJobTest.php` | ✅ |
+| Deal jacket cleanup command | `Console/Commands/CleanupOldDealJacketReportsCommand` | `tests/Feature/Tenant/Console/CleanupOldDealJacketReportsCommandTest.php` | ✅ |
 
 ### Manuals (CMS / ISP / OSHA / RedFlag)
 | Feature | Source | Tests | Status |
@@ -366,14 +365,13 @@ Source inventory (as of this snapshot): 73 controllers, 83 domain modules, 18 po
 | `Audit/Generate*PdfJob` (Osha/Glba/BodyShop) | `tests/Unit/Jobs/Audit/Generate*PdfJobTest.php` | ✅ |
 | `Audit/Upload*PdfJob` (Osha/Glba/BodyShop) | tenant audit feature tests | ✅ |
 | `Audit/Generate*RemediationPdfJob` (Osha/Glba/BodyShop) | `tests/Feature/Tenant/Audits/RemediationPdfJobTest.php` | ✅ |
-| `Audit/GenerateDealJacketReportJob` | — | ❌ |
+| `Audit/GenerateDealJacketReportJob` | `tests/Feature/Tenant/Audit/GenerateDealJacketReportJobTest.php` | ✅ |
 | `Contracts/GeneratePdfJob` | `tests/Feature/Central/Contract/PdfTest.php` | ✅ |
 | `Contracts/UploadToDigitalOceanJob` | `tests/Feature/Central/Contract/UploadToDigitalOceanJobTest.php` | ✅ |
 | `CreateFrameworkDirectoriesForTenantJob` | — | ❌ |
 | `CrossTenantPasswordResetJob` | `tests/Feature/Auth/CrossTenantPasswordResetTest.php`, `tests/Feature/Tenant/Auth/CrossTenantPasswordResetJobTest.php` | ✅ |
 | `DownloadVendorPdfJob` | — | ❌ |
-| `GenerateIndividualAuditPdfJob` | — | ❌ |
-| `GenerateOshaAuditJob` (legacy) | — | ❌ |
+| `GenerateIndividualAuditPdfJob` | `tests/Feature/Tenant/Audits/GenerateIndividualAuditPdfJobTest.php` | ✅ |
 | `ImportEmployeesJob` | `tests/Feature/Tenant/Employee/ImportEmployeesControllerTest.php` | ✅ |
 | `IncompleteVendorNotificationJob` | `tests/Feature/Tenant/Jobs/IncompleteVendorNotificationJobTest.php` | ✅ |
 | `IssueDotCertificate` | `tests/Feature/Tenant/Course/IssueDotCertificateJobTest.php` | ✅ |
@@ -403,12 +401,11 @@ Source inventory (as of this snapshot): 73 controllers, 83 domain modules, 18 po
 | `BackupSelfCheckCommand` | — | ❌ |
 | `CheckMissingSdsFiles` | `tests/Feature/CheckMissingSdsFilesTest.php` | ✅ |
 | `CheckMultiStateUsersCommand` | `tests/Feature/CheckMultiStateUsersCommandTest.php` | ✅ |
-| `CleanupOldDealJacketReportsCommand` | — | ❌ |
+| `CleanupOldDealJacketReportsCommand` | `tests/Feature/Tenant/Console/CleanupOldDealJacketReportsCommandTest.php` | ✅ |
 | `ClearLivewireTempFiles` | — | ❌ |
 | `CourseExpiringEmailCommand` | `tests/Feature/Tenant/Course/CourseReminderCommandsTest.php` | ⚠️ |
 | `CourseReminderCommand` | same | ⚠️ |
 | `CourseYearsExpireCommand` | same | ⚠️ |
-| `DeleteOldDealJacketReports` | — | ❌ |
 | `DeleteTemporaryUploadsCommand` | — | ❌ |
 | `EmployeeCourseReminderCommand` | `tests/Feature/Tenant/Course/CourseReminderCommandsTest.php` | ⚠️ |
 | `EnableVimeoSeek` | — | ❌ |
