@@ -5,6 +5,9 @@
 
 @section('content')
 
+@php $variant = $variant ?? 'all'; @endphp
+
+@if ($variant !== 'body')
 {{-- Cover page --}}
 <div class="cover">
     <x-application-logo class="cover__logo" />
@@ -19,7 +22,13 @@
             Phone: {{ $isp->store->phone }}@if($isp->store->fax)<br>Fax: {{ $isp->store->fax }}@endif
         </div>
     </div>
-    <table class="cover__signatures">
+</div>
+
+{{-- ARMP representative review log (its own page so it never gets clipped) --}}
+<div class="cover-signatures-page">
+    <h2 class="cover-signatures-page__title">ARMP Review Log</h2>
+    <p class="cover-signatures-page__subtitle">For ARMP representative use only.</p>
+    <table class="cover-signatures">
         <thead>
             <tr>
                 <th style="width:35%">Date</th>
@@ -27,41 +36,43 @@
             </tr>
         </thead>
         <tbody>
-            @for ($i = 0; $i < 5; $i++)
+            @for ($i = 0; $i < 6; $i++)
                 <tr><td></td><td></td></tr>
             @endfor
         </tbody>
     </table>
 </div>
 
-{{-- Table of Contents --}}
+{{-- Table of Contents (front matter — no header/footer) --}}
 <div class="toc">
     <h1 class="toc__title">Table of Contents</h1>
     <hr class="toc__rule">
     <ul class="toc__list">
-        <li class="toc__entry"><span class="toc__label">Dealership Information</span><span class="toc__leader"></span><span class="toc__page">3</span></li>
-        <li class="toc__entry"><span class="toc__label">8 Elements Dealerships Must Comply With</span><span class="toc__leader"></span><span class="toc__page">4</span></li>
-        <li class="toc__entry"><span class="toc__label">ISP Objectives</span><span class="toc__leader"></span><span class="toc__page">5</span></li>
-        <li class="toc__entry"><span class="toc__label">Handling and Processing Customer NPI</span><span class="toc__leader"></span><span class="toc__page">6</span></li>
-        <li class="toc__entry"><span class="toc__label">Incident Response Plan</span><span class="toc__leader"></span><span class="toc__page">8</span></li>
-        <li class="toc__entry"><span class="toc__label">Data Breach Guidelines</span><span class="toc__leader"></span><span class="toc__page">9</span></li>
-        <li class="toc__entry"><span class="toc__label">Information Storage IT Safeguards Cyber Security</span><span class="toc__leader"></span><span class="toc__page">10</span></li>
-        <li class="toc__entry"><span class="toc__label">Disposal of Consumer Information and Records</span><span class="toc__leader"></span><span class="toc__page">13</span></li>
-        <li class="toc__entry"><span class="toc__label">Processing Customer NPI by Department</span><span class="toc__leader"></span><span class="toc__page">14</span></li>
-        <li class="toc__entry toc__entry--nested"><span class="toc__label">Sales</span><span class="toc__leader"></span><span class="toc__page">15</span></li>
-        <li class="toc__entry toc__entry--nested"><span class="toc__label">F&amp;I</span><span class="toc__leader"></span><span class="toc__page">17</span></li>
-        <li class="toc__entry toc__entry--nested"><span class="toc__label">Service</span><span class="toc__leader"></span><span class="toc__page">19</span></li>
-        <li class="toc__entry toc__entry--nested"><span class="toc__label">Parts</span><span class="toc__leader"></span><span class="toc__page">20</span></li>
-        <li class="toc__entry toc__entry--nested"><span class="toc__label">Accounting</span><span class="toc__leader"></span><span class="toc__page">21</span></li>
-        <li class="toc__entry toc__entry--nested"><span class="toc__label">Cashier</span><span class="toc__leader"></span><span class="toc__page">23</span></li>
-        <li class="toc__entry toc__entry--nested"><span class="toc__label">Body Shop</span><span class="toc__leader"></span><span class="toc__page">24</span></li>
-        <li class="toc__entry"><span class="toc__label">Dealership Personnel</span><span class="toc__leader"></span><span class="toc__page">25</span></li>
-        <li class="toc__entry"><span class="toc__label">Third Party Service Providers</span><span class="toc__leader"></span><span class="toc__page">26</span></li>
-        <li class="toc__entry"><span class="toc__label">Records Retention List</span><span class="toc__leader"></span><span class="toc__page">28</span></li>
-        <li class="toc__entry"><span class="toc__label">Signature Page</span><span class="toc__leader"></span><span class="toc__page">30</span></li>
+        <li class="toc__entry"><span class="toc__label">Dealership Information</span><span class="toc__leader"></span><span class="toc__page">1</span></li>
+        <li class="toc__entry"><span class="toc__label">8 Elements Dealerships Must Comply With</span><span class="toc__leader"></span><span class="toc__page">2</span></li>
+        <li class="toc__entry"><span class="toc__label">ISP Objectives</span><span class="toc__leader"></span><span class="toc__page">3</span></li>
+        <li class="toc__entry"><span class="toc__label">Handling and Processing Customer NPI</span><span class="toc__leader"></span><span class="toc__page">4</span></li>
+        <li class="toc__entry"><span class="toc__label">Incident Response Plan</span><span class="toc__leader"></span><span class="toc__page">6</span></li>
+        <li class="toc__entry"><span class="toc__label">Data Breach Guidelines</span><span class="toc__leader"></span><span class="toc__page">7</span></li>
+        <li class="toc__entry"><span class="toc__label">Information Storage IT Safeguards Cyber Security</span><span class="toc__leader"></span><span class="toc__page">8</span></li>
+        <li class="toc__entry"><span class="toc__label">Disposal of Consumer Information and Records</span><span class="toc__leader"></span><span class="toc__page">11</span></li>
+        <li class="toc__entry"><span class="toc__label">Processing Customer NPI by Department</span><span class="toc__leader"></span><span class="toc__page">12</span></li>
+        <li class="toc__entry toc__entry--nested"><span class="toc__label">Sales</span><span class="toc__leader"></span><span class="toc__page">13</span></li>
+        <li class="toc__entry toc__entry--nested"><span class="toc__label">F&amp;I</span><span class="toc__leader"></span><span class="toc__page">15</span></li>
+        <li class="toc__entry toc__entry--nested"><span class="toc__label">Service</span><span class="toc__leader"></span><span class="toc__page">17</span></li>
+        <li class="toc__entry toc__entry--nested"><span class="toc__label">Parts</span><span class="toc__leader"></span><span class="toc__page">18</span></li>
+        <li class="toc__entry toc__entry--nested"><span class="toc__label">Accounting</span><span class="toc__leader"></span><span class="toc__page">19</span></li>
+        <li class="toc__entry toc__entry--nested"><span class="toc__label">Cashier</span><span class="toc__leader"></span><span class="toc__page">21</span></li>
+        <li class="toc__entry toc__entry--nested"><span class="toc__label">Body Shop</span><span class="toc__leader"></span><span class="toc__page">22</span></li>
+        <li class="toc__entry"><span class="toc__label">Dealership Personnel</span><span class="toc__leader"></span><span class="toc__page">23</span></li>
+        <li class="toc__entry"><span class="toc__label">Third Party Service Providers</span><span class="toc__leader"></span><span class="toc__page">24</span></li>
+        <li class="toc__entry"><span class="toc__label">Records Retention List</span><span class="toc__leader"></span><span class="toc__page">26</span></li>
+        <li class="toc__entry"><span class="toc__label">Signature Page</span><span class="toc__leader"></span><span class="toc__page">28</span></li>
     </ul>
 </div>
+@endif
 
+@if ($variant !== 'cover')
 {{-- Personnel + Emergency contacts page --}}
 <div class="page-break">
     <div class="personnel">
@@ -86,11 +97,18 @@
 
     <div class="personnel">
         <div class="personnel__title">Emergency Contacts &amp; Alarms</div>
+        @php
+            // Trailing dashes/spaces creep in for short numbers like "911-" since
+            // the editor uses a fixed mask. Strip them at render time.
+            $phone = static fn (?string $value): string => $value === null || trim($value) === ''
+                ? '—'
+                : rtrim(trim($value), '- ');
+        @endphp
         <dl class="emergency">
-            <div><dt>Police Emergency</dt><dd>{{ $isp->police_emergency_phone ?: '—' }}</dd></div>
-            <div><dt>Police Non-Emergency</dt><dd>{{ $isp->police_non_emergency_phone ?: '—' }}</dd></div>
-            <div><dt>Fire Emergency</dt><dd>{{ $isp->fire_non_emergency_phone ?: '—' }}</dd></div>
-            <div><dt>Fire Non-Emergency</dt><dd>{{ $isp->fire_non_emergency_phone ?: '—' }}</dd></div>
+            <div><dt>Police Emergency</dt><dd>{{ $phone($isp->police_emergency_phone) }}</dd></div>
+            <div><dt>Police Non-Emergency</dt><dd>{{ $phone($isp->police_non_emergency_phone) }}</dd></div>
+            <div><dt>Fire Emergency</dt><dd>{{ $phone($isp->fire_non_emergency_phone) }}</dd></div>
+            <div><dt>Fire Non-Emergency</dt><dd>{{ $phone($isp->fire_non_emergency_phone) }}</dd></div>
             <div><dt>Fire Alarm Type</dt><dd>{{ $isp->fire_alarm_type ?: '—' }}</dd></div>
             <div><dt>Burglar Alarm Type</dt><dd>{{ $isp->burglar_alarm_type ?: '—' }}</dd></div>
         </dl>
@@ -1108,8 +1126,21 @@
                 the appropriate authority to monitor and enforce its provisions and policies.</p>
             <p>Effective Date: {{ $isp->created_at->format('F d, Y') }}</p>
             <p>{{ $isp->user->name }}</p>
-            <img src="{{ storage_path() }}/app/isp-signatures/{{ $isp->signature }}" alt="Signature"/>
+            @php
+                // Embed the signature as a base64 data URI so Browsershot doesn't try to
+                // fetch it as a URL (filesystem paths can't be served to headless Chrome).
+                $signaturePath = $isp->signature
+                    ? storage_path('app/isp-signatures/'.$isp->signature)
+                    : null;
+                $signatureData = $signaturePath && file_exists($signaturePath)
+                    ? 'data:image/png;base64,'.base64_encode((string) file_get_contents($signaturePath))
+                    : null;
+            @endphp
+            @if ($signatureData)
+                <img src="{{ $signatureData }}" alt="Signature" style="max-height: 1in; margin-top: 0.15in;"/>
+            @endif
         </section>
 </div>
+@endif
 
 @endsection

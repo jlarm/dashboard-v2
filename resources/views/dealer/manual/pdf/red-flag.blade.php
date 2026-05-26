@@ -1,158 +1,94 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-<body>
-<div class="w-full p-5">
-    <div class="h-screen">
-        <div class="space-y-5 text-center">
-            <x-application-logo class=" h-12 w-auto mx-auto"/>
-            {{--            @if($redFlag->store->logo)--}}
-            {{--                <img--}}
-            {{--                    class="w-full h-25 py-20 mx-auto"--}}
-            {{--                    src="{{ asset($redFlag->store->logo) }}"--}}
-            {{--                    alt="">--}}
-            {{--            @endif--}}
-            <h1 class="text-3xl font-bold text-arm-blue-600">{{ $redFlag->store->name }}</h1>
-            <h1 class="text-3xl font-bold text-arm-blue-600">Red Flags Rules</h1>
-            <p class="text-arm-blue-400">{{ $redFlag->created_at->format('F d, Y') }}</p>
-            <p>
-                {{ $redFlag->store->address }}<br/>
-                {{ $redFlag->store->city }}, {{ $redFlag->store->state }} {{ $redFlag->store->postal_code }}
-            </p>
-            <p>
-                Phone: {{ $redFlag->store->phone }}<br/>
-                @if($redFlag->store->fax)
-                    Fax: {{ $redFlag->store->fax }}
-                @endif
-            </p>
-        </div>
-        <table class="w-full max-w-4xl mx-auto divide-y divide-gray-300 mt-10">
-            <thead>
-            <tr>
-                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Date</th>
-                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">ARMP Rep Signature
-                </th>
-            </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-200">
-            <tr>
-                <td class="whitespace-nowrap py-8 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0"></td>
-                <td class="whitespace-nowrap px-8 py-8 text-sm text-gray-500"></td>
-            </tr>
-            <tr>
-                <td class="whitespace-nowrap py-8 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0"></td>
-                <td class="whitespace-nowrap px-8 py-8 text-sm text-gray-500"></td>
-            </tr>
-            <tr>
-                <td class="whitespace-nowrap py-8 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0"></td>
-                <td class="whitespace-nowrap px-8 py-8 text-sm text-gray-500"></td>
-            </tr>
-            <tr>
-                <td class="whitespace-nowrap py-8 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0"></td>
-                <td class="whitespace-nowrap px-8 py-8 text-sm text-gray-500"></td>
-            </tr>
-            <tr>
-                <td class="whitespace-nowrap py-8 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0"></td>
-                <td class="whitespace-nowrap px-8 py-8 text-sm text-gray-500"></td>
-            </tr>
-            </tbody>
-            <div>
-                <div>
+@extends('dealer.manual.pdf._layout', [
+    'dealershipName' => $redFlag->store->name,
+    'manualTitle' => 'Red Flags Rules',
+])
 
-                </div>
-            </div>
+@section('content')
+
+@php $variant = $variant ?? 'all'; @endphp
+
+@if ($variant !== 'body')
+{{-- Cover page --}}
+<div class="cover">
+    <x-application-logo class="cover__logo" />
+    <h1 class="cover__dealership">{{ $redFlag->store->name }}</h1>
+    <p class="cover__title">Red Flags Rules</p>
+    <div class="cover__meta">
+        <div class="cover__meta-date">Effective Date</div>
+        <div>{{ $redFlag->created_at->format('F j, Y') }}</div>
+        <div style="margin-top: 0.12in;">
+            {{ $redFlag->store->address }}<br>
+            {{ $redFlag->store->city }}, {{ $redFlag->store->state }} {{ $redFlag->store->postal_code }}<br>
+            Phone: {{ $redFlag->store->phone }}@if($redFlag->store->fax)<br>Fax: {{ $redFlag->store->fax }}@endif
+        </div>
+    </div>
+</div>
+
+{{-- ARMP representative review log --}}
+<div class="cover-signatures-page">
+    <h2 class="cover-signatures-page__title">ARMP Review Log</h2>
+    <p class="cover-signatures-page__subtitle">For ARMP representative use only.</p>
+    <table class="cover-signatures">
+        <thead>
+            <tr>
+                <th style="width:35%">Date</th>
+                <th>ARMP Representative Signature</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for ($i = 0; $i < 6; $i++)
+                <tr><td></td><td></td></tr>
+            @endfor
+        </tbody>
+    </table>
+</div>
+
+@endif
+
+@if ($variant !== 'cover')
+{{-- Personnel + Emergency contacts page --}}
+<div class="page-break">
+    <div class="personnel">
+        <div class="personnel__title">Dealership Personnel</div>
+        <table class="data">
+            <thead>
+                <tr>
+                    <th style="width:60%">Name &amp; Role</th>
+                    <th>Phone Number</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><span class="name">{{ $redFlag->owner_name }}</span><span class="role">Owner</span></td><td>{{ $redFlag->owner_phone }}</td></tr>
+                <tr><td><span class="name">{{ $redFlag->general_manager_name }}</span><span class="role">General Manager</span></td><td>{{ $redFlag->general_manager_phone }}</td></tr>
+                <tr><td><span class="name">{{ $redFlag->body_shop_manager_name }}</span><span class="role">Body Shop Manager</span></td><td>{{ $redFlag->body_shop_manager_phone }}</td></tr>
+                <tr><td><span class="name">{{ $redFlag->parts_manager_name }}</span><span class="role">Parts Manager</span></td><td>{{ $redFlag->parts_manager_phone }}</td></tr>
+                <tr><td><span class="name">{{ $redFlag->service_manager_name }}</span><span class="role">Service Manager</span></td><td>{{ $redFlag->service_manager_phone }}</td></tr>
+                <tr><td><span class="name">{{ $redFlag->qualified_individual_name }}</span><span class="role">Qualified Individual</span></td><td>{{ $redFlag->qualified_individual_phone }}</td></tr>
+            </tbody>
         </table>
     </div>
-    <ul>
-        <li class="py-10 space-y-5 page-break">
-            <table class="w-full max-w-4xl mx-auto divide-y divide-gray-300">
-                <thead>
-                <tr>
-                    <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">
-                        Name
-                    </th>
-                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Phone Number</th>
-                </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-200">
-                <tr>
-                    <td class="whitespace-nowrap py-5 pr-3 text-sm sm:pl-0">
-                        <div class="flex items-center">
-                            <div>
-                                <div class="font-medium text-gray-900">{{ $redFlag->owner_name }}</div>
-                                <div class="mt-1 text-gray-500">Owner</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="whitespace-nowrap px-3 py-5 text-sm text-gray-500">{{ $redFlag->owner_phone }}</td>
-                </tr>
-                <tr>
-                    <td class="whitespace-nowrap py-5 pr-3 text-sm sm:pl-0">
-                        <div class="flex items-center">
-                            <div>
-                                <div class="font-medium text-gray-900">{{ $redFlag->general_manager_name }}</div>
-                                <div class="mt-1 text-gray-500">General Manager</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="whitespace-nowrap px-3 py-5 text-sm text-gray-500">{{ $redFlag->general_manager_phone }}</td>
-                </tr>
-                <tr>
-                    <td class="whitespace-nowrap py-5 pr-3 text-sm sm:pl-0">
-                        <div class="flex items-center">
-                            <div>
-                                <div class="font-medium text-gray-900">{{ $redFlag->body_shop_manager_name }}</div>
-                                <div class="mt-1 text-gray-500">Body Shop Manager</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="whitespace-nowrap px-3 py-5 text-sm text-gray-500">{{ $redFlag->body_shop_manager_phone }}</td>
-                </tr>
-                <tr>
-                    <td class="whitespace-nowrap py-5 pr-3 text-sm sm:pl-0">
-                        <div class="flex items-center">
-                            <div>
-                                <div class="font-medium text-gray-900">{{ $redFlag->parts_manager_name }}</div>
-                                <div class="mt-1 text-gray-500">Parts Manager</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="whitespace-nowrap px-3 py-5 text-sm text-gray-500">{{ $redFlag->parts_manager_phone }}</td>
-                </tr>
-                <tr>
-                    <td class="whitespace-nowrap py-5 pr-3 text-sm sm:pl-0">
-                        <div class="flex items-center">
-                            <div>
-                                <div class="font-medium text-gray-900">{{ $redFlag->service_manager_name }}</div>
-                                <div class="mt-1 text-gray-500">Service Manager</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="whitespace-nowrap px-3 py-5 text-sm text-gray-500">{{ $redFlag->service_manager_phone }}</td>
-                </tr>
-                <tr>
-                    <td class="whitespace-nowrap py-5 pr-3 text-sm sm:pl-0">
-                        <div class="flex items-center">
-                            <div>
-                                <div class="font-medium text-gray-900">{{ $redFlag->qualified_individual_name }}</div>
-                                <div class="mt-1 text-gray-500">Qualified Individual</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="whitespace-nowrap px-3 py-5 text-sm text-gray-500">{{ $redFlag->qualified_individual_phone }}</td>
-                </tr>
-                </tbody>
-            </table>
-        </li>
-    </ul>
-    <div class="prose mx-auto min-w-full">
-        <div id="red-flag-rule">
+
+    <div class="personnel">
+        <div class="personnel__title">Emergency Contacts &amp; Alarms</div>
+        @php
+            $phone = static fn (?string $value): string => $value === null || trim($value) === ''
+                ? '—'
+                : rtrim(trim($value), '- ');
+        @endphp
+        <dl class="emergency">
+            <div><dt>Police Emergency</dt><dd>{{ $phone($redFlag->police_emergency_phone) }}</dd></div>
+            <div><dt>Police Non-Emergency</dt><dd>{{ $phone($redFlag->police_non_emergency_phone) }}</dd></div>
+            <div><dt>Fire Emergency</dt><dd>{{ $phone($redFlag->fire_emergency_phone) }}</dd></div>
+            <div><dt>Fire Non-Emergency</dt><dd>{{ $phone($redFlag->fire_non_emergency_phone) }}</dd></div>
+            <div><dt>Fire Alarm Type</dt><dd>{{ $redFlag->fire_alarm_type ?: '—' }}</dd></div>
+            <div><dt>Burglar Alarm Type</dt><dd>{{ $redFlag->burglar_alarm_type ?: '—' }}</dd></div>
+        </dl>
+    </div>
+</div>
+
+{{-- Body content --}}
+<div class="body">
+<section id="red-flag-rule">
             <h2>Red Flag Rule</h2>
             <p>The Federal Trade Commission and the federal financial institution regulatory agencies have sent to the
                 Federal Register for publication final rules on identity theft “red flags” and address discrepancies.
@@ -192,8 +128,8 @@
                     final rules were effective on January 1, 2008 but FTC mandated compliance by January 1,
                     2011.</strong>
             </p>
-        </div>
-        <div id="identity-theft">
+        </section>
+        <section id="identity-theft">
             <h2>Identity Theft Prevention Program, Address Discrepancy Rule, Red Flag Rules</h2>
             <h3>Objectives</h3>
             <p>The objectives of this program are to establish the necessary policies and procedures through a written
@@ -250,8 +186,8 @@
             </ol>
             <p><strong>{{ tenant('name') }}</strong> will use account identification and risk assessment worksheet to
                 properly identify each covered account that exists and make part of this ITPP.</p>
-        </div>
-        <div id="methods-for-identifying">
+        </section>
+        <section id="methods-for-identifying">
             <h2>Methods for Identifying Relevant Red Flags</h2>
             <p>The Qualified Individual in conjunction with the ITPP coordinator(s) and ARMP will conduct an
                 identification of the relevant Red Flags through a prescribed process. This process must consider the
@@ -309,8 +245,8 @@
                 used by identity thieves are ever evolving. The Qualified Individual will keep a log of identity theft
                 incidents in order to identify any patterns or nuances within the Dealership and the Qualified
                 Individual will identify methods of identity theft that reflect changes in identity theft risks.</p>
-        </div>
-        <div id="detect">
+        </section>
+        <section id="detect">
             <h2>Developing the means to detect Red Flags and Verify Identity.</h2>
             <p>Although the procedures may vary depending on the type of Accounts involved, identity verification is a
                 standard operating procedure for <strong>{{ tenant('name') }}</strong> to use for any person seeking to
@@ -335,8 +271,8 @@
                 </li>
             </ul>
             <p>Unknown Customer Identity Verification Process which follows;</p>
-        </div>
-        <div id="unknown">
+        </section>
+        <section id="unknown">
             <h2>Unknown Customer Identity Verification Process</h2>
             <ol>
                 <li>Collect a copy of the individuals Driver’s License and match the picture and Physical description
@@ -386,8 +322,8 @@
                     that is tied to this individual, and contact the local authorities.
                 </li>
             </ol>
-        </div>
-        <div id="updating">
+        </section>
+        <section id="updating">
             <h2>Updating the ITPP</h2>
             <p>The Qualified Individual will update the ITPP on an annual basis with the assistance of ARMP and these
                 updates will reflect the changes in risks that may have occurred in {{ tenant('name') }}
@@ -413,8 +349,8 @@
                 identity theft or
                 installation of a new credit report retrieval system, the Qualified Individual in conjunction with ARMP
                 should immediately update the ITPP.</p>
-        </div>
-        <div id="policies">
+        </section>
+        <section id="policies">
             <h2>General Policies and Procedures for responding to detected Red Flags</h2>
             <p>{{ tenant('name') }} has developed procedures for responding to detected red flags, the response will
                 depend on
@@ -459,8 +395,8 @@
                     </ul>
                 </li>
             </ol>
-        </div>
-        <div id="program">
+        </section>
+        <section id="program">
             <h2>Red Flag Rules Compliance Program Red Flags currently known in the automobile industry</h2>
             <div id="one">
                 <div class="rounded-md bg-red-50 p-4">
@@ -1394,8 +1330,8 @@ facility to sign the required documents.</span>
                 the use of their dealership software. It will be the responsibility of the Qualified Individual
                 to identify all personnel that require training and work with ARMP to ensure they are
                 trained within the 90 day timeframe.</p>
-        </div>
-        <div id="acknowledgement">
+        </section>
+        <section id="acknowledgement">
             The undersigned employee acknowledges {{ tenant('name') }} has instituted an Identity
             Theft Prevention Program (hereinafter referred to as ITPP), and agrees to comply with its
             practices and procedures. Employee agrees to abide by the policies contained in the ITPP,
@@ -1403,8 +1339,8 @@ facility to sign the required documents.</span>
             theft. I will follow employer procedures to prevent Identity Theft in accordance with the
             ITPP. I further acknowledge that intentional violation of procedures and policies set
             forth in the ITPP, may result in my termination.
-        </div>
-        <div id="oversee">
+        </section>
+        <section id="oversee">
             <h2>Overseeing Service Providers</h2>
             <p>Any third-party service provider that is engaged in an activity in connection with one or more covered
                 Accounts, {{ tenant('name') }} will ensure that the activity of the service provider is conducted in
@@ -1451,17 +1387,29 @@ facility to sign the required documents.</span>
                 a
                 member of the board of directors, or a member of senior management will sign off on this ITPP and
                 approve its mission.</p>
-        </div>
-        <div id="understand">
+        </section>
+        <section id="understand">
             <h2>Acceptance of procedures for Address Discrepancy, Red Flag Rules, and Identity Theft Mitigation</h2>
             <p>I the undersigned accept the Procedures contained herein and agree to implement
                 them to the best ability possible. {{ tenant('name') }} has received their Red Flag program and
                 have been trained on the Red Flag Check dealership software and the procedures contained
                 herein.</p>
-        </div>
+        </section>
         <p>{{ $redFlag->user->name }}</p>
-        <img src="{{ storage_path() }}/app/red-flag-signatures/{{ $redFlag->signature }}" alt="Signature"/>
+        @php
+    $signaturePath = $redFlag->signature
+        ? storage_path('app/red-flag-signatures/'.$redFlag->signature)
+        : null;
+    $signatureData = $signaturePath && file_exists($signaturePath)
+        ? 'data:image/png;base64,'.base64_encode((string) file_get_contents($signaturePath))
+        : null;
+@endphp
+@if ($signatureData)
+    <img src="{{ $signatureData }}" alt="Signature" style="max-height: 1in; margin-top: 0.15in;"/>
+@endif
     </div>
+
 </div>
-</body>
-</html>
+@endif
+
+@endsection

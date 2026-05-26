@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { Head, Link, router } from '@inertiajs/vue3';
+import { computed, ref, watch } from 'vue';
+import { Head, Link, router, usePoll } from '@inertiajs/vue3';
 import { AlertOctagon, Download, Loader2, Trash2 } from 'lucide-vue-next';
 import AppLayout from '@/layouts/tenant/AppLayout.vue';
 import { Button } from '@/components/ui/button';
@@ -33,7 +33,7 @@ type Manual = {
     download_url: string | null;
 };
 
-defineProps<{
+const props = defineProps<{
     store: { id: number; name: string } | null;
     manuals: Manual[];
 }>();
@@ -44,6 +44,14 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 const deletingId = ref<number | null>(null);
 const openDialogId = ref<number | null>(null);
+
+// Poll the manuals prop while any are still generating so the download link
+// appears without the user having to refresh.
+const hasGenerating = computed(() => props.manuals.some((m) => m.download_url === null));
+
+const poll = usePoll(3000, { only: ['manuals'] }, { autoStart: false });
+
+watch(hasGenerating, (pending) => (pending ? poll.start() : poll.stop()), { immediate: true });
 
 const remove = (manual: Manual): void => {
     deletingId.value = manual.id;

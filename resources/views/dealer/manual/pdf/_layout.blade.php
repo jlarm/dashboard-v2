@@ -83,14 +83,36 @@
             margin-bottom: 0.05in;
         }
 
-        .cover__signatures {
-            margin: 1.1in auto 0;
+        /* ----- ARMP rep signature page (its own page so it never gets clipped) ----- */
+        .cover-signatures-page {
+            page-break-before: always;
+            page-break-after: always;
+            padding-top: 1in;
+        }
+
+        .cover-signatures-page__title {
+            font-size: 18pt;
+            font-weight: 700;
+            color: var(--armp-blue);
+            margin: 0 0 0.05in;
+            text-align: center;
+        }
+
+        .cover-signatures-page__subtitle {
+            font-size: 10.5pt;
+            color: var(--ink-muted);
+            text-align: center;
+            margin: 0 0 0.6in;
+        }
+
+        .cover-signatures {
+            margin: 0 auto;
             width: 5.5in;
             border-collapse: collapse;
             font-size: 9pt;
         }
 
-        .cover__signatures th {
+        .cover-signatures th {
             text-transform: uppercase;
             letter-spacing: 0.08em;
             color: var(--ink-muted);
@@ -100,9 +122,9 @@
             padding: 0 0.1in 0.08in;
         }
 
-        .cover__signatures td {
+        .cover-signatures td {
             border-bottom: 1px solid var(--rule);
-            height: 0.45in;
+            height: 0.55in;
             padding: 0 0.1in;
         }
 
@@ -164,11 +186,13 @@
         }
 
         /* ----- Body content scope ----- */
-        .body section {
+        .body > section,
+        .body > article {
             page-break-before: always;
         }
 
-        .body section:first-of-type {
+        .body > section:first-of-type,
+        .body > article:first-of-type {
             page-break-before: auto;
         }
 

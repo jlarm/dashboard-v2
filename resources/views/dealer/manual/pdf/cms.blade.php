@@ -1,41 +1,74 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-<body>
-<div class="w-full p-5">
-    <div class="h-screen">
-        <div class="space-y-5 text-center">
-            <x-application-logo class=" h-12 w-auto mx-auto"/>
-            <h1 class="text-3xl font-bold text-arm-blue-600">{{ $cms->store->name }}</h1>
-            <h1 class="text-3xl font-bold text-arm-blue-600">Compliance Management System Program</h1>
-            <p class="text-arm-blue-400">{{ $cms->created_at->format('F d, Y') }}</p>
-            <p>
-                {{ $cms->store->address }}<br/>
-                {{ $cms->store->city }}, {{ $cms->store->state }} {{ $cms->store->postal_code }}
-            </p>
-            <p>
-                Phone: {{ $cms->store->phone }}<br/>
-                @if($cms->store->fax)
-                    Fax: {{ $cms->store->fax }}
-                @endif
-            </p>
+@extends('dealer.manual.pdf._layout', [
+    'dealershipName' => $cms->store->name,
+    'manualTitle' => 'Compliance Management System',
+])
+
+@section('content')
+
+@php $variant = $variant ?? 'all'; @endphp
+
+@if ($variant !== 'body')
+{{-- Cover page --}}
+<div class="cover">
+    <x-application-logo class="cover__logo" />
+    <h1 class="cover__dealership">{{ $cms->store->name }}</h1>
+    <p class="cover__title">Compliance Management System</p>
+    <div class="cover__meta">
+        <div class="cover__meta-date">Effective Date</div>
+        <div>{{ $cms->created_at->format('F j, Y') }}</div>
+        <div style="margin-top: 0.12in;">
+            {{ $cms->store->address }}<br>
+            {{ $cms->store->city }}, {{ $cms->store->state }} {{ $cms->store->postal_code }}<br>
+            Phone: {{ $cms->store->phone }}@if($cms->store->fax)<br>Fax: {{ $cms->store->fax }}@endif
         </div>
     </div>
-    <div class="prose max-w-none px-6">
-        {{--        Compliance Management System Program--}}
+</div>
+
+{{-- ARMP representative review log --}}
+<div class="cover-signatures-page">
+    <h2 class="cover-signatures-page__title">ARMP Review Log</h2>
+    <p class="cover-signatures-page__subtitle">For ARMP representative use only.</p>
+    <table class="cover-signatures">
+        <thead>
+            <tr>
+                <th style="width:35%">Date</th>
+                <th>ARMP Representative Signature</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for ($i = 0; $i < 6; $i++)
+                <tr><td></td><td></td></tr>
+            @endfor
+        </tbody>
+    </table>
+</div>
+
+@endif
+
+@if ($variant !== 'cover')
+{{-- Body content --}}
+<div class="body">
+@php
+    $cmsSig = static function (?string $filename): string {
+        if ($filename === null || $filename === '') {
+            return '';
+        }
+        $path = storage_path('app/cms-signatures/'.$filename);
+        if (! file_exists($path)) {
+            return '';
+        }
+        $data = 'data:image/png;base64,'.base64_encode((string) file_get_contents($path));
+        return '<img src="'.$data.'" alt="Signature" style="max-height: 0.8in; margin-top: 0.1in;"/>';
+    };
+@endphp
+{{--        Compliance Management System Program--}}
         <div>
             <h2>Compliance Management System Program</h2>
-            <div class="page-break">
+            <section>
                 <h3 class="font-bold">I. Purpose</h3>
                 <p>Dealership is committed to complying with the letter and spirit of Federal and State laws and regulations designed to protect consumers, customers and employees. Dealership compliance is the responsibility of each owner, board member, manager and employee. Dealership has created a Compliance Management System (CMS) to ensure compliance in all aspects of day-to-day business operations. The CMS has been created to establish compliance responsibilities, provide necessary training, review and audit compliance systems and procedures, take necessary corrective action, and manage and respond to consumer complaints.</p>
-            </div>
-            <div class="page-break">
+            </section>
+            <section>
                 <h3 class="font-bold">II. Scope</h3>
                 <p class="font-bold">a. Persons Covered</p>
                 <p>This Program, which includes all components and policies to this Program applies to all employees, agents, and/or independent contractors of Dealership who are involved in any aspect of Dealership operations. Failure to comply with any requirement in this Program, or to follow compliance procedures and requirements may result in disciplinary action, including termination of employment and/or the agency or independent contractor relationship.
@@ -44,8 +77,8 @@
                 <p>This Program applies to all facets of Dealership operations. Compliance practices and procedures are in place for compliance with Consumer Privacy (Gramm–Leach–Bliley), Finance and Insurance (Truth in Lending Act, Equal Credit Opportunity Act, Fair Credit Reporting Act, OFAC), Identify and deter identity theft (Red Flags), and work place safety (OSHA).</p>
                 <p class="font-bold">c. Responsibility</p>
                 <p>It is each employee’s responsibility to understand and institute Dealership’s compliance policies and procedures. Employees will be provided training for aspects of the compliance program that apply to their duties and responsibilities. Employees are encouraged to bring compliance concerns to the attention of their immediate supervisor or the named Qualified Individual.</p>
-            </div>
-            <div class="page-break">
+            </section>
+            <section>
                 <h3 class="font-bold">III. Compliance Programs</h3>
                 <p>Dealership has in place the following compliance programs;</p>
                 <p class="font-bold">a. Privacy and protection of Consumer information</p>
@@ -61,36 +94,36 @@
                 <p>Establish designated personnel to receive consumer complaints, procedures to categorize received complaints, and procedures to respond to and document final resolution of received complaints.</p>
                 <p class="font-bold">f. Occupational Safety and Health OSHA</p>
                 <p>Training, reviews and audits for compliance with worker safety. Creation and maintenance of OSHA compliance manuals and training records.</p>
-            </div>
-            <div class="page-break">
+            </section>
+            <section>
                 <h3>IV. Appointment of Qualified Individual</h3>
                 <p>Upon adoption of this Program, the Dealership’s Board of Directors will appoint (and, thereafter, replace as necessary or appropriate) a Qualified Individual, or Officers as the case may be, who will administer the CMS Program. The Qualified Individual will report directly to Ownership and/or the Board of Directors.</p>
-            </div>
-            <div class="page-break">
+            </section>
+            <section>
                 <h3>V. Automotive Risk Management Partners</h3>
                 <p>Dealership has contracted with Automotive Risk Management Partners (ARMP) to provide consulting, training, auditing and review in the establishment of the Dealership CMS.  ARMP will provide training, review procedures and consult with the Qualified Individual and Management regarding compliance responsibilities, programs, create manuals for compliance and compliance record keeping, discuss best practices, audit finance transactions, audit compliance, and consult with management regarding compliance strengths, weaknesses, concerns and modifications that may be required.</p>
-            </div>
-            <div class="page-break">
+            </section>
+            <section>
                 <h3>VI. Adoption and Approval</h3>
                 <p>Dealership’s Board of Directors hereby adopts and approves the Dealership Compliance Management System as set forth above.</p>
-            </div>
+            </section>
             <p>Dated this {{ $cms->created_at->format('jS') }} day of {{ $cms->created_at->format('F') }}, {{ $cms->created_at->format('Y') }}.</p>
             <div class="grid grid-cols-3 gap-5">
                 @if($cms->adoption_approval_signature_one)
                 <div>
-                    <img src="{{ storage_path() }}/app/cms-signatures/{{ $cms->adoption_approval_signature_one }}" alt="Signature"/>
+                    {!! $cmsSig($cms->adoption_approval_signature_one) !!}
                     <p>{{ $cms->adoption_approval_name_one }}</p>
                 </div>
                 @endif
                 @if($cms->adoption_approval_signature_two)
                 <div>
-                    <img src="{{ storage_path() }}/app/cms-signatures/{{ $cms->adoption_approval_signature_two }}" alt="Signature"/>
+                    {!! $cmsSig($cms->adoption_approval_signature_two) !!}
                     <p>{{ $cms->adoption_approval_name_two }}</p>
                 </div>
                @endif
                 @if($cms->adoption_approval_signature_three)
                 <div>
-                    <img src="{{ storage_path() }}/app/cms-signatures/{{ $cms->adoption_approval_signature_three }}" alt="Signature"/>
+                    {!! $cmsSig($cms->adoption_approval_signature_three) !!}
                     <p>{{ $cms->adoption_approval_name_three }}</p>
                 </div>
                @endif
@@ -111,14 +144,14 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
                 @if($cms->dealer_participation_program_signature)
                 <div>
-                    <img src="{{ storage_path() }}/app/cms-signatures/{{ $cms->dealer_participation_program_signature }}" alt="Signature"/>
+                    {!! $cmsSig($cms->dealer_participation_program_signature) !!}
                     <p>{{ $cms->dealer_participation_program_name }}</p>
                 </div>
                 @endif
             </div>
         </div>
         {{--        Dealer Participation Program Form--}}
-        <div class="page-break">
+        <section>
             <h2>Dealer Participation Program Form</h2>
             <div class="max-w-3xl text-sm space-y-10">
                 <div class="grid grid-cols-4 gap-5">
@@ -366,7 +399,7 @@
             </div>
             <p>The Equal Credit Opportunity Act makes it illegal for a "creditor" to discriminate in any aspect of a credit transaction because of race, color, religion, national origin, sex, marital status, age, receipt of income from any public assistance program, or the exercise, in good faith, of a right under the Consumer Credit Protection Act.
             </p>
-        </div>
+        </section>
         {{--        Appointment and Program Approval--}}
         <div>
             <h2>Appointment and Program Approval</h2>
@@ -378,19 +411,19 @@
             <div class="grid grid-cols-3 gap-5">
                 @if($cms->appointment_program_signature_one)
                 <div>
-                    <img src="{{ storage_path() }}/app/cms-signatures/{{ $cms->appointment_program_signature_one }}" alt="Signature"/>
+                    {!! $cmsSig($cms->appointment_program_signature_one) !!}
                     <p>{{ $cms->appointment_program_name_one }}</p>
                 </div>
                 @endif
                 @if($cms->appointment_program_signature_two)
                 <div>
-                    <img src="{{ storage_path() }}/app/cms-signatures/{{ $cms->appointment_program_signature_two }}" alt="Signature"/>
+                    {!! $cmsSig($cms->appointment_program_signature_two) !!}
                     <p>{{ $cms->appointment_program_name_two }}</p>
                 </div>
                 @endif
                 @if($cms->appointment_program_signature_three)
                 <div>
-                    <img src="{{ storage_path() }}/app/cms-signatures/{{ $cms->appointment_program_signature_three }}" alt="Signature"/>
+                    {!! $cmsSig($cms->appointment_program_signature_three) !!}
                     <p>{{ $cms->appointment_program_name_three }}</p>
                 </div>
                 @endif
@@ -403,12 +436,13 @@
             <p>Dated: {{ $cms->created_at->format('F d, Y') }}</p>
             <div class="grid grid-cols-3 gap-5">
                 <div>
-                    <img src="{{ storage_path() }}/app/cms-signatures/{{ $cms->acknowledgement_signature }}" alt="Signature"/>
+                    {!! $cmsSig($cms->acknowledgement_signature) !!}
                     <p>{{ $cms->acknowledgement_name }}</p>
                 </div>
             </div>
         </div>
     </div>
 </div>
-</body>
-</html>
+@endif
+
+@endsection

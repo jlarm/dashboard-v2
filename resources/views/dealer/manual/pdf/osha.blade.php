@@ -1,184 +1,94 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-<body>
-<div class="w-full p-5">
-    <div class="h-screen">
-        <div class="space-y-5 text-center">
-            <x-application-logo class=" h-12 w-auto mx-auto"/>
-            @if($osha->store->logo)
-                <img
-                    class="w-full h-25 py-20 mx-auto"
-                    src="{{ asset($osha->store->logo) }}"
-                    alt="">
-            @endif
-            <h1 class="text-3xl font-bold text-arm-blue-600">{{ $osha->store->name }}</h1>
-            <h1 class="text-3xl font-bold text-arm-blue-600">OSHA Manual</h1>
-            <p class="text-arm-blue-400">{{ $osha->created_at->format('F d, Y') }}</p>
-            <p>
-                {{ $osha->store->address }}<br/>
-                {{ $osha->store->city }}, {{ $osha->store->state }} {{ $osha->store->postal_code }}
-            </p>
-            <p>
-                Phone: {{ $osha->store->phone }}<br/>
-                @if($osha->store->fax)
-                    Fax: {{ $osha->store->fax }}
-                @endif
-            </p>
-        </div>
-        <table class="w-full max-w-4xl mx-auto divide-y divide-gray-300 mt-10">
-            <thead>
-            <tr>
-                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Date</th>
-                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">ARMP Rep Signature
-                </th>
-            </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-200">
-            <tr>
-                <td class="whitespace-nowrap py-8 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0"></td>
-                <td class="whitespace-nowrap px-8 py-8 text-sm text-gray-500"></td>
-            </tr>
-            <tr>
-                <td class="whitespace-nowrap py-8 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0"></td>
-                <td class="whitespace-nowrap px-8 py-8 text-sm text-gray-500"></td>
-            </tr>
-            <tr>
-                <td class="whitespace-nowrap py-8 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0"></td>
-                <td class="whitespace-nowrap px-8 py-8 text-sm text-gray-500"></td>
-            </tr>
-            <tr>
-                <td class="whitespace-nowrap py-8 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0"></td>
-                <td class="whitespace-nowrap px-8 py-8 text-sm text-gray-500"></td>
-            </tr>
-            <tr>
-                <td class="whitespace-nowrap py-8 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0"></td>
-                <td class="whitespace-nowrap px-8 py-8 text-sm text-gray-500"></td>
-            </tr>
-            </tbody>
-            <div>
-                <div>
+@extends('dealer.manual.pdf._layout', [
+    'dealershipName' => $osha->store->name,
+    'manualTitle' => 'OSHA Manual',
+])
 
-                </div>
-            </div>
+@section('content')
+
+@php $variant = $variant ?? 'all'; @endphp
+
+@if ($variant !== 'body')
+{{-- Cover page --}}
+<div class="cover">
+    <x-application-logo class="cover__logo" />
+    <h1 class="cover__dealership">{{ $osha->store->name }}</h1>
+    <p class="cover__title">OSHA Manual</p>
+    <div class="cover__meta">
+        <div class="cover__meta-date">Effective Date</div>
+        <div>{{ $osha->created_at->format('F j, Y') }}</div>
+        <div style="margin-top: 0.12in;">
+            {{ $osha->store->address }}<br>
+            {{ $osha->store->city }}, {{ $osha->store->state }} {{ $osha->store->postal_code }}<br>
+            Phone: {{ $osha->store->phone }}@if($osha->store->fax)<br>Fax: {{ $osha->store->fax }}@endif
+        </div>
+    </div>
+</div>
+
+{{-- ARMP representative review log --}}
+<div class="cover-signatures-page">
+    <h2 class="cover-signatures-page__title">ARMP Review Log</h2>
+    <p class="cover-signatures-page__subtitle">For ARMP representative use only.</p>
+    <table class="cover-signatures">
+        <thead>
+            <tr>
+                <th style="width:35%">Date</th>
+                <th>ARMP Representative Signature</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for ($i = 0; $i < 6; $i++)
+                <tr><td></td><td></td></tr>
+            @endfor
+        </tbody>
+    </table>
+</div>
+
+@endif
+
+@if ($variant !== 'cover')
+{{-- Personnel + Emergency contacts page --}}
+<div class="page-break">
+    <div class="personnel">
+        <div class="personnel__title">Dealership Personnel</div>
+        <table class="data">
+            <thead>
+                <tr>
+                    <th style="width:60%">Name &amp; Role</th>
+                    <th>Phone Number</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td><span class="name">{{ $osha->owner_name }}</span><span class="role">Owner</span></td><td>{{ $osha->owner_phone }}</td></tr>
+                <tr><td><span class="name">{{ $osha->general_manager_name }}</span><span class="role">General Manager</span></td><td>{{ $osha->general_manager_phone }}</td></tr>
+                <tr><td><span class="name">{{ $osha->body_shop_manager_name }}</span><span class="role">Body Shop Manager</span></td><td>{{ $osha->body_shop_manager_phone }}</td></tr>
+                <tr><td><span class="name">{{ $osha->parts_manager_name }}</span><span class="role">Parts Manager</span></td><td>{{ $osha->parts_manager_phone }}</td></tr>
+                <tr><td><span class="name">{{ $osha->service_manager_name }}</span><span class="role">Service Manager</span></td><td>{{ $osha->service_manager_phone }}</td></tr>
+                <tr><td><span class="name">{{ $osha->qualified_individual_name }}</span><span class="role">Qualified Individual</span></td><td>{{ $osha->qualified_individual_phone }}</td></tr>
+            </tbody>
         </table>
     </div>
-    <ul>
-        <li class="py-10 space-y-5 page-break">
-            <table class="w-full max-w-4xl mx-auto divide-y divide-gray-300">
-                <thead>
-                <tr>
-                    <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">
-                        Name
-                    </th>
-                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Phone Number</th>
-                </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-200">
-                <tr>
-                    <td class="whitespace-nowrap py-5 pr-3 text-sm sm:pl-0">
-                        <div class="flex items-center">
-                            <div>
-                                <div class="font-medium text-gray-900">{{ $osha->owner_name }}</div>
-                                <div class="mt-1 text-gray-500">Owner</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="whitespace-nowrap px-3 py-5 text-sm text-gray-500">{{ $osha->owner_phone }}</td>
-                </tr>
-                <tr>
-                    <td class="whitespace-nowrap py-5 pr-3 text-sm sm:pl-0">
-                        <div class="flex items-center">
-                            <div>
-                                <div class="font-medium text-gray-900">{{ $osha->general_manager_name }}</div>
-                                <div class="mt-1 text-gray-500">General Manager</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="whitespace-nowrap px-3 py-5 text-sm text-gray-500">{{ $osha->general_manager_phone }}</td>
-                </tr>
-                <tr>
-                    <td class="whitespace-nowrap py-5 pr-3 text-sm sm:pl-0">
-                        <div class="flex items-center">
-                            <div>
-                                <div class="font-medium text-gray-900">{{ $osha->body_shop_manager_name }}</div>
-                                <div class="mt-1 text-gray-500">Body Shop Manager</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="whitespace-nowrap px-3 py-5 text-sm text-gray-500">{{ $osha->body_shop_manager_phone }}</td>
-                </tr>
-                <tr>
-                    <td class="whitespace-nowrap py-5 pr-3 text-sm sm:pl-0">
-                        <div class="flex items-center">
-                            <div>
-                                <div class="font-medium text-gray-900">{{ $osha->parts_manager_name }}</div>
-                                <div class="mt-1 text-gray-500">Parts Manager</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="whitespace-nowrap px-3 py-5 text-sm text-gray-500">{{ $osha->parts_manager_phone }}</td>
-                </tr>
-                <tr>
-                    <td class="whitespace-nowrap py-5 pr-3 text-sm sm:pl-0">
-                        <div class="flex items-center">
-                            <div>
-                                <div class="font-medium text-gray-900">{{ $osha->service_manager_name }}</div>
-                                <div class="mt-1 text-gray-500">Service Manager</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="whitespace-nowrap px-3 py-5 text-sm text-gray-500">{{ $osha->service_manager_phone }}</td>
-                </tr>
-                <tr>
-                    <td class="whitespace-nowrap py-5 pr-3 text-sm sm:pl-0">
-                        <div class="flex items-center">
-                            <div>
-                                <div class="font-medium text-gray-900">{{ $osha->qualified_individual_name }}</div>
-                                <div class="mt-1 text-gray-500">Qualified Individual</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td class="whitespace-nowrap px-3 py-5 text-sm text-gray-500">{{ $osha->qualified_individual_phone }}</td>
-                </tr>
-                </tbody>
-            </table>
-            <div class="w-full max-w-4xl mx-auto grid grid-cols-2 gap-5">
-                <div>
-                    Police Emergency Phone Number<br>
-                    {{ $osha->police_emergency_phone }}
-                </div>
-                <div>
-                    Police Non-Emergency Phone Number<br>
-                    {{ $osha->police_non_emergency_phone }}
-                </div>
-                <div>
-                    Fire Emergency Phone Number<br>
-                    {{ $osha->fire_non_emergency_phone }}
-                </div>
-                <div>
-                    Fire Non-Emergency Phone Number<br>
-                    {{ $osha->fire_non_emergency_phone }}
-                </div>
-                <div>
-                    Fire Alarm Type<br>
-                    {{ $osha->fire_alarm_type }}
-                </div>
-                <div>
-                    Burglar Alarm Type<br>
-                    {{ $osha->burglar_alarm_type }}
-                </div>
-            </div>
-        </li>
-    </ul>
-    <div class="space-y-10 prose max-w-none px-6">
-        <article id="eap">
+
+    <div class="personnel">
+        <div class="personnel__title">Emergency Contacts &amp; Alarms</div>
+        @php
+            $phone = static fn (?string $value): string => $value === null || trim($value) === ''
+                ? '—'
+                : rtrim(trim($value), '- ');
+        @endphp
+        <dl class="emergency">
+            <div><dt>Police Emergency</dt><dd>{{ $phone($osha->police_emergency_phone) }}</dd></div>
+            <div><dt>Police Non-Emergency</dt><dd>{{ $phone($osha->police_non_emergency_phone) }}</dd></div>
+            <div><dt>Fire Emergency</dt><dd>{{ $phone($osha->fire_emergency_phone) }}</dd></div>
+            <div><dt>Fire Non-Emergency</dt><dd>{{ $phone($osha->fire_non_emergency_phone) }}</dd></div>
+            <div><dt>Fire Alarm Type</dt><dd>{{ $osha->fire_alarm_type ?: '—' }}</dd></div>
+            <div><dt>Burglar Alarm Type</dt><dd>{{ $osha->burglar_alarm_type ?: '—' }}</dd></div>
+        </dl>
+    </div>
+</div>
+
+{{-- Body content --}}
+<div class="body">
+<article id="eap">
             <h1 class="text-arm-blue-600">Emergency Action Plan</h1>
             <div>
                 <h2>Purpose</h2>
@@ -2791,8 +2701,20 @@
             </ul>
         </article>
         <p>{{ $osha->user->name }}</p>
-        <img src="{{ storage_path() }}/app/osha-signatures/{{ $osha->signature }}" alt="Signature"/>
-    </div>
+        @php
+    $signaturePath = $osha->signature
+        ? storage_path('app/osha-signatures/'.$osha->signature)
+        : null;
+    $signatureData = $signaturePath && file_exists($signaturePath)
+        ? 'data:image/png;base64,'.base64_encode((string) file_get_contents($signaturePath))
+        : null;
+@endphp
+@if ($signatureData)
+    <img src="{{ $signatureData }}" alt="Signature" style="max-height: 1in; margin-top: 0.15in;"/>
+@endif
+    </article>
+
 </div>
-</body>
-</html>
+@endif
+
+@endsection

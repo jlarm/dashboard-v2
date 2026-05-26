@@ -27,7 +27,7 @@ class ListIspManuals
             ->get()
             ->map(fn (Isp $manual): IspManualListItemData => new IspManualListItemData(
                 id: (int) $manual->getKey(),
-                signedAt: $manual->created_at?->format('M j, Y g:i A') ?? '',
+                signedAt: $manual->created_at?->format('M j, Y') ?? '',
                 signedAtIso: $manual->created_at?->toIso8601String() ?? '',
                 signedByName: (string) ($manual->user->name ?? ''),
                 storeName: (string) ($manual->store->name ?? ''),
