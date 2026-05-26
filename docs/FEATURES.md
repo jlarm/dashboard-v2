@@ -161,8 +161,8 @@ Source inventory (as of this snapshot): 73 controllers, 83 domain modules, 18 po
 | Feature | Source | Tests | Status |
 | --- | --- | --- | --- |
 | Dashboard view | `Tenant/DashboardController@show` | `tests/Feature/Tenant/DashboardTest.php`, `tests/Feature/Tenant/Compliance/DashboardControllerTest.php` | ✅ |
-| Audit report PDF download | `@downloadAuditReport` | — | ❌ |
-| Audit type report download | `@downloadAuditTypeReport` | — | ❌ |
+| Audit report PDF download | `@downloadAuditReport` | `tests/Feature/Tenant/Dashboard/DownloadAuditReportTest.php` | ✅ |
+| Audit type report download | `@downloadAuditTypeReport` | `tests/Feature/Tenant/Dashboard/DownloadAuditTypeReportTest.php` | ✅ |
 | Update consultant note | `@updateConsultantNote` | `tests/Feature/Tenant/Dashboard/UpdateConsultantNoteTest.php` | ✅ |
 | Compliance score (overall) | `Domain/Tenant/Compliance/Queries/CalculateComplianceScore` | `tests/Feature/Tenant/Compliance/CalculateComplianceScoreTest.php` | ✅ |
 | Audit pillar | `CalculateAuditPillar` | `tests/Feature/Tenant/Compliance/CalculateAuditPillarTest.php` | ✅ |
@@ -179,7 +179,7 @@ Source inventory (as of this snapshot): 73 controllers, 83 domain modules, 18 po
 | Manuals summary | `GetManualsSummary` | `tests/Feature/Tenant/Compliance/GetManualsSummaryTest.php` | ✅ |
 | Training completion by dept | `GetTrainingCompletionByDepartment` | `tests/Feature/Tenant/Compliance/GetTrainingCompletionByDepartmentTest.php` | ✅ |
 | Training compliance snapshot | `GetTrainingComplianceSnapshot` | `tests/Feature/Tenant/Compliance/GetTrainingComplianceSnapshotTest.php` | ✅ |
-| Snapshot scheduled command | `Console/Commands/SnapshotComplianceScoresCommand` | — | ❌ |
+| Snapshot scheduled command | `Console/Commands/SnapshotComplianceScoresCommand` | `tests/Feature/Tenant/Console/SnapshotComplianceScoresCommandTest.php` | ✅ |
 | Department completion stats (Livewire) | `Http/Livewire/Dealer/Employee/DepartmentCompletionStats` | `tests/Feature/Tenant/DepartmentCompletionStatsTest.php` | ✅ |
 
 ### Stores / Locations / Switching
@@ -431,7 +431,7 @@ Source inventory (as of this snapshot): 73 controllers, 83 domain modules, 18 po
 | `SendCourseNotificationToTenantCommand` | `tests/Feature/Tenant/SendCourseNotificationToTenantCommandTest.php` | ✅ |
 | `SendVendorNotificationCommand` | — | ❌ |
 | `SetCurrentStoreCommand` | — | ❌ |
-| `SnapshotComplianceScoresCommand` | — | ❌ |
+| `SnapshotComplianceScoresCommand` | `tests/Feature/Tenant/Console/SnapshotComplianceScoresCommandTest.php` | ✅ |
 | `SyncCaliforniaHarassmentReplacementCommand` | `tests/Feature/SyncCaliforniaHarassmentReplacementCommandTest.php` | ✅ |
 | `SyncIllinoisHarassmentRolesCommand` | `tests/Feature/SyncIllinoisHarassmentRolesCommandTest.php` | ✅ |
 | `SyncSingleStoreUsersCommand` | `tests/Feature/Tenant/Console/SyncSingleStoreUsersCommandTest.php` | ✅ |
