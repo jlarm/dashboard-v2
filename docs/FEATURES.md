@@ -206,9 +206,8 @@ Source inventory (as of this snapshot): 73 controllers, 83 domain modules, 18 po
 | Import employees (CSV) | `Tenant/UserController@import` + `Jobs/ImportEmployeesJob` | `tests/Feature/Tenant/Employee/ImportEmployeesControllerTest.php` | ✅ |
 | Send custom message | `Tenant/UserController@sendCustomMessage` + `Jobs/SendCustomEmployeeMessageJob` | `tests/Feature/Tenant/Employee/SendCustomMessageControllerTest.php` | ✅ |
 | Register invited employee (full flow) | `Dealer/UserController` | `tests/Feature/Tenant/Employee/RegisterInvitedEmployeeTest.php`, `InviteRegistrationStoreAssignmentTest.php` | ✅ |
-| Reset employee password (action) | `Domain/Tenant/User/Actions/ResetEmployeePassword` | — | ❌ |
-| Export employees CSV | `Domain/Tenant/User/Actions/BuildEmployeesCsv` | — | ❌ |
-| `EmployeesImportComplete` notification | `Notifications/EmployeesImportCompleteNotification` | — | ❌ |
+| Export employees CSV | `Domain/Tenant/User/Actions/BuildEmployeesCsv` | `tests/Feature/Tenant/Employee/BuildEmployeesCsvTest.php` | ✅ |
+| `EmployeesImportComplete` notification | `Notifications/EmployeesImportCompleteNotification` | `tests/Feature/Tenant/Employee/EmployeesImportCompleteNotificationTest.php` | ✅ |
 
 ### Audits — Violation Audits (OSHA / GLBA / BodyShop framework)
 | Feature | Source | Tests | Status |
