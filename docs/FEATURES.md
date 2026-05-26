@@ -115,8 +115,8 @@ Source inventory (as of this snapshot): 73 controllers, 83 domain modules, 18 po
 | Create invite (action) | `Domain/Central/User/Actions/CreateInvite` | `tests/Feature/Central/Invite/CreateInviteActionTest.php` | ✅ |
 | UserInvite model | `Models/CentralUserInvite` | `tests/Feature/Central/Invite/UserInviteModelTest.php` | ✅ |
 | Registration via invite token | `Central/UserInviteRegistrationController` | `tests/Feature/Central/Invite/UserInviteRegistrationTest.php` | ✅ |
-| Reminder mailers (10/20 day) | `Mail/TenDay…`, `Mail/TwentyDay…`, `Console/Commands/RunInvitesCommand` | — | ❌ |
-| Notification dispatch | `Notifications/Central/UserInviteNotification` | — | ❌ |
+| Reminder mailers (10/20 day) | `Mail/TenDay…`, `Mail/TwentyDay…`, `Console/Commands/RunInvitesCommand` | `tests/Feature/Tenant/Console/RunInvitesCommandTest.php` | ✅ |
+| Notification dispatch | `Notifications/Central/UserInviteNotification` | `tests/Feature/Central/Invite/UserInviteNotificationTest.php` | ✅ |
 
 ### Violation Statements (audit content library)
 | Feature | Source | Tests | Status |
@@ -426,7 +426,7 @@ Source inventory (as of this snapshot): 73 controllers, 83 domain modules, 18 po
 | `RepairViolationStatementKeywordsCommand` | — | ❌ |
 | `ReportTenantSizeCommand` | — | ❌ |
 | `RevertCourseResetCommand` | — | ❌ |
-| `RunInvitesCommand` | — | ❌ |
+| `RunInvitesCommand` | `tests/Feature/Tenant/Console/RunInvitesCommandTest.php` | ✅ |
 | `SendComplianceSummaryCommand` | `tests/Feature/Tenant/Console/SendComplianceSummaryCommandTest.php` | ✅ |
 | `SendCourseNotificationToTenantCommand` | `tests/Feature/Tenant/SendCourseNotificationToTenantCommandTest.php` | ✅ |
 | `SendVendorNotificationCommand` | — | ❌ |
