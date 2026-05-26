@@ -145,7 +145,7 @@ Source inventory (as of this snapshot): 73 controllers, 83 domain modules, 18 po
 ### Central Dashboard
 | Feature | Source | Tests | Status |
 | --- | --- | --- | --- |
-| Index | `Central/DashboardController@index` | `tests/Feature/Central/Authorization/CentralRouteAccessTest.php` | ⚠️ |
+| Index | `Central/DashboardController@index` | `tests/Feature/Central/Dashboard/DashboardControllerTest.php` | ✅ |
 
 ### Impersonation (super-admin → tenant user)
 | Feature | Source | Tests | Status |
