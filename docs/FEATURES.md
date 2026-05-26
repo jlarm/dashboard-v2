@@ -139,8 +139,8 @@ Source inventory (as of this snapshot): 73 controllers, 83 domain modules, 18 po
 | Send for review | `ContractSendController` | `tests/Feature/Central/Contract/SendTest.php` | ✅ |
 | Public review + sign | `ContractReviewController` | `tests/Feature/Central/Contract/ReviewTest.php` | ✅ |
 | Generate PDF | `ContractPdfController`, `Jobs/Contracts/GeneratePdfJob` | `tests/Feature/Central/Contract/PdfTest.php` | ✅ |
-| Upload PDF to Digital Ocean | `Jobs/Contracts/UploadToDigitalOceanJob` | — | ❌ |
-| Notifications (sent / signed / pdf ready) | `Notifications/Contract*Notification` | — | ❌ |
+| Upload PDF to Digital Ocean | `Jobs/Contracts/UploadToDigitalOceanJob` | `tests/Feature/Central/Contract/UploadToDigitalOceanJobTest.php` | ✅ |
+| Notifications (sent / signed / pdf ready) | `Notifications/Contract*Notification` | `tests/Feature/Central/Contract/ContractNotificationsTest.php` | ✅ |
 
 ### Central Dashboard
 | Feature | Source | Tests | Status |
@@ -371,7 +371,7 @@ Source inventory (as of this snapshot): 73 controllers, 83 domain modules, 18 po
 | `Audit/Generate*RemediationPdfJob` | — | ❌ |
 | `Audit/GenerateDealJacketReportJob` | — | ❌ |
 | `Contracts/GeneratePdfJob` | `tests/Feature/Central/Contract/PdfTest.php` | ✅ |
-| `Contracts/UploadToDigitalOceanJob` | — | ❌ |
+| `Contracts/UploadToDigitalOceanJob` | `tests/Feature/Central/Contract/UploadToDigitalOceanJobTest.php` | ✅ |
 | `CreateFrameworkDirectoriesForTenantJob` | — | ❌ |
 | `CrossTenantPasswordResetJob` | `tests/Feature/Auth/CrossTenantPasswordResetTest.php`, `tests/Feature/Tenant/Auth/CrossTenantPasswordResetJobTest.php` | ✅ |
 | `DownloadVendorPdfJob` | — | ❌ |
