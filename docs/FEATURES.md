@@ -222,20 +222,18 @@ Source inventory (as of this snapshot): 73 controllers, 83 domain modules, 18 po
 | OSHA destroy | same | `tests/Feature/Tenant/Audits/Osha/DestroyTest.php` | ✅ |
 | OSHA PDF generate | `Jobs/Audit/GenerateOshaPdfJob` | `tests/Unit/Jobs/Audit/GenerateOshaPdfJobTest.php` | ✅ |
 | OSHA PDF upload | `Jobs/Audit/UploadOshaPdfJob` | `tests/Feature/Tenant/Audits/Osha/UploadOshaPdfJobTest.php` | ✅ |
-| OSHA remediation PDF | `Jobs/Audit/GenerateOshaRemediationPdfJob` | — | ❌ |
+| OSHA remediation PDF | `Jobs/Audit/GenerateOshaRemediationPdfJob` | `tests/Feature/Tenant/Audits/RemediationPdfJobTest.php` | ✅ |
 | GLBA edit/full flow | `ViolationAuditController` (Glba) | `tests/Feature/Tenant/Audits/Glba/EditGlbaViolationAuditTest.php` | ✅ |
 | GLBA PDF generate | `Jobs/Audit/GenerateGlbaPdfJob` | `tests/Unit/Jobs/Audit/GenerateGlbaPdfJobTest.php` | ✅ |
 | GLBA PDF upload | `Jobs/Audit/UploadGlbaPdfJob` | `tests/Feature/Tenant/Audits/Glba/UploadGlbaPdfJobTest.php` | ✅ |
-| GLBA remediation PDF | `Jobs/Audit/GenerateGlbaRemediationPdfJob` | — | ❌ |
+| GLBA remediation PDF | `Jobs/Audit/GenerateGlbaRemediationPdfJob` | `tests/Feature/Tenant/Audits/RemediationPdfJobTest.php` | ✅ |
 | BodyShop edit/full flow | `ViolationAuditController` (BodyShop) | `tests/Feature/Tenant/Audits/BodyShop/EditBodyShopViolationAuditTest.php` | ✅ |
 | BodyShop PDF generate | `Jobs/Audit/GenerateBodyShopPdfJob` | `tests/Unit/Jobs/Audit/GenerateBodyShopPdfJobTest.php` | ✅ |
 | BodyShop PDF upload | `Jobs/Audit/UploadBodyShopPdfJob` | `tests/Feature/Tenant/Audits/BodyShop/UploadBodyShopPdfJobTest.php` | ✅ |
-| BodyShop remediation PDF | `Jobs/Audit/GenerateBodyShopRemediationPdfJob` | — | ❌ |
+| BodyShop remediation PDF | `Jobs/Audit/GenerateBodyShopRemediationPdfJob` | `tests/Feature/Tenant/Audits/RemediationPdfJobTest.php` | ✅ |
 | Audit chart data | `Domain/Tenant/Audits/Queries/BuildAuditChartData` | `tests/Unit/Domain/Tenant/Audits/Queries/BuildAuditChartDataTest.php` | ✅ |
 | Scoped store resolution | `ResolveAuditScopedStores` | `tests/Unit/Domain/Tenant/Audits/Queries/ResolveAuditScopedStoresTest.php` | ✅ |
-| Upload audit images (job) | `Jobs/UploadAuditImagesJob` | — | ❌ |
-| Upload finance audit images | `Jobs/UploadFinanceAuditImagesJob` | — | ❌ |
-| Audit DO upload jobs (BodyShop/Individual/Osha) | `Jobs/Upload*AuditToDigitalOceanJob` | — | ❌ |
+| Individual audit DO upload | `Jobs/UploadIndividualAuditToDigitalOceanJob` | `tests/Feature/Tenant/Audits/UploadIndividualAuditToDigitalOceanJobTest.php` | ✅ |
 
 ### Audits — Individual / Fit Tests / Deal Jackets
 | Feature | Source | Tests | Status |
@@ -367,7 +365,7 @@ Source inventory (as of this snapshot): 73 controllers, 83 domain modules, 18 po
 | --- | --- | --- |
 | `Audit/Generate*PdfJob` (Osha/Glba/BodyShop) | `tests/Unit/Jobs/Audit/Generate*PdfJobTest.php` | ✅ |
 | `Audit/Upload*PdfJob` (Osha/Glba/BodyShop) | tenant audit feature tests | ✅ |
-| `Audit/Generate*RemediationPdfJob` | — | ❌ |
+| `Audit/Generate*RemediationPdfJob` (Osha/Glba/BodyShop) | `tests/Feature/Tenant/Audits/RemediationPdfJobTest.php` | ✅ |
 | `Audit/GenerateDealJacketReportJob` | — | ❌ |
 | `Contracts/GeneratePdfJob` | `tests/Feature/Central/Contract/PdfTest.php` | ✅ |
 | `Contracts/UploadToDigitalOceanJob` | `tests/Feature/Central/Contract/UploadToDigitalOceanJobTest.php` | ✅ |
@@ -389,9 +387,7 @@ Source inventory (as of this snapshot): 73 controllers, 83 domain modules, 18 po
 | `SendQueueEmailJob` | — | ❌ |
 | `SendVendorEmailJob` | `tests/Feature/Tenant/Jobs/SendVendorEmailJobTest.php` | ✅ |
 | `TestRedisJob` | — | n/a (debug-only) |
-| `UploadAuditImagesJob` | — | ❌ |
-| `UploadFinanceAuditImagesJob` | — | ❌ |
-| `Upload*AuditToDigitalOceanJob` (Audit / BodyShop / Individual / Osha) | — | ❌ |
+| `UploadIndividualAuditToDigitalOceanJob` | `tests/Feature/Tenant/Audits/UploadIndividualAuditToDigitalOceanJobTest.php` | ✅ |
 
 ---
 

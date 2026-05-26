@@ -13,8 +13,6 @@ parameters:
 
     excludePaths:
         - app/Http/Livewire
-        # Job depends on MediaLibrary Pro which was removed in this migration; only callers were Livewire
-        - app/Jobs/UploadFinanceAuditImagesJob.php
         # Manual PDF jobs reference Blade views deleted during the manual rewrites; pending follow-up redesign
         - app/Jobs/Manuals/GenerateCmsManualJob.php
         - app/Jobs/Manuals/GenerateIspManualJob.php
