@@ -10,7 +10,10 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Request;
 use Spatie\Browsershot\Browsershot;
+use Spatie\LaravelPdf\Facades\Pdf;
 use Throwable;
 
 class GenerateRedFlagManualJob implements ShouldQueue
@@ -23,16 +26,19 @@ class GenerateRedFlagManualJob implements ShouldQueue
     {
         $fileName = 'red-flags-manual-'.now()->format('YmdHis').'.pdf';
         $storagePath = storage_path('app/'.$fileName);
+        $nodeBinary = $this->resolveNodeBinary();
 
-        $html = view('dealer.manual.pdf.red-flag', [
+        Pdf::view('dealer.manual.pdf.red-flag', [
             'redFlag' => $this->manual,
-        ])->render();
-
-        Browsershot::html($html)
-            ->showBackground()
-            ->margins(10, 10, 10, 10)
-            ->scale(0.75)
-            ->waitUntilNetworkIdle()
+        ])
+            ->withBrowsershot(static fn (Browsershot $browsershot): Browsershot => $browsershot
+                ->setNodeModulePath(base_path('node_modules'))
+                ->setNodeBinary($nodeBinary)
+                ->showBackground()
+                ->margins(10, 10, 10, 10)
+                ->scale(0.75)
+                ->waitUntilNetworkIdle()
+            )
             ->save($storagePath);
 
         $this->manual->update([
@@ -47,5 +53,38 @@ class GenerateRedFlagManualJob implements ShouldQueue
         }
 
         report($exception);
+    }
+
+    private function resolveNodeBinary(): string
+    {
+        $configured = config('services.browsershot.node_binary');
+
+        if (is_string($configured) && $configured !== '' && File::exists($configured)) {
+            return $configured;
+        }
+
+        foreach (['/opt/homebrew/bin/node', '/usr/local/bin/node'] as $candidate) {
+            if (File::exists($candidate)) {
+                return $candidate;
+            }
+        }
+
+        $serverHome = Request::server('HOME');
+        $home = is_string($serverHome) && $serverHome !== ''
+            ? $serverHome
+            : (string) (getenv('HOME') ?: '');
+        if ($home !== '') {
+            $herdNvm = $home.'/Library/Application Support/Herd/config/nvm/versions/node';
+            if (is_dir($herdNvm)) {
+                $versions = glob($herdNvm.'/v*/bin/node') ?: [];
+                if ($versions !== []) {
+                    rsort($versions);
+
+                    return $versions[0];
+                }
+            }
+        }
+
+        return 'node';
     }
 }

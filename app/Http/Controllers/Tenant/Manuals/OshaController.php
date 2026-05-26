@@ -19,10 +19,12 @@ use App\Models\Dealer\Store;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\View;
 use Inertia\Inertia;
 use Inertia\Response as InertiaResponse;
 use RuntimeException;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class OshaController extends Controller
 {
@@ -84,6 +86,24 @@ class OshaController extends Controller
         $deleteOshaManual->handle($manual);
 
         return back()->with('success', 'OSHA manual deleted.');
+    }
+
+    public function download(Request $request, Osha $manual): StreamedResponse
+    {
+        $this->authorizeManualScope($request, $manual);
+
+        abort_unless(is_string($manual->pdf_path) && $manual->pdf_path !== '', 404);
+
+        $path = tenant('id').'/osha/'.$manual->pdf_path;
+        $disk = Storage::disk('do-manuals');
+
+        abort_unless($disk->exists($path), 404);
+
+        $filename = 'osha-manual-'.optional($manual->created_at)->format('Y-m-d').'.pdf';
+
+        return $disk->download($path, $filename, [
+            'Content-Type' => 'application/pdf',
+        ]);
     }
 
     private function renderPolicyHtml(Store $store, OshaFormDefaultsData $defaults): string

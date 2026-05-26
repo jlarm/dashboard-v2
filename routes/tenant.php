@@ -273,21 +273,25 @@ Route::name('dealer.')->middleware([
             Route::get('isp', [IspController::class, 'index'])->name('isp.index');
             Route::get('isp/create', [IspController::class, 'create'])->name('isp.create');
             Route::post('isp', [IspController::class, 'store'])->name('isp.store');
+            Route::get('isp/{manual}/download', [IspController::class, 'download'])->name('isp.download');
             Route::delete('isp/{manual}', [IspController::class, 'destroy'])->name('isp.destroy');
 
             Route::get('osha', [OshaController::class, 'index'])->name('osha.index');
             Route::get('osha/create', [OshaController::class, 'create'])->name('osha.create');
             Route::post('osha', [OshaController::class, 'store'])->name('osha.store');
+            Route::get('osha/{manual}/download', [OshaController::class, 'download'])->name('osha.download');
             Route::delete('osha/{manual}', [OshaController::class, 'destroy'])->name('osha.destroy');
 
             Route::get('red-flag', [RedFlagController::class, 'index'])->name('red-flag.index');
             Route::get('red-flag/create', [RedFlagController::class, 'create'])->name('red-flag.create');
             Route::post('red-flag', [RedFlagController::class, 'store'])->name('red-flag.store');
+            Route::get('red-flag/{manual}/download', [RedFlagController::class, 'download'])->name('red-flag.download');
             Route::delete('red-flag/{manual}', [RedFlagController::class, 'destroy'])->name('red-flag.destroy');
 
             Route::get('cms', [CmsController::class, 'index'])->name('cms.index');
             Route::get('cms/create', [CmsController::class, 'create'])->name('cms.create');
             Route::post('cms', [CmsController::class, 'store'])->name('cms.store');
+            Route::get('cms/{manual}/download', [CmsController::class, 'download'])->name('cms.download');
             Route::delete('cms/{manual}', [CmsController::class, 'destroy'])->name('cms.destroy');
         });
 

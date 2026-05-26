@@ -7,7 +7,6 @@ namespace App\Domain\Tenant\Manuals\Isp\Queries;
 use App\Domain\Tenant\Manuals\Isp\Data\IspManualListItemData;
 use App\Models\Dealer\Manual\Isp;
 use Illuminate\Support\Collection as SupportCollection;
-use Illuminate\Support\Facades\Storage;
 
 class ListIspManuals
 {
@@ -43,6 +42,6 @@ class ListIspManuals
             return null;
         }
 
-        return Storage::disk('do-manuals')->url(tenant('id').'/isp/'.$manual->pdf_path);
+        return route('dealer.manual.isp.download', $manual);
     }
 }

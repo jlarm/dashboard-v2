@@ -7,7 +7,6 @@ namespace App\Domain\Tenant\Manuals\Osha\Queries;
 use App\Domain\Tenant\Manuals\Osha\Data\OshaManualListItemData;
 use App\Models\Dealer\Manual\Osha;
 use Illuminate\Support\Collection as SupportCollection;
-use Illuminate\Support\Facades\Storage;
 
 class ListOshaManuals
 {
@@ -43,6 +42,6 @@ class ListOshaManuals
             return null;
         }
 
-        return Storage::disk('do-manuals')->url(tenant('id').'/osha/'.$manual->pdf_path);
+        return route('dealer.manual.osha.download', $manual);
     }
 }

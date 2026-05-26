@@ -253,7 +253,7 @@ Source inventory (as of this snapshot): 73 controllers, 83 domain modules, 18 po
 | ISP manual CRUD + download | `Tenant/Manuals/IspController` | `tests/Feature/Tenant/Manuals/Isp/IspControllerTest.php` | ✅ |
 | OSHA manual CRUD + download | `Tenant/Manuals/OshaController` | `tests/Feature/Tenant/Manuals/Osha/OshaControllerTest.php` | ✅ |
 | RedFlag manual CRUD + download | `Tenant/Manuals/RedFlagController` | `tests/Feature/Tenant/Manuals/RedFlag/RedFlagControllerTest.php` | ✅ |
-| Generate manual PDF jobs | `Jobs/Manuals/Generate*ManualJob` | — pending redesign; references `resources/views/dealer/manual/pdf/*` views that were deleted during the manual rewrite. PHPStan-excluded. | ⚠️ |
+| Generate manual PDF jobs | `Jobs/Manuals/Generate*ManualJob` (Cms/Isp/Osha/RedFlag) | `tests/Feature/Tenant/Manuals/GenerateManualJobTest.php` | ✅ |
 | Upload manual to DO jobs | `Jobs/Manuals/Upload*ToDigitalOceanJob` (Cms/Isp/Osha/RedFlag) | `tests/Feature/Tenant/Manuals/UploadManualJobTest.php` | ✅ |
 | Manual access policies | `ManualAccessTest` | `tests/Feature/Tenant/Authorization/ManualAccessTest.php` | ✅ |
 
@@ -375,7 +375,7 @@ Source inventory (as of this snapshot): 73 controllers, 83 domain modules, 18 po
 | `ImportEmployeesJob` | `tests/Feature/Tenant/Employee/ImportEmployeesControllerTest.php` | ✅ |
 | `IncompleteVendorNotificationJob` | `tests/Feature/Tenant/Jobs/IncompleteVendorNotificationJobTest.php` | ✅ |
 | `IssueDotCertificate` | `tests/Feature/Tenant/Course/IssueDotCertificateJobTest.php` | ✅ |
-| `Manuals/Generate*ManualJob` | — pending redesign; missing views | ⚠️ |
+| `Manuals/Generate*ManualJob` | `tests/Feature/Tenant/Manuals/GenerateManualJobTest.php` | ✅ |
 | `Manuals/Upload*ToDigitalOceanJob` | `tests/Feature/Tenant/Manuals/UploadManualJobTest.php` | ✅ |
 | `RemediationReminderEmailJob` | — | ❌ |
 | `Scans/GenerateCyrismaReportJob` | — | ❌ |

@@ -18,9 +18,11 @@ use App\Models\Dealer\Store;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response as InertiaResponse;
 use RuntimeException;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class IspController extends Controller
 {
@@ -79,5 +81,23 @@ class IspController extends Controller
         $deleteIspManual->handle($manual);
 
         return back()->with('success', 'ISP manual deleted.');
+    }
+
+    public function download(Request $request, Isp $manual): StreamedResponse
+    {
+        $this->authorizeManualScope($request, $manual);
+
+        abort_unless(is_string($manual->pdf_path) && $manual->pdf_path !== '', 404);
+
+        $path = tenant('id').'/isp/'.$manual->pdf_path;
+        $disk = Storage::disk('do-manuals');
+
+        abort_unless($disk->exists($path), 404);
+
+        $filename = 'isp-manual-'.optional($manual->created_at)->format('Y-m-d').'.pdf';
+
+        return $disk->download($path, $filename, [
+            'Content-Type' => 'application/pdf',
+        ]);
     }
 }

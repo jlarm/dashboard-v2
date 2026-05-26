@@ -7,7 +7,6 @@ namespace App\Domain\Tenant\Manuals\RedFlag\Queries;
 use App\Domain\Tenant\Manuals\RedFlag\Data\RedFlagManualListItemData;
 use App\Models\Dealer\Manual\RedFlag;
 use Illuminate\Support\Collection as SupportCollection;
-use Illuminate\Support\Facades\Storage;
 
 class ListRedFlagManuals
 {
@@ -43,6 +42,6 @@ class ListRedFlagManuals
             return null;
         }
 
-        return Storage::disk('do-manuals')->url(tenant('id').'/red-flags/'.$manual->pdf_path);
+        return route('dealer.manual.red-flag.download', $manual);
     }
 }

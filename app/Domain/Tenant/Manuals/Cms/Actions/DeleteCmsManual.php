@@ -13,6 +13,10 @@ class DeleteCmsManual
     {
         if ($manual->pdf_path !== null && $manual->pdf_path !== '') {
             Storage::disk('do-manuals')->delete(tenant('id').'/cms/'.$manual->pdf_path);
+            // Generate*ManualJob stages the PDF under storage/app/ before the
+            // Upload job moves it to do-manuals. If we're deleting the manual
+            // mid-flight, the staging file would otherwise be orphaned.
+            Storage::delete($manual->pdf_path);
         }
 
         $signatureFields = [

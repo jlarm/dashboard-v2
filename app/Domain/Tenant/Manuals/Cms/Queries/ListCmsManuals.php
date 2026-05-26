@@ -7,7 +7,6 @@ namespace App\Domain\Tenant\Manuals\Cms\Queries;
 use App\Domain\Tenant\Manuals\Cms\Data\CmsManualListItemData;
 use App\Models\CmsManual;
 use Illuminate\Support\Collection as SupportCollection;
-use Illuminate\Support\Facades\Storage;
 
 class ListCmsManuals
 {
@@ -43,6 +42,6 @@ class ListCmsManuals
             return null;
         }
 
-        return Storage::disk('do-manuals')->url(tenant('id').'/cms/'.$manual->pdf_path);
+        return route('dealer.manual.cms.download', $manual);
     }
 }

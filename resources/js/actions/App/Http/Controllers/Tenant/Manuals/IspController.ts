@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\IspController::index
-* @see app/Http/Controllers/Tenant/Manuals/IspController.php:29
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:31
 * @route '/manuals/isp'
 */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\IspController::index
-* @see app/Http/Controllers/Tenant/Manuals/IspController.php:29
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:31
 * @route '/manuals/isp'
 */
 index.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ index.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\IspController::index
-* @see app/Http/Controllers/Tenant/Manuals/IspController.php:29
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:31
 * @route '/manuals/isp'
 */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\IspController::index
-* @see app/Http/Controllers/Tenant/Manuals/IspController.php:29
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:31
 * @route '/manuals/isp'
 */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\IspController::index
-* @see app/Http/Controllers/Tenant/Manuals/IspController.php:29
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:31
 * @route '/manuals/isp'
 */
 const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -55,7 +55,7 @@ const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\IspController::index
-* @see app/Http/Controllers/Tenant/Manuals/IspController.php:29
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:31
 * @route '/manuals/isp'
 */
 indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -65,7 +65,7 @@ indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\IspController::index
-* @see app/Http/Controllers/Tenant/Manuals/IspController.php:29
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:31
 * @route '/manuals/isp'
 */
 indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -82,7 +82,7 @@ index.form = indexForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\IspController::create
-* @see app/Http/Controllers/Tenant/Manuals/IspController.php:48
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:50
 * @route '/manuals/isp/create'
 */
 export const create = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -97,7 +97,7 @@ create.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\IspController::create
-* @see app/Http/Controllers/Tenant/Manuals/IspController.php:48
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:50
 * @route '/manuals/isp/create'
 */
 create.url = (options?: RouteQueryOptions) => {
@@ -106,7 +106,7 @@ create.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\IspController::create
-* @see app/Http/Controllers/Tenant/Manuals/IspController.php:48
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:50
 * @route '/manuals/isp/create'
 */
 create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -116,7 +116,7 @@ create.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\IspController::create
-* @see app/Http/Controllers/Tenant/Manuals/IspController.php:48
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:50
 * @route '/manuals/isp/create'
 */
 create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -126,7 +126,7 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\IspController::create
-* @see app/Http/Controllers/Tenant/Manuals/IspController.php:48
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:50
 * @route '/manuals/isp/create'
 */
 const createForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -136,7 +136,7 @@ const createForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => 
 
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\IspController::create
-* @see app/Http/Controllers/Tenant/Manuals/IspController.php:48
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:50
 * @route '/manuals/isp/create'
 */
 createForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -146,7 +146,7 @@ createForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\IspController::create
-* @see app/Http/Controllers/Tenant/Manuals/IspController.php:48
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:50
 * @route '/manuals/isp/create'
 */
 createForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -163,7 +163,7 @@ create.form = createForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\IspController::store
-* @see app/Http/Controllers/Tenant/Manuals/IspController.php:57
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:59
 * @route '/manuals/isp'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -178,7 +178,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\IspController::store
-* @see app/Http/Controllers/Tenant/Manuals/IspController.php:57
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:59
 * @route '/manuals/isp'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -187,7 +187,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\IspController::store
-* @see app/Http/Controllers/Tenant/Manuals/IspController.php:57
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:59
 * @route '/manuals/isp'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -197,7 +197,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\IspController::store
-* @see app/Http/Controllers/Tenant/Manuals/IspController.php:57
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:59
 * @route '/manuals/isp'
 */
 const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -207,7 +207,7 @@ const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => 
 
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\IspController::store
-* @see app/Http/Controllers/Tenant/Manuals/IspController.php:57
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:59
 * @route '/manuals/isp'
 */
 storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -218,8 +218,113 @@ storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => (
 store.form = storeForm
 
 /**
+* @see \App\Http\Controllers\Tenant\Manuals\IspController::download
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:86
+* @route '/manuals/isp/{manual}/download'
+*/
+export const download = (args: { manual: string | number | { id: string | number } } | [manual: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: download.url(args, options),
+    method: 'get',
+})
+
+download.definition = {
+    methods: ["get","head"],
+    url: '/manuals/isp/{manual}/download',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\Tenant\Manuals\IspController::download
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:86
+* @route '/manuals/isp/{manual}/download'
+*/
+download.url = (args: { manual: string | number | { id: string | number } } | [manual: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { manual: args }
+    }
+
+    if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
+        args = { manual: args.id }
+    }
+
+    if (Array.isArray(args)) {
+        args = {
+            manual: args[0],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        manual: typeof args.manual === 'object'
+        ? args.manual.id
+        : args.manual,
+    }
+
+    return download.definition.url
+            .replace('{manual}', parsedArgs.manual.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\Tenant\Manuals\IspController::download
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:86
+* @route '/manuals/isp/{manual}/download'
+*/
+download.get = (args: { manual: string | number | { id: string | number } } | [manual: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: download.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Manuals\IspController::download
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:86
+* @route '/manuals/isp/{manual}/download'
+*/
+download.head = (args: { manual: string | number | { id: string | number } } | [manual: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: download.url(args, options),
+    method: 'head',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Manuals\IspController::download
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:86
+* @route '/manuals/isp/{manual}/download'
+*/
+const downloadForm = (args: { manual: string | number | { id: string | number } } | [manual: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: download.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Manuals\IspController::download
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:86
+* @route '/manuals/isp/{manual}/download'
+*/
+downloadForm.get = (args: { manual: string | number | { id: string | number } } | [manual: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: download.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Manuals\IspController::download
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:86
+* @route '/manuals/isp/{manual}/download'
+*/
+downloadForm.head = (args: { manual: string | number | { id: string | number } } | [manual: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: download.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+download.form = downloadForm
+
+/**
 * @see \App\Http\Controllers\Tenant\Manuals\IspController::destroy
-* @see app/Http/Controllers/Tenant/Manuals/IspController.php:72
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:74
 * @route '/manuals/isp/{manual}'
 */
 export const destroy = (args: { manual: string | number | { id: string | number } } | [manual: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -234,7 +339,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\IspController::destroy
-* @see app/Http/Controllers/Tenant/Manuals/IspController.php:72
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:74
 * @route '/manuals/isp/{manual}'
 */
 destroy.url = (args: { manual: string | number | { id: string | number } } | [manual: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
@@ -267,7 +372,7 @@ destroy.url = (args: { manual: string | number | { id: string | number } } | [ma
 
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\IspController::destroy
-* @see app/Http/Controllers/Tenant/Manuals/IspController.php:72
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:74
 * @route '/manuals/isp/{manual}'
 */
 destroy.delete = (args: { manual: string | number | { id: string | number } } | [manual: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -277,7 +382,7 @@ destroy.delete = (args: { manual: string | number | { id: string | number } } | 
 
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\IspController::destroy
-* @see app/Http/Controllers/Tenant/Manuals/IspController.php:72
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:74
 * @route '/manuals/isp/{manual}'
 */
 const destroyForm = (args: { manual: string | number | { id: string | number } } | [manual: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -292,7 +397,7 @@ const destroyForm = (args: { manual: string | number | { id: string | number } }
 
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\IspController::destroy
-* @see app/Http/Controllers/Tenant/Manuals/IspController.php:72
+* @see app/Http/Controllers/Tenant/Manuals/IspController.php:74
 * @route '/manuals/isp/{manual}'
 */
 destroyForm.delete = (args: { manual: string | number | { id: string | number } } | [manual: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -307,6 +412,6 @@ destroyForm.delete = (args: { manual: string | number | { id: string | number } 
 
 destroy.form = destroyForm
 
-const IspController = { index, create, store, destroy }
+const IspController = { index, create, store, download, destroy }
 
 export default IspController
