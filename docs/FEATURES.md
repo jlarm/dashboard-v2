@@ -191,7 +191,7 @@ Source inventory (as of this snapshot): 73 controllers, 83 domain modules, 18 po
 | Store-scoped middleware | `StoreIdentifier`/`RequireTenantStore` middleware | `tests/Feature/Tenant/StoreIdentifierMiddlewareTest.php`, `StoreMiddlewareTest.php` | ✅ |
 | Legacy store redirect | route-level | `tests/Feature/Tenant/LegacyStoreRedirectTest.php` | ✅ |
 | Store-level access control | `Policies/StorePolicy` | `tests/Feature/Tenant/Authorization/StoreAccessControlTest.php` | ✅ |
-| `SetCurrentStoreCommand` | `Console/Commands/SetCurrentStoreCommand` | — | ❌ |
+| `SetCurrentStoreCommand` | `Console/Commands/SetCurrentStoreCommand` | `tests/Feature/Tenant/Console/SetCurrentStoreCommandTest.php` | ✅ |
 | Sync single-store users | `Console/Commands/SyncSingleStoreUsersCommand` | `tests/Feature/Tenant/Console/SyncSingleStoreUsersCommandTest.php` | ✅ |
 
 ### Employees
@@ -430,7 +430,7 @@ Source inventory (as of this snapshot): 73 controllers, 83 domain modules, 18 po
 | `SendComplianceSummaryCommand` | `tests/Feature/Tenant/Console/SendComplianceSummaryCommandTest.php` | ✅ |
 | `SendCourseNotificationToTenantCommand` | `tests/Feature/Tenant/SendCourseNotificationToTenantCommandTest.php` | ✅ |
 | `SendVendorNotificationCommand` | — | ❌ |
-| `SetCurrentStoreCommand` | — | ❌ |
+| `SetCurrentStoreCommand` | `tests/Feature/Tenant/Console/SetCurrentStoreCommandTest.php` | ✅ |
 | `SnapshotComplianceScoresCommand` | `tests/Feature/Tenant/Console/SnapshotComplianceScoresCommandTest.php` | ✅ |
 | `SyncCaliforniaHarassmentReplacementCommand` | `tests/Feature/SyncCaliforniaHarassmentReplacementCommandTest.php` | ✅ |
 | `SyncIllinoisHarassmentRolesCommand` | `tests/Feature/SyncIllinoisHarassmentRolesCommandTest.php` | ✅ |
