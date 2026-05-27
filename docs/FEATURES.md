@@ -43,7 +43,7 @@ Source inventory (as of this snapshot): 73 controllers, 83 domain modules, 18 po
 | Password confirmation | `Dealer/Auth/ConfirmablePasswordController` | `tests/Feature/Tenant/Auth/PasswordConfirmationTest.php` | ✅ |
 | Email verification | `Dealer/Auth/EmailVerification*Controller`, `VerifyEmailController` | `tests/Feature/Tenant/Auth/EmailVerificationTest.php` | ✅ |
 | Cross-tenant password reset (job-side) | `Jobs/CrossTenantPasswordResetJob` | `tests/Feature/Tenant/Auth/CrossTenantPasswordResetJobTest.php` | ✅ |
-| Profile edit/update | `Tenant/Settings/ProfileController` | `tests/Feature/Tenant/Settings/*` | ⚠️ |
+| Profile edit/update | `Tenant/Settings/ProfileController` | `tests/Feature/Tenant/Settings/ProfileControllerTest.php` | ✅ |
 | Invited employee registration | `Dealer/UserController@create/store` | `tests/Feature/Tenant/Employee/RegisterInvitedEmployeeTest.php`, `InviteRegistrationStoreAssignmentTest.php` | ✅ |
 | Impersonation entry (Stancl) | `Dealer/ImpersonationController`, `UserImpersonation::makeResponse` | `tests/Feature/Tenant/Authorization/ImpersonationAccessTest.php` | ✅ |
 
@@ -266,11 +266,11 @@ Source inventory (as of this snapshot): 73 controllers, 83 domain modules, 18 po
 | Mark video complete | `@markVideoComplete` | `tests/Feature/Tenant/Course/MarkVideoCompleteTest.php` | ✅ |
 | Submit quiz | `@submitQuiz` | `tests/Feature/Tenant/Course/SubmitQuizTest.php` | ✅ |
 | Course assignment to user | `Domain/Tenant/Course/Actions/AssignCourse` | `tests/Feature/Tenant/Course/CourseAssignmentTest.php` | ✅ |
-| Reminder commands (expiring/expired) | `Console/Commands/CourseExpiringEmailCommand`, `CourseReminderCommand`, `CourseYearsExpireCommand`, `EmployeeCourseReminderCommand`, `RemediationReminderCommand` | `tests/Feature/Tenant/Course/CourseReminderCommandsTest.php` | ⚠️ (covers some but not all) |
+| Reminder commands (expiring/expired) | `Console/Commands/CourseExpiringEmailCommand`, `CourseReminderCommand`, `CourseYearsExpireCommand`, `EmployeeCourseReminderCommand`, `RemediationReminderCommand` | `tests/Feature/Tenant/Course/CourseReminderCommandsTest.php`, `CourseYearsExpireCommandTest.php`, `tests/Feature/Tenant/Console/RemediationReminderCommandTest.php` | ✅ |
 | Issue DOT certificate | `Jobs/IssueDotCertificate`, `CourseController@issueDotCertificate` | `tests/Feature/Tenant/Course/IssueDotCertificateJobTest.php` | ✅ |
 | DOT cert ready notification | `Notifications/DotCertificateReadyNotification` | `tests/Feature/Tenant/Course/CourseNotificationsTest.php` | ✅ |
 | Course-expired notifications | `Notifications/CourseExpired*`, `ExpiredCourseNotification`, `IncompleteCoursesNotification` | `tests/Feature/Tenant/Course/CourseNotificationsTest.php` | ✅ |
-| New course notification command | `Console/Commands/NewCourseNotificationCommand`, `SendCourseNotificationToTenantCommand` | `tests/Feature/Tenant/SendCourseNotificationToTenantCommandTest.php` | ⚠️ |
+| New course notification command | `Console/Commands/NewCourseNotificationCommand`, `SendCourseNotificationToTenantCommand` | `tests/Feature/Tenant/SendCourseNotificationToTenantCommandTest.php`, `tests/Feature/Tenant/Console/NewCourseNotificationCommandTest.php` | ✅ |
 | Backfill IL harassment results | `Console/Commands/BackfillIllinoisHarassmentCourseResultsCommand` | `tests/Feature/BackfillIllinoisHarassmentCourseResultsCommandTest.php` | ✅ |
 | Sync IL harassment roles | `Console/Commands/SyncIllinoisHarassmentRolesCommand` | `tests/Feature/SyncIllinoisHarassmentRolesCommandTest.php` | ✅ |
 | Sync CA harassment replacement | `Console/Commands/SyncCaliforniaHarassmentReplacementCommand` | `tests/Feature/SyncCaliforniaHarassmentReplacementCommandTest.php` | ✅ |
@@ -318,7 +318,7 @@ Source inventory (as of this snapshot): 73 controllers, 83 domain modules, 18 po
 | --- | --- | --- | --- |
 | Index / search | `Tenant/SdsController@index` | `tests/Feature/Tenant/Sds/SdsControllerTest.php` | ✅ |
 | View record | `@view` | `tests/Feature/Tenant/Sds/SdsControllerTest.php` | ✅ |
-| Request SDS sheet | `@storeRequest`, `Mail/Tenant/SdsRequestMail` | `tests/Feature/Tenant/Sds/SdsControllerTest.php` | ⚠️ (controller covered; mail not asserted) |
+| Request SDS sheet | `@storeRequest`, `Mail/Tenant/SdsRequestMail` | `tests/Feature/Tenant/Sds/SdsControllerTest.php`, `tests/Feature/Tenant/Sds/SdsRequestMailTest.php` | ✅ |
 
 ### Notifications & Logs
 | Feature | Source | Tests | Status |
@@ -337,7 +337,7 @@ Source inventory (as of this snapshot): 73 controllers, 83 domain modules, 18 po
 | Compliance form (signed link, settings) | `Tenant/Settings/ComplianceFormController` | `tests/Feature/Tenant/Settings/ComplianceFormControllerTest.php` | ✅ |
 | Automated reports | `Tenant/Settings/AutomatedReportsController` | `tests/Feature/Tenant/Dealer/Settings/AutomatedReportsControllerTest.php` | ✅ |
 | Profile (settings) | `Tenant/Settings/ProfileController` | `tests/Feature/Tenant/Settings/ProfileControllerTest.php` | ✅ |
-| Toggle store notifications | `GlobalSettingsController@toggleStoreNotifications` | `tests/Feature/Tenant/Dealer/Settings/GlobalSettingsControllerTest.php` | ⚠️ (presence; verify branch) |
+| Toggle store notifications | `GlobalSettingsController@toggleStoreNotifications` | `tests/Feature/Tenant/Dealer/Settings/GlobalSettingsControllerTest.php` | ✅ |
 
 ### Search & Misc
 | Feature | Source | Tests | Status |
@@ -381,7 +381,7 @@ Source inventory (as of this snapshot): 73 controllers, 83 domain modules, 18 po
 | `Scans/GenerateCyrismaReportJob` | `tests/Feature/Tenant/Scans/GenerateCyrismaReportJobTest.php` | ⚠️ |
 | `SendComplianceSummaryJob` | `tests/Feature/Tenant/Jobs/SendComplianceSummaryJobTest.php` | ✅ |
 | `SendCoursesResetNotifications` | `tests/Feature/Tenant/Course/SendCoursesResetNotificationsJobTest.php` | ✅ |
-| `SendCustomEmployeeMessageJob` | `tests/Feature/Tenant/Employee/SendCustomMessageControllerTest.php` | ⚠️ |
+| `SendCustomEmployeeMessageJob` | `tests/Feature/Tenant/Employee/SendCustomMessageControllerTest.php`, `tests/Feature/Tenant/Jobs/SendCustomEmployeeMessageJobTest.php` | ✅ |
 | `SendQueueEmailJob` | `tests/Feature/Tenant/Jobs/SendQueueEmailJobTest.php` | ✅ |
 | `SendVendorEmailJob` | `tests/Feature/Tenant/Jobs/SendVendorEmailJobTest.php` | ✅ |
 | `TestRedisJob` | — | n/a (debug-only) |
@@ -403,11 +403,11 @@ Source inventory (as of this snapshot): 73 controllers, 83 domain modules, 18 po
 | `CheckMultiStateUsersCommand` | `tests/Feature/CheckMultiStateUsersCommandTest.php` | ✅ |
 | `CleanupOldDealJacketReportsCommand` | `tests/Feature/Tenant/Console/CleanupOldDealJacketReportsCommandTest.php` | ✅ |
 | `ClearLivewireTempFiles` | `tests/Feature/Tenant/Console/MaintenanceCommandsTest.php` | ✅ |
-| `CourseExpiringEmailCommand` | `tests/Feature/Tenant/Course/CourseReminderCommandsTest.php` | ⚠️ |
-| `CourseReminderCommand` | same | ⚠️ |
-| `CourseYearsExpireCommand` | same | ⚠️ |
+| `CourseExpiringEmailCommand` | `tests/Feature/Tenant/Course/CourseReminderCommandsTest.php` | ✅ |
+| `CourseReminderCommand` | same | ✅ |
+| `CourseYearsExpireCommand` | `tests/Feature/Tenant/Course/CourseYearsExpireCommandTest.php` | ✅ |
 | `DeleteTemporaryUploadsCommand` | — | ⚠️ (broken: spatie/media-library-pro v3 removed `TemporaryUpload::old()` scope) |
-| `EmployeeCourseReminderCommand` | `tests/Feature/Tenant/Course/CourseReminderCommandsTest.php` | ⚠️ |
+| `EmployeeCourseReminderCommand` | `tests/Feature/Tenant/Course/CourseReminderCommandsTest.php` | ✅ |
 | `EnableVimeoSeek` | `tests/Feature/Tenant/Course/ComplexCourseCommandsTest.php` | ✅ |
 | `ImportSdsCommand` | `tests/Feature/ImportSdsCommandTest.php` | ✅ |
 | `MigrateSharedDocumentsToCentralDocsCommand` | — | ⚠️ (one-off bulk migration script, not run on schedule) |
@@ -499,10 +499,10 @@ Roles (ascending): `Employee`, `Porter/Driver`, `Manager`, `Qualified Individual
 
 ## Top Gaps (priority order)
 
-All ❌ items have been resolved, and every policy now has a dedicated (role × method) unit test. Remaining ⚠️ rows fall into two buckets:
+Every ❌ row is resolved and every policy has a dedicated (role × method) unit test. The remaining ⚠️ rows are:
 
-1. **Partial-coverage live flows** — `GenerateCyrismaReportJob::handle()` (PDF/FPDI path), `RemediationReminderCommand` due-audit happy path, `SendCustomEmployeeMessageJob`, the various `Course*ReminderCommand`s (covered together but per-command branches not isolated), and the `SdsRequestMail` body assertion.
-2. **Won't-fix-without-upgrade or one-off** — `DeleteTemporaryUploadsCommand` (broken upstream API), `VerifyCourseVideos` (queries `DealerCourse` outside tenancy context), `MigrateSharedDocumentsToCentralDocsCommand` / `ReportTenantSizeCommand` / `UpdateCompletedAtFieldForAudits` (admin scripts).
+1. **Live flows still pending isolated coverage** — `GenerateCyrismaReportJob::handle()` (PDF/FPDI path needs real Cyrisma data), `RemediationReminderCommand` due-audit happy path (fixture-heavy `reminder_logs` JSON), and the two tenancy router middlewares (`InitializeTenancyByDomain`, `PreventAccessFromCentralDomains`) which only get touched through route smoke tests.
+2. **Won't-fix-without-upgrade or one-off admin scripts** — `DeleteTemporaryUploadsCommand` (broken upstream API), `VerifyCourseVideos` (queries `DealerCourse` outside tenancy context), `MigrateSharedDocumentsToCentralDocsCommand` / `ReportTenantSizeCommand` / `UpdateCompletedAtFieldForAudits`.
 
 ---
 

@@ -123,7 +123,7 @@ describe('global settings index', function (): void {
 });
 
 describe('global settings store toggles', function (): void {
-    it('toggles store course-not-taken notifications', function (): void {
+    it('toggles store course-not-taken notifications in both directions', function (): void {
         $store = Store::query()->firstOrFail();
         $store->update(['courses_not_taken_notification' => false]);
 
@@ -132,6 +132,12 @@ describe('global settings store toggles', function (): void {
             ->assertRedirect();
 
         expect((bool) $store->fresh()->courses_not_taken_notification)->toBeTrue();
+
+        $this->actingAs($this->consultant)
+            ->post(route('dealer.settings.global.stores.notifications', $store))
+            ->assertRedirect();
+
+        expect((bool) $store->fresh()->courses_not_taken_notification)->toBeFalse();
     });
 
     it('toggles store remediation settings', function (): void {
