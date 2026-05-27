@@ -487,8 +487,8 @@ Roles (ascending): `Employee`, `Porter/Driver`, `Manager`, `Qualified Individual
 | Feature | Source | Tests | Status |
 | --- | --- | --- | --- |
 | Tenant data isolation (DB per tenant) | Stancl tenancy | `tests/Feature/Tenant/TenantIsolationTest.php` | ✅ |
-| `InitializeTenancyByDomain` middleware | route stack | `tests/Feature/Tenant/TenantAccessTest.php` | ⚠️ |
-| `PreventAccessFromCentralDomains` middleware | route stack | covered by route tests | ⚠️ |
+| `InitializeTenancyByDomain` middleware | route stack | `tests/Feature/Tenant/TenantAccessTest.php`, `tests/Feature/Tenant/Middleware/TenancyRoutingMiddlewareTest.php` | ✅ |
+| `PreventAccessFromCentralDomains` middleware | route stack | `tests/Feature/Tenant/Middleware/TenancyRoutingMiddlewareTest.php` | ✅ |
 | `EnsureTenantIsNotSuspended` middleware | `Http/Middleware/EnsureTenantIsNotSuspended` | `tests/Feature/Tenant/Middleware/EnsureTenantIsNotSuspendedTest.php` | ✅ |
 | Queue Redis routing (DB 3, no prefix) | `config/database.php` (`redis.queue` connection) | `tests/Feature/QueueRedisRoutingTest.php` | ✅ |
 | Telescope disabled in prod | `Providers/TelescopeServiceProvider` | `tests/Unit/TelescopeDisabledTest.php` | ✅ |
@@ -499,10 +499,12 @@ Roles (ascending): `Employee`, `Porter/Driver`, `Manager`, `Qualified Individual
 
 ## Top Gaps (priority order)
 
-Every ❌ row is resolved and every policy has a dedicated (role × method) unit test. The remaining ⚠️ rows are:
+Every ❌ row is resolved, every policy has a dedicated (role × method) unit test, and both tenancy router middlewares are now isolated-tested. Only two genuine ⚠️ rows remain:
 
-1. **Live flows still pending isolated coverage** — `GenerateCyrismaReportJob::handle()` (PDF/FPDI path needs real Cyrisma data), `RemediationReminderCommand` due-audit happy path (fixture-heavy `reminder_logs` JSON), and the two tenancy router middlewares (`InitializeTenancyByDomain`, `PreventAccessFromCentralDomains`) which only get touched through route smoke tests.
-2. **Won't-fix-without-upgrade or one-off admin scripts** — `DeleteTemporaryUploadsCommand` (broken upstream API), `VerifyCourseVideos` (queries `DealerCourse` outside tenancy context), `MigrateSharedDocumentsToCentralDocsCommand` / `ReportTenantSizeCommand` / `UpdateCompletedAtFieldForAudits`.
+1. **`GenerateCyrismaReportJob::handle()`** — the PDF/FPDI render path would need a real Cyrisma API response + browsershot output; the WithoutOverlapping middleware and `failed()` notification path are already covered.
+2. **`RemediationReminderCommand` due-audit happy path** — the JSON_LENGTH/JSON_UNQUOTE SQL window plus the OshaViolation + reminder-preference fixtures needed to trigger a real reminder is heavier than the no-op branches that are already tested.
+
+Outside the table are the won't-fix-without-upgrade rows: `DeleteTemporaryUploadsCommand` (broken upstream API), `VerifyCourseVideos` (queries `DealerCourse` outside tenancy context), and three one-off admin scripts (`MigrateSharedDocumentsToCentralDocsCommand`, `ReportTenantSizeCommand`, `UpdateCompletedAtFieldForAudits`).
 
 ---
 
