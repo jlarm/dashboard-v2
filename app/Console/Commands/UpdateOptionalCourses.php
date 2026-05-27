@@ -7,7 +7,6 @@ namespace App\Console\Commands;
 use App\Models\Course;
 use App\Models\Dealership;
 use Illuminate\Console\Command;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Override;
 
@@ -43,17 +42,16 @@ class UpdateOptionalCourses extends Command
             $this->info("Running command for tenant {$tenant->id} ({$tenant->name})");
 
             Course::query()
-                ->where('slug', function (Builder $query): void {
-                    $query->select('slug')
-                        ->where('slug', '6h-national-emission-standards')
-                        ->orWhere('slug', 'tractor-safety')
-                        ->orWhere('slug', 'dot-hazardous-materials-transportation')
-                        ->orWhere('slug', 'dot-hazardous-materials-transportation-identifying-hazardous-materials')
-                        ->orWhere('slug', 'dot-hazardous-materials-transportation-preparing-hazardous-materials-for-shipment')
-                        ->orWhere('slug', 'dot-hazardous-materials-transportation-shipping-papers-emergency-response-and-placarding')
-                        ->orWhere('slug', 'diversity-equality-and-inclusion-training')
-                        ->orWhere('slug', 'powered-industrial-trucks');
-                })
+                ->whereIn('slug', [
+                    '6h-national-emission-standards',
+                    'tractor-safety',
+                    'dot-hazardous-materials-transportation',
+                    'dot-hazardous-materials-transportation-identifying-hazardous-materials',
+                    'dot-hazardous-materials-transportation-preparing-hazardous-materials-for-shipment',
+                    'dot-hazardous-materials-transportation-shipping-papers-emergency-response-and-placarding',
+                    'diversity-equality-and-inclusion-training',
+                    'powered-industrial-trucks',
+                ])
                 ->update(['optional' => true]);
 
         });

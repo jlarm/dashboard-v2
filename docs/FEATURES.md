@@ -268,21 +268,21 @@ Source inventory (as of this snapshot): 73 controllers, 83 domain modules, 18 po
 | Course assignment to user | `Domain/Tenant/Course/Actions/AssignCourse` | `tests/Feature/Tenant/Course/CourseAssignmentTest.php` | ✅ |
 | Reminder commands (expiring/expired) | `Console/Commands/CourseExpiringEmailCommand`, `CourseReminderCommand`, `CourseYearsExpireCommand`, `EmployeeCourseReminderCommand`, `RemediationReminderCommand` | `tests/Feature/Tenant/Course/CourseReminderCommandsTest.php` | ⚠️ (covers some but not all) |
 | Issue DOT certificate | `Jobs/IssueDotCertificate`, `CourseController@issueDotCertificate` | `tests/Feature/Tenant/Course/IssueDotCertificateJobTest.php` | ✅ |
-| DOT cert ready notification | `Notifications/DotCertificateReadyNotification` | — | ❌ |
-| Course-expired notifications | `Notifications/CourseExpired*`, `ExpiredCourseNotification`, `IncompleteCoursesNotification` | — | ❌ |
+| DOT cert ready notification | `Notifications/DotCertificateReadyNotification` | `tests/Feature/Tenant/Course/CourseNotificationsTest.php` | ✅ |
+| Course-expired notifications | `Notifications/CourseExpired*`, `ExpiredCourseNotification`, `IncompleteCoursesNotification` | `tests/Feature/Tenant/Course/CourseNotificationsTest.php` | ✅ |
 | New course notification command | `Console/Commands/NewCourseNotificationCommand`, `SendCourseNotificationToTenantCommand` | `tests/Feature/Tenant/SendCourseNotificationToTenantCommandTest.php` | ⚠️ |
 | Backfill IL harassment results | `Console/Commands/BackfillIllinoisHarassmentCourseResultsCommand` | `tests/Feature/BackfillIllinoisHarassmentCourseResultsCommandTest.php` | ✅ |
 | Sync IL harassment roles | `Console/Commands/SyncIllinoisHarassmentRolesCommand` | `tests/Feature/SyncIllinoisHarassmentRolesCommandTest.php` | ✅ |
 | Sync CA harassment replacement | `Console/Commands/SyncCaliforniaHarassmentReplacementCommand` | `tests/Feature/SyncCaliforniaHarassmentReplacementCommandTest.php` | ✅ |
 | Reconcile tenant courses | `Console/Commands/ReconcileTenantCoursesCommand` | `tests/Feature/ReconcileTenantCoursesCommandTest.php` | ✅ |
-| Revert course reset | `Console/Commands/RevertCourseResetCommand` | — | ❌ |
-| Send course reset notifications | `Jobs/SendCoursesResetNotifications` | — | ❌ |
-| Course reset (mail + flow) | `Mail/CourseResetNotificationMail`, `CourseNotificationMail` | — | ❌ |
-| Update optional courses | `Console/Commands/UpdateOptionalCourses` | — | ❌ |
-| Add video to course | `Console/Commands/AddVideoToCourseCommand` | — | ❌ |
-| Enable vimeo seek | `Console/Commands/EnableVimeoSeek` | — | ❌ |
-| Verify course videos | `Console/Commands/VerifyCourseVideos` | — | ❌ |
-| Audit finance manager courses | `Console/Commands/AuditFinanceManagerCoursesCommand` | — | ❌ |
+| Revert course reset | `Console/Commands/RevertCourseResetCommand` | `tests/Feature/Tenant/Course/CourseMaintenanceCommandsTest.php` | ✅ |
+| Send course reset notifications | `Jobs/SendCoursesResetNotifications` | `tests/Feature/Tenant/Course/SendCoursesResetNotificationsJobTest.php` | ✅ |
+| Course reset (mail + flow) | `Mail/CourseResetNotificationMail`, `CourseNotificationMail` | `tests/Feature/Tenant/Course/CourseMailablesTest.php` | ✅ |
+| Update optional courses | `Console/Commands/UpdateOptionalCourses` | `tests/Feature/Tenant/Course/CourseMaintenanceCommandsTest.php` | ✅ |
+| Add video to course | `Console/Commands/AddVideoToCourseCommand` | `tests/Feature/Tenant/Course/CourseMaintenanceCommandsTest.php` | ✅ |
+| Enable vimeo seek | `Console/Commands/EnableVimeoSeek` | `tests/Feature/Tenant/Course/ComplexCourseCommandsTest.php` | ✅ |
+| Verify course videos | `Console/Commands/VerifyCourseVideos` | — | ⚠️ (broken: queries DealerCourse outside tenancy context) |
+| Audit finance manager courses | `Console/Commands/AuditFinanceManagerCoursesCommand` | `tests/Feature/Tenant/Course/ComplexCourseCommandsTest.php` | ✅ |
 | Dealer course show (slug-based) | `Dealer/CourseController` | `tests/Feature/Tenant/Dealer/Course/ShowTest.php` | ✅ |
 
 ### Scans (Cyrisma integration)
@@ -380,7 +380,7 @@ Source inventory (as of this snapshot): 73 controllers, 83 domain modules, 18 po
 | `RemediationReminderEmailJob` | — | ❌ |
 | `Scans/GenerateCyrismaReportJob` | — | ❌ |
 | `SendComplianceSummaryJob` | `tests/Feature/Tenant/Jobs/SendComplianceSummaryJobTest.php` | ✅ |
-| `SendCoursesResetNotifications` | — | ❌ |
+| `SendCoursesResetNotifications` | `tests/Feature/Tenant/Course/SendCoursesResetNotificationsJobTest.php` | ✅ |
 | `SendCustomEmployeeMessageJob` | `tests/Feature/Tenant/Employee/SendCustomMessageControllerTest.php` | ⚠️ |
 | `SendQueueEmailJob` | — | ❌ |
 | `SendVendorEmailJob` | `tests/Feature/Tenant/Jobs/SendVendorEmailJobTest.php` | ✅ |
@@ -393,8 +393,8 @@ Source inventory (as of this snapshot): 73 controllers, 83 domain modules, 18 po
 
 | Command | Tests | Status |
 | --- | --- | --- |
-| `AddVideoToCourseCommand` | — | ❌ |
-| `AuditFinanceManagerCoursesCommand` | — | ❌ |
+| `AddVideoToCourseCommand` | `tests/Feature/Tenant/Course/CourseMaintenanceCommandsTest.php` | ✅ |
+| `AuditFinanceManagerCoursesCommand` | `tests/Feature/Tenant/Course/ComplexCourseCommandsTest.php` | ✅ |
 | `BackfillIllinoisHarassmentCourseResultsCommand` | `tests/Feature/BackfillIllinoisHarassmentCourseResultsCommandTest.php` | ✅ |
 | `BackupCleanupCommand` | — | ❌ |
 | `BackupCommand` | — | ❌ |
@@ -408,7 +408,7 @@ Source inventory (as of this snapshot): 73 controllers, 83 domain modules, 18 po
 | `CourseYearsExpireCommand` | same | ⚠️ |
 | `DeleteTemporaryUploadsCommand` | — | ❌ |
 | `EmployeeCourseReminderCommand` | `tests/Feature/Tenant/Course/CourseReminderCommandsTest.php` | ⚠️ |
-| `EnableVimeoSeek` | — | ❌ |
+| `EnableVimeoSeek` | `tests/Feature/Tenant/Course/ComplexCourseCommandsTest.php` | ✅ |
 | `ImportSdsCommand` | `tests/Feature/ImportSdsCommandTest.php` | ✅ |
 | `MigrateSharedDocumentsToCentralDocsCommand` | — | ❌ |
 | `MigrateViolationStatementsCommand` | `tests/Feature/Central/ViolationStatement/MigrateViolationStatementsCommandTest.php` | ✅ |
@@ -417,7 +417,7 @@ Source inventory (as of this snapshot): 73 controllers, 83 domain modules, 18 po
 | `RemediationReminderCommand` | — | ❌ |
 | `RepairViolationStatementKeywordsCommand` | `tests/Feature/Central/ViolationStatement/RepairViolationStatementKeywordsCommandTest.php` | ✅ |
 | `ReportTenantSizeCommand` | — | ❌ |
-| `RevertCourseResetCommand` | — | ❌ |
+| `RevertCourseResetCommand` | `tests/Feature/Tenant/Course/CourseMaintenanceCommandsTest.php` | ✅ |
 | `RunInvitesCommand` | `tests/Feature/Tenant/Console/RunInvitesCommandTest.php` | ✅ |
 | `SendComplianceSummaryCommand` | `tests/Feature/Tenant/Console/SendComplianceSummaryCommandTest.php` | ✅ |
 | `SendCourseNotificationToTenantCommand` | `tests/Feature/Tenant/SendCourseNotificationToTenantCommandTest.php` | ✅ |
@@ -428,8 +428,8 @@ Source inventory (as of this snapshot): 73 controllers, 83 domain modules, 18 po
 | `SyncIllinoisHarassmentRolesCommand` | `tests/Feature/SyncIllinoisHarassmentRolesCommandTest.php` | ✅ |
 | `SyncSingleStoreUsersCommand` | `tests/Feature/Tenant/Console/SyncSingleStoreUsersCommandTest.php` | ✅ |
 | `UpdateCompletedAtFieldForAudits` | — | ❌ |
-| `UpdateOptionalCourses` | — | ❌ |
-| `VerifyCourseVideos` | — | ❌ |
+| `UpdateOptionalCourses` | `tests/Feature/Tenant/Course/CourseMaintenanceCommandsTest.php` | ✅ |
+| `VerifyCourseVideos` | — | ⚠️ (broken: queries DealerCourse outside tenancy context) |
 
 ---
 
