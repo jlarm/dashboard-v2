@@ -471,8 +471,8 @@ Roles (ascending): `Employee`, `Porter/Driver`, `Manager`, `Qualified Individual
 | `CourseResultsPolicy` | tenant course tests | ⚠️ |
 | `CyrismaPolicy` | `CyrismaPolicyTest` | ✅ |
 | `DealerDocPolicy` | `DealerDocControllerTest` | ⚠️ |
-| `DealJacketGroupPolicy` | — | ❌ |
-| `DealJacketPolicy` | — | ❌ |
+| `DealJacketGroupPolicy` | `tests/Feature/Tenant/Authorization/DealJacketPolicyTest.php` | ✅ |
+| `DealJacketPolicy` | `tests/Feature/Tenant/Authorization/DealJacketPolicyTest.php` | ✅ |
 | `GlobalSettingPolicy` | `GlobalSettingsControllerTest` | ⚠️ |
 | `SharedDocumentPolicy` (tenant) | `DealerDocControllerTest` | ⚠️ |
 | `StorePolicy` | `StoreAccessControlTest` | ✅ |
@@ -489,8 +489,8 @@ Roles (ascending): `Employee`, `Porter/Driver`, `Manager`, `Qualified Individual
 | Tenant data isolation (DB per tenant) | Stancl tenancy | `tests/Feature/Tenant/TenantIsolationTest.php` | ✅ |
 | `InitializeTenancyByDomain` middleware | route stack | `tests/Feature/Tenant/TenantAccessTest.php` | ⚠️ |
 | `PreventAccessFromCentralDomains` middleware | route stack | covered by route tests | ⚠️ |
-| `EnsureTenantIsNotSuspended` middleware | `Http/Middleware/EnsureTenantIsNotSuspended` | — | ❌ |
-| Queue Redis routing (DB 3, no prefix) | `config/queue.php` | — | ❌ |
+| `EnsureTenantIsNotSuspended` middleware | `Http/Middleware/EnsureTenantIsNotSuspended` | `tests/Feature/Tenant/Middleware/EnsureTenantIsNotSuspendedTest.php` | ✅ |
+| Queue Redis routing (DB 3, no prefix) | `config/database.php` (`redis.queue` connection) | `tests/Feature/QueueRedisRoutingTest.php` | ✅ |
 | Telescope disabled in prod | `Providers/TelescopeServiceProvider` | `tests/Unit/TelescopeDisabledTest.php` | ✅ |
 | Framework dirs created for new tenant | `Jobs/CreateFrameworkDirectoriesForTenantJob` | `tests/Feature/Tenant/Jobs/CreateFrameworkDirectoriesForTenantJobTest.php` | ✅ |
 | Backups (configure/cleanup/self-check) | `Console/Commands/Backup*` | `tests/Feature/Tenant/Console/BackupCommandsTest.php` | ✅ |
