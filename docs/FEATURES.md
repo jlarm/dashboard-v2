@@ -396,27 +396,27 @@ Source inventory (as of this snapshot): 73 controllers, 83 domain modules, 18 po
 | `AddVideoToCourseCommand` | `tests/Feature/Tenant/Course/CourseMaintenanceCommandsTest.php` | ✅ |
 | `AuditFinanceManagerCoursesCommand` | `tests/Feature/Tenant/Course/ComplexCourseCommandsTest.php` | ✅ |
 | `BackfillIllinoisHarassmentCourseResultsCommand` | `tests/Feature/BackfillIllinoisHarassmentCourseResultsCommandTest.php` | ✅ |
-| `BackupCleanupCommand` | — | ❌ |
-| `BackupCommand` | — | ❌ |
-| `BackupSelfCheckCommand` | — | ❌ |
+| `BackupCleanupCommand` | `tests/Feature/Tenant/Console/BackupCommandsTest.php` | ✅ |
+| `BackupCommand` | `tests/Feature/Tenant/Console/BackupCommandsTest.php` | ✅ |
+| `BackupSelfCheckCommand` | `tests/Feature/Tenant/Console/BackupCommandsTest.php` | ✅ |
 | `CheckMissingSdsFiles` | `tests/Feature/CheckMissingSdsFilesTest.php` | ✅ |
 | `CheckMultiStateUsersCommand` | `tests/Feature/CheckMultiStateUsersCommandTest.php` | ✅ |
 | `CleanupOldDealJacketReportsCommand` | `tests/Feature/Tenant/Console/CleanupOldDealJacketReportsCommandTest.php` | ✅ |
-| `ClearLivewireTempFiles` | — | ❌ |
+| `ClearLivewireTempFiles` | `tests/Feature/Tenant/Console/MaintenanceCommandsTest.php` | ✅ |
 | `CourseExpiringEmailCommand` | `tests/Feature/Tenant/Course/CourseReminderCommandsTest.php` | ⚠️ |
 | `CourseReminderCommand` | same | ⚠️ |
 | `CourseYearsExpireCommand` | same | ⚠️ |
-| `DeleteTemporaryUploadsCommand` | — | ❌ |
+| `DeleteTemporaryUploadsCommand` | — | ⚠️ (broken: spatie/media-library-pro v3 removed `TemporaryUpload::old()` scope) |
 | `EmployeeCourseReminderCommand` | `tests/Feature/Tenant/Course/CourseReminderCommandsTest.php` | ⚠️ |
 | `EnableVimeoSeek` | `tests/Feature/Tenant/Course/ComplexCourseCommandsTest.php` | ✅ |
 | `ImportSdsCommand` | `tests/Feature/ImportSdsCommandTest.php` | ✅ |
-| `MigrateSharedDocumentsToCentralDocsCommand` | — | ❌ |
+| `MigrateSharedDocumentsToCentralDocsCommand` | — | ⚠️ (one-off bulk migration script, not run on schedule) |
 | `MigrateViolationStatementsCommand` | `tests/Feature/Central/ViolationStatement/MigrateViolationStatementsCommandTest.php` | ✅ |
-| `NewCourseNotificationCommand` | — | ❌ |
+| `NewCourseNotificationCommand` | `tests/Feature/Tenant/Console/NewCourseNotificationCommandTest.php` | ✅ |
 | `ReconcileTenantCoursesCommand` | `tests/Feature/ReconcileTenantCoursesCommandTest.php` | ✅ |
-| `RemediationReminderCommand` | — | ❌ |
+| `RemediationReminderCommand` | `tests/Feature/Tenant/Console/RemediationReminderCommandTest.php` | ⚠️ (no-op branches covered; due-audit happy path requires fixture-heavy reminder_logs JSON) |
 | `RepairViolationStatementKeywordsCommand` | `tests/Feature/Central/ViolationStatement/RepairViolationStatementKeywordsCommandTest.php` | ✅ |
-| `ReportTenantSizeCommand` | — | ❌ |
+| `ReportTenantSizeCommand` | — | ⚠️ (diagnostic-only; prints `information_schema.TABLES` size per tenant DB) |
 | `RevertCourseResetCommand` | `tests/Feature/Tenant/Course/CourseMaintenanceCommandsTest.php` | ✅ |
 | `RunInvitesCommand` | `tests/Feature/Tenant/Console/RunInvitesCommandTest.php` | ✅ |
 | `SendComplianceSummaryCommand` | `tests/Feature/Tenant/Console/SendComplianceSummaryCommandTest.php` | ✅ |
@@ -427,7 +427,7 @@ Source inventory (as of this snapshot): 73 controllers, 83 domain modules, 18 po
 | `SyncCaliforniaHarassmentReplacementCommand` | `tests/Feature/SyncCaliforniaHarassmentReplacementCommandTest.php` | ✅ |
 | `SyncIllinoisHarassmentRolesCommand` | `tests/Feature/SyncIllinoisHarassmentRolesCommandTest.php` | ✅ |
 | `SyncSingleStoreUsersCommand` | `tests/Feature/Tenant/Console/SyncSingleStoreUsersCommandTest.php` | ✅ |
-| `UpdateCompletedAtFieldForAudits` | — | ❌ |
+| `UpdateCompletedAtFieldForAudits` | — | ⚠️ (one-off backfill that sets completed_date = updated_at on uploaded but unmarked violation audits) |
 | `UpdateOptionalCourses` | `tests/Feature/Tenant/Course/CourseMaintenanceCommandsTest.php` | ✅ |
 | `VerifyCourseVideos` | — | ⚠️ (broken: queries DealerCourse outside tenancy context) |
 
@@ -493,7 +493,7 @@ Roles (ascending): `Employee`, `Porter/Driver`, `Manager`, `Qualified Individual
 | Queue Redis routing (DB 3, no prefix) | `config/queue.php` | — | ❌ |
 | Telescope disabled in prod | `Providers/TelescopeServiceProvider` | `tests/Unit/TelescopeDisabledTest.php` | ✅ |
 | Framework dirs created for new tenant | `Jobs/CreateFrameworkDirectoriesForTenantJob` | `tests/Feature/Tenant/Jobs/CreateFrameworkDirectoriesForTenantJobTest.php` | ✅ |
-| Backups (configure/cleanup/self-check) | `Console/Commands/Backup*` | — | ❌ |
+| Backups (configure/cleanup/self-check) | `Console/Commands/Backup*` | `tests/Feature/Tenant/Console/BackupCommandsTest.php` | ✅ |
 
 ---
 
