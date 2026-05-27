@@ -459,26 +459,26 @@ Roles (ascending): `Employee`, `Porter/Driver`, `Manager`, `Qualified Individual
 ### Per-policy method coverage
 | Policy | Tests | Status |
 | --- | --- | --- |
-| `Central/ContractPolicy` | implied via `tests/Feature/Central/Contract/*` + `CentralRouteAccessTest` | ⚠️ (per-method assertions not isolated) |
-| `Central/DealershipPolicy` | `CentralRouteAccessTest`, `Dealership/*Test` | ⚠️ |
-| `Central/DocumentPolicy` | `CentralRouteAccessTest`, `Document/*Test` | ⚠️ |
-| `Central/InvitePolicy` | `Central/Invite/InviteControllerTest` | ⚠️ |
-| `Central/SdsPolicy` | `Central/Sds/*Test` | ⚠️ |
-| `Central/SharedDocumentPolicy` | `Central/SharedDocument/*Test` | ⚠️ |
-| `Central/UserPolicy` | `Central/User/UserControllerTest` | ⚠️ |
-| `Central/ViolationStatementPolicy` | `Central/ViolationStatement/*Test` | ⚠️ |
-| `CoursePolicy` | tenant authorization tests | ⚠️ |
-| `CourseResultsPolicy` | tenant course tests | ⚠️ |
+| `Central/ContractPolicy` | `tests/Feature/Central/Authorization/CentralPoliciesTest.php` | ✅ |
+| `Central/DealershipPolicy` | `tests/Feature/Central/Authorization/CentralPoliciesTest.php` | ✅ |
+| `Central/DocumentPolicy` | `tests/Feature/Central/Authorization/CentralPoliciesTest.php` | ✅ |
+| `Central/InvitePolicy` | `tests/Feature/Central/Authorization/CentralPoliciesTest.php` | ✅ |
+| `Central/SdsPolicy` | `tests/Feature/Central/Authorization/CentralPoliciesTest.php` | ✅ |
+| `Central/SharedDocumentPolicy` | `tests/Feature/Central/Authorization/CentralPoliciesTest.php` | ✅ |
+| `Central/UserPolicy` | `tests/Feature/Central/Authorization/CentralUserPolicyTest.php` | ✅ |
+| `Central/ViolationStatementPolicy` | `tests/Feature/Central/Authorization/CentralPoliciesTest.php` | ✅ |
+| `CoursePolicy` | `tests/Feature/Tenant/Authorization/TenantPoliciesTest.php` | ✅ |
+| `CourseResultsPolicy` | `tests/Feature/Tenant/Authorization/TenantPoliciesTest.php` | ✅ |
 | `CyrismaPolicy` | `CyrismaPolicyTest` | ✅ |
-| `DealerDocPolicy` | `DealerDocControllerTest` | ⚠️ |
+| `DealerDocPolicy` | `tests/Feature/Tenant/Authorization/TenantPoliciesTest.php` | ✅ |
 | `DealJacketGroupPolicy` | `tests/Feature/Tenant/Authorization/DealJacketPolicyTest.php` | ✅ |
 | `DealJacketPolicy` | `tests/Feature/Tenant/Authorization/DealJacketPolicyTest.php` | ✅ |
-| `GlobalSettingPolicy` | `GlobalSettingsControllerTest` | ⚠️ |
-| `SharedDocumentPolicy` (tenant) | `DealerDocControllerTest` | ⚠️ |
+| `GlobalSettingPolicy` | `tests/Feature/Tenant/Authorization/TenantPoliciesTest.php` | ✅ |
+| `SharedDocumentPolicy` (tenant) | `tests/Feature/Tenant/Authorization/TenantPoliciesTest.php` | ✅ |
 | `StorePolicy` | `StoreAccessControlTest` | ✅ |
-| `VendorPolicy` | `VendorControllerTest` | ⚠️ |
+| `VendorPolicy` | `tests/Feature/Tenant/Authorization/TenantPoliciesTest.php` | ✅ |
 
-> ⚠️ entries above pass via integration tests but lack dedicated policy-method unit tests. Add focused tests if you want to lock in allow/deny per (role × method).
+> Per-method policy unit tests live in `tests/Feature/{Central,Tenant}/Authorization/`. Integration tests in the route handlers still exercise the policies end-to-end.
 
 ---
 
@@ -499,11 +499,10 @@ Roles (ascending): `Employee`, `Porter/Driver`, `Manager`, `Qualified Individual
 
 ## Top Gaps (priority order)
 
-All ❌ items have been resolved. Remaining ⚠️ rows fall into three buckets:
+All ❌ items have been resolved, and every policy now has a dedicated (role × method) unit test. Remaining ⚠️ rows fall into two buckets:
 
-1. **Per-policy unit tests** — every Central + tenant policy still in section 7 marked ⚠️ passes through integration tests but lacks a dedicated `(role × method)` policy class test. Same pattern as `DealJacketPolicyTest`.
-2. **Partial-coverage live flows** — `GenerateCyrismaReportJob::handle()` (PDF/FPDI path), `RemediationReminderCommand` due-audit happy path, `SendCustomEmployeeMessageJob`, the various `Course*ReminderCommand`s (covered together but per-command branches not isolated), and the `SdsRequestMail` body assertion.
-3. **Won't-fix-without-upgrade** — `DeleteTemporaryUploadsCommand` (broken upstream API), `VerifyCourseVideos` (queries `DealerCourse` outside tenancy context), `MigrateSharedDocumentsToCentralDocsCommand` / `ReportTenantSizeCommand` / `UpdateCompletedAtFieldForAudits` (one-off admin scripts).
+1. **Partial-coverage live flows** — `GenerateCyrismaReportJob::handle()` (PDF/FPDI path), `RemediationReminderCommand` due-audit happy path, `SendCustomEmployeeMessageJob`, the various `Course*ReminderCommand`s (covered together but per-command branches not isolated), and the `SdsRequestMail` body assertion.
+2. **Won't-fix-without-upgrade or one-off** — `DeleteTemporaryUploadsCommand` (broken upstream API), `VerifyCourseVideos` (queries `DealerCourse` outside tenancy context), `MigrateSharedDocumentsToCentralDocsCommand` / `ReportTenantSizeCommand` / `UpdateCompletedAtFieldForAudits` (admin scripts).
 
 ---
 
