@@ -304,14 +304,14 @@ Source inventory (as of this snapshot): 73 controllers, 83 domain modules, 18 po
 | Feature | Source | Tests | Status |
 | --- | --- | --- | --- |
 | Vendor index (dealer) | `Dealer/VendorController` | `tests/Feature/Tenant/Dealer/Vendor/VendorControllerTest.php`, `tests/Feature/Tenant/Vendor/IndexItemTest.php` | ✅ |
-| Public vendor form | `Dealer/VendorController@form`, `@submit` | — | ❌ |
-| Vendor form submit (action) | `Domain/Tenant/Vendor/Actions/SubmitVendorForm` | — | ❌ |
+| Public vendor form | `Dealer/VendorController@form`, `@submit` | `tests/Feature/Tenant/Vendor/PublicVendorFormTest.php` | ✅ |
+| Vendor form submit (action) | `Domain/Tenant/Vendor/Actions/SubmitVendorForm` | `tests/Feature/Tenant/Vendor/SubmitVendorFormActionTest.php` | ✅ |
 | Send vendor email job | `Jobs/SendVendorEmailJob` | `tests/Feature/Tenant/Jobs/SendVendorEmailJobTest.php` | ✅ |
 | Incomplete vendor reminder | `Jobs/IncompleteVendorNotificationJob` | `tests/Feature/Tenant/Jobs/IncompleteVendorNotificationJobTest.php` | ✅ |
 | Vendor email log | tenant log surface | `tests/Feature/Tenant/VendorEmailLogTest.php` | ✅ |
-| Send vendor notification command | `Console/Commands/SendVendorNotificationCommand` | — | ❌ |
-| Download vendor PDF | `Jobs/DownloadVendorPdfJob` | — | ❌ |
-| Vendor form notification | `Notifications/VendorFormNotification`, `VendorSignedNotification` | — | ❌ |
+| Send vendor notification command | `Console/Commands/SendVendorNotificationCommand` | `tests/Feature/Tenant/Vendor/SendVendorNotificationCommandTest.php` | ✅ |
+| ~~Download vendor PDF~~ (orphan, deleted) | ~~`Jobs/DownloadVendorPdfJob`~~ | — | n/a |
+| Vendor form notification | `Notifications/VendorFormNotification`, `VendorSignedNotification` | `tests/Feature/Tenant/Vendor/VendorNotificationsTest.php` | ✅ |
 
 ### SDS (tenant-facing)
 | Feature | Source | Tests | Status |
@@ -370,7 +370,7 @@ Source inventory (as of this snapshot): 73 controllers, 83 domain modules, 18 po
 | `Contracts/UploadToDigitalOceanJob` | `tests/Feature/Central/Contract/UploadToDigitalOceanJobTest.php` | ✅ |
 | `CreateFrameworkDirectoriesForTenantJob` | — | ❌ |
 | `CrossTenantPasswordResetJob` | `tests/Feature/Auth/CrossTenantPasswordResetTest.php`, `tests/Feature/Tenant/Auth/CrossTenantPasswordResetJobTest.php` | ✅ |
-| `DownloadVendorPdfJob` | — | ❌ |
+| ~~`DownloadVendorPdfJob`~~ | — | deleted (orphan, empty handle) |
 | `GenerateIndividualAuditPdfJob` | `tests/Feature/Tenant/Audits/GenerateIndividualAuditPdfJobTest.php` | ✅ |
 | `ImportEmployeesJob` | `tests/Feature/Tenant/Employee/ImportEmployeesControllerTest.php` | ✅ |
 | `IncompleteVendorNotificationJob` | `tests/Feature/Tenant/Jobs/IncompleteVendorNotificationJobTest.php` | ✅ |
@@ -421,7 +421,7 @@ Source inventory (as of this snapshot): 73 controllers, 83 domain modules, 18 po
 | `RunInvitesCommand` | `tests/Feature/Tenant/Console/RunInvitesCommandTest.php` | ✅ |
 | `SendComplianceSummaryCommand` | `tests/Feature/Tenant/Console/SendComplianceSummaryCommandTest.php` | ✅ |
 | `SendCourseNotificationToTenantCommand` | `tests/Feature/Tenant/SendCourseNotificationToTenantCommandTest.php` | ✅ |
-| `SendVendorNotificationCommand` | — | ❌ |
+| `SendVendorNotificationCommand` | `tests/Feature/Tenant/Vendor/SendVendorNotificationCommandTest.php` | ✅ |
 | `SetCurrentStoreCommand` | `tests/Feature/Tenant/Console/SetCurrentStoreCommandTest.php` | ✅ |
 | `SnapshotComplianceScoresCommand` | `tests/Feature/Tenant/Console/SnapshotComplianceScoresCommandTest.php` | ✅ |
 | `SyncCaliforniaHarassmentReplacementCommand` | `tests/Feature/SyncCaliforniaHarassmentReplacementCommandTest.php` | ✅ |
