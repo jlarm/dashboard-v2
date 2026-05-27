@@ -499,18 +499,11 @@ Roles (ascending): `Employee`, `Porter/Driver`, `Manager`, `Qualified Individual
 
 ## Top Gaps (priority order)
 
-These are the highest-value missing tests for stability and audit-trail reasons:
+All ❌ items have been resolved. Remaining ⚠️ rows fall into three buckets:
 
-1. **Individual audit CRUD + PDF flow** — entire flow untested (controller, action, job).
-2. **Deal jacket CRUD + report download/cleanup** — heavily used feature with zero tests.
-3. **Manual PDF generation jobs** (CMS/ISP/OSHA/RedFlag Generate + Upload) — PDF correctness is a compliance artifact.
-4. **Vendor public form submission flow** — public route, no auth, no tests.
-5. **Cyrisma scan report generation** (`Scans/GenerateCyrismaReportJob`) and scan-result notifications.
-6. **Course reset / notification flow** — `SendCoursesResetNotifications`, reset mailables, revert command.
-7. **Per-policy unit tests** — every ⚠️ policy in section 7, especially `DealJacketPolicy` and `DealJacketGroupPolicy` (❌).
-8. **API endpoints** — `API/AuthController`, `API/DealerListController` are entirely untested.
-9. **Backup commands** — `BackupCommand`, `BackupCleanupCommand`, `BackupSelfCheckCommand` (data-loss risk).
-10. **`EnsureTenantIsNotSuspended` middleware** — suspends billing/access, no regression test.
+1. **Per-policy unit tests** — every Central + tenant policy still in section 7 marked ⚠️ passes through integration tests but lacks a dedicated `(role × method)` policy class test. Same pattern as `DealJacketPolicyTest`.
+2. **Partial-coverage live flows** — `GenerateCyrismaReportJob::handle()` (PDF/FPDI path), `RemediationReminderCommand` due-audit happy path, `SendCustomEmployeeMessageJob`, the various `Course*ReminderCommand`s (covered together but per-command branches not isolated), and the `SdsRequestMail` body assertion.
+3. **Won't-fix-without-upgrade** — `DeleteTemporaryUploadsCommand` (broken upstream API), `VerifyCourseVideos` (queries `DealerCourse` outside tenancy context), `MigrateSharedDocumentsToCentralDocsCommand` / `ReportTenantSizeCommand` / `UpdateCompletedAtFieldForAudits` (one-off admin scripts).
 
 ---
 
