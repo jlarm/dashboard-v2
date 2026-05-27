@@ -368,7 +368,7 @@ Source inventory (as of this snapshot): 73 controllers, 83 domain modules, 18 po
 | `Audit/GenerateDealJacketReportJob` | `tests/Feature/Tenant/Audit/GenerateDealJacketReportJobTest.php` | ✅ |
 | `Contracts/GeneratePdfJob` | `tests/Feature/Central/Contract/PdfTest.php` | ✅ |
 | `Contracts/UploadToDigitalOceanJob` | `tests/Feature/Central/Contract/UploadToDigitalOceanJobTest.php` | ✅ |
-| `CreateFrameworkDirectoriesForTenantJob` | — | ❌ |
+| `CreateFrameworkDirectoriesForTenantJob` | `tests/Feature/Tenant/Jobs/CreateFrameworkDirectoriesForTenantJobTest.php` | ✅ |
 | `CrossTenantPasswordResetJob` | `tests/Feature/Auth/CrossTenantPasswordResetTest.php`, `tests/Feature/Tenant/Auth/CrossTenantPasswordResetJobTest.php` | ✅ |
 | ~~`DownloadVendorPdfJob`~~ | — | deleted (orphan, empty handle) |
 | `GenerateIndividualAuditPdfJob` | `tests/Feature/Tenant/Audits/GenerateIndividualAuditPdfJobTest.php` | ✅ |
@@ -377,12 +377,12 @@ Source inventory (as of this snapshot): 73 controllers, 83 domain modules, 18 po
 | `IssueDotCertificate` | `tests/Feature/Tenant/Course/IssueDotCertificateJobTest.php` | ✅ |
 | `Manuals/Generate*ManualJob` | `tests/Feature/Tenant/Manuals/GenerateManualJobTest.php` | ✅ |
 | `Manuals/Upload*ToDigitalOceanJob` | `tests/Feature/Tenant/Manuals/UploadManualJobTest.php` | ✅ |
-| `RemediationReminderEmailJob` | — | ❌ |
+| ~~`RemediationReminderEmailJob`~~ | — | deleted (orphan, only dispatched `InitialRemediationReminderNotification` which was also unused) |
 | `Scans/GenerateCyrismaReportJob` | `tests/Feature/Tenant/Scans/GenerateCyrismaReportJobTest.php` | ⚠️ |
 | `SendComplianceSummaryJob` | `tests/Feature/Tenant/Jobs/SendComplianceSummaryJobTest.php` | ✅ |
 | `SendCoursesResetNotifications` | `tests/Feature/Tenant/Course/SendCoursesResetNotificationsJobTest.php` | ✅ |
 | `SendCustomEmployeeMessageJob` | `tests/Feature/Tenant/Employee/SendCustomMessageControllerTest.php` | ⚠️ |
-| `SendQueueEmailJob` | — | ❌ |
+| `SendQueueEmailJob` | `tests/Feature/Tenant/Jobs/SendQueueEmailJobTest.php` | ✅ |
 | `SendVendorEmailJob` | `tests/Feature/Tenant/Jobs/SendVendorEmailJobTest.php` | ✅ |
 | `TestRedisJob` | — | n/a (debug-only) |
 | `UploadIndividualAuditToDigitalOceanJob` | `tests/Feature/Tenant/Audits/UploadIndividualAuditToDigitalOceanJobTest.php` | ✅ |
@@ -492,7 +492,7 @@ Roles (ascending): `Employee`, `Porter/Driver`, `Manager`, `Qualified Individual
 | `EnsureTenantIsNotSuspended` middleware | `Http/Middleware/EnsureTenantIsNotSuspended` | — | ❌ |
 | Queue Redis routing (DB 3, no prefix) | `config/queue.php` | — | ❌ |
 | Telescope disabled in prod | `Providers/TelescopeServiceProvider` | `tests/Unit/TelescopeDisabledTest.php` | ✅ |
-| Framework dirs created for new tenant | `Jobs/CreateFrameworkDirectoriesForTenantJob` | — | ❌ |
+| Framework dirs created for new tenant | `Jobs/CreateFrameworkDirectoriesForTenantJob` | `tests/Feature/Tenant/Jobs/CreateFrameworkDirectoriesForTenantJobTest.php` | ✅ |
 | Backups (configure/cleanup/self-check) | `Console/Commands/Backup*` | — | ❌ |
 
 ---
