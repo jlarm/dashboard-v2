@@ -296,9 +296,9 @@ Source inventory (as of this snapshot): 73 controllers, 83 domain modules, 18 po
 | Scan archive | `Tenant/ScanArchiveController` | `tests/Feature/Tenant/Scans/ScanArchiveControllerTest.php` | ✅ |
 | Download report | `Tenant/CyrismaReportController` | `tests/Feature/Tenant/Scans/DownloadReportTest.php` | ✅ |
 | Cyrisma policy | `Policies/CyrismaPolicy` | `tests/Feature/Tenant/Authorization/CyrismaPolicyTest.php` | ✅ |
-| Cyrisma controller | `Tenant/CyrismaController` | — | ❌ |
-| Generate Cyrisma report job | `Jobs/Scans/GenerateCyrismaReportJob` | — | ❌ |
-| Scan report ready/failed notifications | `Notifications/Scans/ScanReportReady…`, `ScanReportFailed…` | — | ❌ |
+| Cyrisma controller | `Tenant/CyrismaController` | `tests/Feature/Tenant/Scans/SettingsTest.php` | ✅ (settings + update) |
+| Generate Cyrisma report job | `Jobs/Scans/GenerateCyrismaReportJob` | `tests/Feature/Tenant/Scans/GenerateCyrismaReportJobTest.php` | ⚠️ (middleware + failed() covered; handle() PDF path requires real Cyrisma data) |
+| Scan report ready/failed notifications | `Notifications/Scans/ScanReportReady…`, `ScanReportFailed…` | `tests/Feature/Tenant/Scans/ScanReportNotificationsTest.php` | ✅ |
 
 ### Vendors
 | Feature | Source | Tests | Status |
@@ -378,7 +378,7 @@ Source inventory (as of this snapshot): 73 controllers, 83 domain modules, 18 po
 | `Manuals/Generate*ManualJob` | `tests/Feature/Tenant/Manuals/GenerateManualJobTest.php` | ✅ |
 | `Manuals/Upload*ToDigitalOceanJob` | `tests/Feature/Tenant/Manuals/UploadManualJobTest.php` | ✅ |
 | `RemediationReminderEmailJob` | — | ❌ |
-| `Scans/GenerateCyrismaReportJob` | — | ❌ |
+| `Scans/GenerateCyrismaReportJob` | `tests/Feature/Tenant/Scans/GenerateCyrismaReportJobTest.php` | ⚠️ |
 | `SendComplianceSummaryJob` | `tests/Feature/Tenant/Jobs/SendComplianceSummaryJobTest.php` | ✅ |
 | `SendCoursesResetNotifications` | `tests/Feature/Tenant/Course/SendCoursesResetNotificationsJobTest.php` | ✅ |
 | `SendCustomEmployeeMessageJob` | `tests/Feature/Tenant/Employee/SendCustomMessageControllerTest.php` | ⚠️ |
