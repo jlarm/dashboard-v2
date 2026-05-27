@@ -336,7 +336,7 @@ Source inventory (as of this snapshot): 73 controllers, 83 domain modules, 18 po
 | Store settings sections | `Tenant/Settings/StoreSettingsController` | `tests/Feature/Tenant/Dealer/Store/SettingsSectionsTest.php` | ✅ |
 | Compliance form (signed link, settings) | `Tenant/Settings/ComplianceFormController` | `tests/Feature/Tenant/Settings/ComplianceFormControllerTest.php` | ✅ |
 | Automated reports | `Tenant/Settings/AutomatedReportsController` | `tests/Feature/Tenant/Dealer/Settings/AutomatedReportsControllerTest.php` | ✅ |
-| Profile (settings) | `Tenant/Settings/ProfileController` | — | ❌ |
+| Profile (settings) | `Tenant/Settings/ProfileController` | `tests/Feature/Tenant/Settings/ProfileControllerTest.php` | ✅ |
 | Toggle store notifications | `GlobalSettingsController@toggleStoreNotifications` | `tests/Feature/Tenant/Dealer/Settings/GlobalSettingsControllerTest.php` | ⚠️ (presence; verify branch) |
 
 ### Search & Misc
@@ -352,8 +352,8 @@ Source inventory (as of this snapshot): 73 controllers, 83 domain modules, 18 po
 
 | Feature | Source | Tests | Status |
 | --- | --- | --- | --- |
-| API auth (Sanctum token) | `API/AuthController` | — | ❌ |
-| Dealer list endpoint | `API/DealerListController` | — | ❌ |
+| API auth (Sanctum token) | `API/AuthController` | `tests/Feature/API/AuthControllerTest.php` | ✅ |
+| ~~Dealer list endpoint~~ (orphan, deleted) | ~~`API/DealerListController`~~ | — | n/a |
 | Mailgun webhook | `API/MailgunWebhookController` | `tests/Feature/MailgunWebhookTest.php` | ✅ |
 
 ---
