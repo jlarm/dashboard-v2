@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-use App\Http\Livewire\Dealer\Vendor\IndexItem;
+use App\Domain\Tenant\Vendor\Data\VendorListData;
 use App\Models\Dealer\Vendor;
 use App\Models\Dealer\VendorForm;
-use Livewire\Livewire;
 
 beforeEach(function (): void {
     $this->vendor = Vendor::query()->create([
@@ -16,12 +15,9 @@ beforeEach(function (): void {
 });
 
 it('reports not completed when vendor has no forms', function (): void {
-    $this->actingAs($this->consultant);
+    $this->vendor->load('latestForm');
 
-    Livewire::test(IndexItem::class, ['vendor' => $this->vendor])
-        ->assertSet('vendor', $this->vendor)
-        ->assertStatus(200);
-
+    expect(VendorListData::fromModel($this->vendor)->isCompleted)->toBeFalse();
     expect($this->vendor->latestForm)->toBeNull();
 });
 
@@ -36,11 +32,7 @@ it('reports not completed when latest form has no signature or document', functi
 
     $this->vendor->load('latestForm');
 
-    $this->actingAs($this->consultant);
-
-    $component = Livewire::test(IndexItem::class, ['vendor' => $this->vendor]);
-
-    expect($component->instance()->isCompleted())->toBeFalse();
+    expect(VendorListData::fromModel($this->vendor)->isCompleted)->toBeFalse();
 });
 
 it('reports completed when latest form has a signature', function (): void {
@@ -54,11 +46,7 @@ it('reports completed when latest form has a signature', function (): void {
 
     $this->vendor->load('latestForm');
 
-    $this->actingAs($this->consultant);
-
-    $component = Livewire::test(IndexItem::class, ['vendor' => $this->vendor]);
-
-    expect($component->instance()->isCompleted())->toBeTrue();
+    expect(VendorListData::fromModel($this->vendor)->isCompleted)->toBeTrue();
 });
 
 it('reports completed when latest form has a document path', function (): void {
@@ -72,11 +60,7 @@ it('reports completed when latest form has a document path', function (): void {
 
     $this->vendor->load('latestForm');
 
-    $this->actingAs($this->consultant);
-
-    $component = Livewire::test(IndexItem::class, ['vendor' => $this->vendor]);
-
-    expect($component->instance()->isCompleted())->toBeTrue();
+    expect(VendorListData::fromModel($this->vendor)->isCompleted)->toBeTrue();
 });
 
 it('latestForm relationship returns the most recent form', function (): void {

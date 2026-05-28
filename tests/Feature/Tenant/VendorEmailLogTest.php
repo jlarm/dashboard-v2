@@ -115,10 +115,18 @@ it('logs multiple emails for the same vendor form', function (): void {
         'email' => 'vendor@example.com',
     ]);
 
-    // Send multiple emails
+    // The job dedupes sends within a 10-minute window via VendorEmailLog,
+    // so travel past the window between dispatches to record three logs.
+    Illuminate\Support\Facades\Date::setTestNow(now());
     dispatch_sync(new IncompleteVendorNotificationJob($vendorForm));
+
+    Illuminate\Support\Facades\Date::setTestNow(now()->addMinutes(15));
     dispatch_sync(new IncompleteVendorNotificationJob($vendorForm));
+
+    Illuminate\Support\Facades\Date::setTestNow(now()->addMinutes(15));
     dispatch_sync(new IncompleteVendorNotificationJob($vendorForm));
+
+    Illuminate\Support\Facades\Date::setTestNow();
 
     expect(VendorEmailLog::query()->count())->toBe(3);
     expect($vendorForm->emailLogs->count())->toBe(3);
