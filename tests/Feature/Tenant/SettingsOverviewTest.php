@@ -19,9 +19,14 @@ describe('settings overview', function (): void {
 
         $this->actingAs($this->consultant)
             ->get(route('dealer.dealer.settings'))
+            ->assertRedirect(route('dealer.settings.global'));
+
+        $this->actingAs($this->consultant)
+            ->get(route('dealer.settings.global'))
             ->assertOk()
-            ->assertSee('Settings Overview')
-            ->assertSee($storeA->name)
-            ->assertSee($storeB->name);
+            ->assertInertia(fn ($page) => $page
+                ->component('tenant/settings/GlobalSettings')
+                ->where('stores', fn (Illuminate\Support\Collection $stores): bool => $stores->pluck('name')->sort()->values()->all() === collect([$storeA->name, $storeB->name])->sort()->values()->all())
+            );
     });
 });
