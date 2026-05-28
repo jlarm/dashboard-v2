@@ -37,6 +37,8 @@ beforeEach(function (): void {
     Storage::fake('sds-sheets');
     Storage::fake('do-audits');
     Storage::fake('do-manuals');
+    Storage::fake('dealer-docs');
+    Storage::fake('central-docs');
 
     // PDF dispatchers instantiate heavy jobs in their constructors. The smoke
     // test only verifies route + middleware wiring, so swap them for no-ops.
@@ -204,7 +206,90 @@ beforeEach(function (): void {
         'vendor_id' => $this->vendor->id,
         'name' => 'Vendor Form Contact',
         'email' => 'vendor-form@test-tenant.localhost',
+        'document_path' => 'route-coverage-vendor-form.pdf',
     ]);
+    Storage::disk('do-manuals')->put('route-coverage-vendor-form.pdf', 'pdf-content');
+
+    $this->dealerDoc = App\Models\DealerDoc::query()->create([
+        'title' => 'Route Coverage Doc',
+        'store_id' => $this->store->id,
+        'file_name' => 'route-coverage-doc.pdf',
+        'file_path' => 'route-coverage-doc.pdf',
+    ]);
+    Storage::disk('dealer-docs')->put('route-coverage-doc.pdf', 'pdf-content');
+
+    $this->sharedDocument = tenancy()->central(function (): App\Models\SharedDocument {
+        Storage::disk('central-docs')->put('route-coverage-shared.pdf', 'pdf-content');
+
+        return App\Models\SharedDocument::query()->create([
+            'title' => 'Route Coverage Shared',
+            'file_name' => 'route-coverage-shared.pdf',
+        ]);
+    });
+
+    $this->fitTestDoc = App\Models\FitTestDoc::query()->create([
+        'store_id' => $this->store->id,
+        'user_id' => $this->routeConsultant->id,
+        'employee_name' => 'Route Coverage Employee',
+        'date' => now()->toDateString(),
+        'file_path' => 'route-coverage-fit-test.pdf',
+    ]);
+    Storage::disk('dealer-docs')->put('route-coverage-fit-test.pdf', 'pdf-content');
+
+    $tenantId = tenant('id');
+
+    $this->oshaManual = App\Models\Dealer\Manual\Osha::query()->create([
+        'store_id' => $this->store->id,
+        'user_id' => $this->routeConsultant->id,
+        'pdf_path' => 'route-coverage-osha-manual.pdf',
+    ]);
+    Storage::disk('do-manuals')->put("{$tenantId}/osha/route-coverage-osha-manual.pdf", 'pdf-content');
+
+    $this->ispManual = App\Models\Dealer\Manual\Isp::query()->create([
+        'store_id' => $this->store->id,
+        'user_id' => $this->routeConsultant->id,
+        'pdf_path' => 'route-coverage-isp-manual.pdf',
+    ]);
+    Storage::disk('do-manuals')->put("{$tenantId}/isp/route-coverage-isp-manual.pdf", 'pdf-content');
+
+    $this->redFlagManual = App\Models\Dealer\Manual\RedFlag::query()->create([
+        'store_id' => $this->store->id,
+        'user_id' => $this->routeConsultant->id,
+        'pdf_path' => 'route-coverage-red-flag-manual.pdf',
+    ]);
+    Storage::disk('do-manuals')->put("{$tenantId}/red-flags/route-coverage-red-flag-manual.pdf", 'pdf-content');
+
+    $this->cmsManual = App\Models\CmsManual::query()->create([
+        'store_id' => $this->store->id,
+        'user_id' => $this->routeConsultant->id,
+        'qi_name' => 'Route Coverage QI',
+        'standard_dpp_rate' => 1.00,
+        'acknowledgement_name' => 'Route Coverage Ack',
+        'acknowledgement_signature' => 'route-coverage-ack-signature.png',
+        'pdf_path' => 'route-coverage-cms-manual.pdf',
+    ]);
+    Storage::disk('do-manuals')->put("{$tenantId}/cms/route-coverage-cms-manual.pdf", 'pdf-content');
+
+    $this->consultantNotification = $this->routeConsultant->notifications()->create([
+        'id' => (string) Str::uuid(),
+        'type' => 'route-coverage',
+        'data' => ['message' => 'Route coverage notification'],
+    ]);
+
+    $this->superAdminNotification = $this->superAdmin->notifications()->create([
+        'id' => (string) Str::uuid(),
+        'type' => 'route-coverage',
+        'data' => ['message' => 'Route coverage notification'],
+    ]);
+
+    $this->deletedEmployee = User::factory()->create([
+        'name' => 'Route Deleted Employee',
+        'email' => 'route-deleted-employee@test-tenant.localhost',
+        'password' => bcrypt('password'),
+    ]);
+    $this->deletedEmployee->assignRole('Employee');
+    $this->deletedEmployee->stores()->sync([$this->store->id]);
+    $this->deletedEmployee->delete();
 
     $this->activity = activity()
         ->causedBy($this->routeConsultant)
@@ -312,8 +397,12 @@ function violationAuditRouteParams(object $test, string $type, string $action): 
     };
 }
 
-function namedRouteParameters(object $test, string $routeName): array
+function namedRouteParameters(object $test, string $routeName, ?User $actor = null): array
 {
+    $notification = $actor === $test->superAdmin
+        ? $test->superAdminNotification
+        : $test->consultantNotification;
+
     if (preg_match('/^dealer\.audit\.(body-shop|osha|finance)\.(.+)$/', $routeName, $matches) === 1) {
         return violationAuditRouteParams($test, $matches[1], $matches[2]);
     }
@@ -360,6 +449,74 @@ function namedRouteParameters(object $test, string $routeName): array
         'dealer.dealer.settings.compliance.update' => ['store' => $test->store->id],
         'dealer.dealer.settings.compliance.download' => ['store' => $test->store->id],
         'dealer.dealer.settings.reset-courses.run' => ['store' => $test->store->id],
+
+        'dealer.doc.destroy' => ['dealerDoc' => $test->dealerDoc->id],
+        'dealer.doc.download' => ['dealerDoc' => $test->dealerDoc->id],
+        'dealer.doc.shared.download' => ['sharedDocument' => $test->sharedDocument->id],
+
+        'dealer.employees.course-overrides.update' => [
+            'user' => $test->employee->slug,
+            'course' => coverageCourse($test)->id,
+        ],
+        'dealer.employees.courses.record-result' => [
+            'user' => $test->employee->slug,
+            'course' => coverageCourse($test)->id,
+        ],
+        'dealer.employees.deleted.restore' => ['user' => $test->deletedEmployee->id],
+        'dealer.employees.destroy' => ['user' => $test->employee->slug],
+        'dealer.employees.dot-certificates.generate' => ['user' => $test->employee->slug],
+        'dealer.employees.impersonate' => ['user' => $test->employee->slug],
+        'dealer.employees.open-invites.destroy' => ['invite' => Invite::query()->create([
+            'name' => 'Invite Open Resend',
+            'email' => 'invite-open-destroy-'.Str::random(6).'@test-tenant.localhost',
+            'stores' => [$test->store->id],
+            'department_id' => $test->department->id,
+            'user_id' => $test->routeConsultant->id,
+            'roles' => ['Employee'],
+            'invitation_token' => Str::random(32),
+            'courses' => [],
+        ])->id],
+        'dealer.employees.open-invites.resend-one' => ['invite' => Invite::query()->create([
+            'name' => 'Invite Open Resend One',
+            'email' => 'invite-open-resend-'.Str::random(6).'@test-tenant.localhost',
+            'stores' => [$test->store->id],
+            'department_id' => $test->department->id,
+            'user_id' => $test->routeConsultant->id,
+            'roles' => ['Employee'],
+            'invitation_token' => Str::random(32),
+            'courses' => [],
+        ])->id],
+        'dealer.employees.show.courses' => ['user' => $test->employee->slug],
+        'dealer.employees.show.dot-certificates' => ['user' => $test->employee->slug],
+        'dealer.employees.update' => ['user' => $test->employee->slug],
+
+        'dealer.fit-tests.destroy' => ['fitTestDoc' => $test->fitTestDoc->id],
+        'dealer.fit-tests.download' => ['fitTestDoc' => $test->fitTestDoc->id],
+
+        'dealer.locations.update' => ['store' => $test->store->id],
+
+        'dealer.manual.cms.destroy' => ['manual' => $test->cmsManual->id],
+        'dealer.manual.cms.download' => ['manual' => $test->cmsManual->id],
+        'dealer.manual.isp.destroy' => ['manual' => $test->ispManual->id],
+        'dealer.manual.isp.download' => ['manual' => $test->ispManual->id],
+        'dealer.manual.osha.destroy' => ['manual' => $test->oshaManual->id],
+        'dealer.manual.osha.download' => ['manual' => $test->oshaManual->id],
+        'dealer.manual.red-flag.destroy' => ['manual' => $test->redFlagManual->id],
+        'dealer.manual.red-flag.download' => ['manual' => $test->redFlagManual->id],
+
+        'dealer.notifications.destroy' => ['notification' => $notification->id],
+        'dealer.notifications.mark-read' => ['notification' => $notification->id],
+
+        'dealer.scan.report-status' => ['type' => 'executive'],
+
+        'dealer.settings.global.courses.optional' => ['course' => coverageCourse($test)->id],
+        'dealer.settings.global.stores.notifications' => ['store' => $test->store->id],
+        'dealer.settings.global.stores.remediations' => ['store' => $test->store->id],
+
+        'dealer.vendor.destroy' => ['vendor' => $test->vendor->id],
+        'dealer.vendor.forms.download' => ['vendorForm' => $test->vendorForm->id],
+        'dealer.vendor.forms.send' => ['vendor' => $test->vendor->id],
+        'dealer.vendor.show' => ['vendor' => $test->vendor->id],
 
         'dealer.employee.impersonate' => ['user' => $test->employee->id],
         'dealer.employees.create' => ['invite' => Invite::query()->create([
@@ -608,7 +765,7 @@ it('smoke tests every named dealer tenant route as super-admin', function (): vo
             continue;
         }
 
-        $params = namedRouteParameters($this, $name);
+        $params = namedRouteParameters($this, $name, $actor);
         $payload = namedRoutePayload($this, $name);
 
         $url = routeHasMiddleware($route, 'signed')
@@ -641,6 +798,7 @@ it('smoke tests consultant access for non super-admin-only named dealer routes',
     $routes = dealerNamedRoutes();
 
     foreach ($routes as $route) {
+        refreshAuditFixtures($this);
         $name = (string) $route->getName();
 
         if (routeHasExactMiddleware($route, 'role:super-admin')) {
@@ -649,7 +807,7 @@ it('smoke tests consultant access for non super-admin-only named dealer routes',
 
         $method = firstHttpMethod($route);
         $actor = actorForNamedRoute($this, $route, consultantMode: true);
-        $params = namedRouteParameters($this, $name);
+        $params = namedRouteParameters($this, $name, $actor);
         $payload = namedRoutePayload($this, $name);
 
         $url = routeHasMiddleware($route, 'signed')
