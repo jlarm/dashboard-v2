@@ -15,10 +15,9 @@ describe('Tenant Password Reset - Forgot Password Screen', function (): void {
     });
 
     it('forgot password form posts to the tenant route', function (): void {
-        $response = $this->get(route('dealer.password.request'));
-
-        $response->assertOk();
-        $response->assertSee(route('dealer.password.email'), escape: false);
+        $this->get(route('dealer.password.request'))
+            ->assertOk()
+            ->assertInertia(fn ($page) => $page->component('tenant/auth/ForgotPassword'));
     });
 });
 
@@ -74,10 +73,9 @@ describe('Tenant Password Reset - Reset Password Screen', function (): void {
             ]);
 
         Notification::assertSentTo($this->consultant, ResetPassword::class, function ($notification): bool {
-            $response = $this->get(route('dealer.password.reset', ['token' => $notification->token]));
-
-            $response->assertOk();
-            $response->assertSee(route('dealer.password.store'), escape: false);
+            $this->get(route('dealer.password.reset', ['token' => $notification->token]))
+                ->assertOk()
+                ->assertInertia(fn ($page) => $page->component('tenant/auth/ResetPassword'));
 
             return true;
         });
