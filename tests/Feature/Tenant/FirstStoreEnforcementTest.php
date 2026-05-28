@@ -12,7 +12,11 @@ describe('first store enforcement', function (): void {
         $this->actingAs($this->consultant)
             ->get(route('dealer.dashboard'))
             ->assertOk()
-            ->assertSee('Create your first store');
+            ->assertInertia(fn ($page) => $page
+                ->component('tenant/Dashboard')
+                ->has('stores', 0)
+                ->where('audit_quick_start_store_id', null)
+            );
     });
 
     it('redirects other tenant pages to dashboard when tenant has no stores', function (): void {
