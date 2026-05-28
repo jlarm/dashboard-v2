@@ -146,7 +146,7 @@ describe('vendor store', function (): void {
                 'contact_email' => 'jane@boom.test',
             ])
             ->assertRedirect()
-            ->assertSessionHas('flash.error');
+            ->assertSessionHas('error');
 
         expect(Vendor::query()->where('name', 'Boom Co')->exists())->toBeFalse();
     });
