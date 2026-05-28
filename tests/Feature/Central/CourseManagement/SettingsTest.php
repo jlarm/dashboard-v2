@@ -40,6 +40,7 @@ describe('central course management settings', function (): void {
             'role_ids' => [$role->id],
             'states_required' => ['California'],
             'replaces_course_slugs' => [$otherCourse->slug],
+            'tenant_ids' => [],
         ]);
 
         $response->assertRedirect();
@@ -70,6 +71,7 @@ describe('central course management settings', function (): void {
             'role_ids' => [],
             'states_required' => [],
             'replaces_course_slugs' => [],
+            'tenant_ids' => [],
         ])->assertRedirect();
 
         $course->refresh();
@@ -93,6 +95,7 @@ describe('central course management settings', function (): void {
             'role_ids' => [],
             'states_required' => [],
             'replaces_course_slugs' => [],
+            'tenant_ids' => [],
         ])->assertForbidden();
     });
 });
