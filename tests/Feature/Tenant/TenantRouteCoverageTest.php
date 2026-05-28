@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Models\AuditComment;
 use App\Models\Dealer\Audit\BodyShopViolationAudit;
 use App\Models\Dealer\Audit\DealJacket;
 use App\Models\Dealer\Audit\DealJacketGroup;
@@ -30,7 +31,21 @@ use Spatie\Permission\Models\Permission;
 use Spatie\Permission\PermissionRegistrar;
 
 beforeEach(function (): void {
+    \Illuminate\Support\Facades\Bus::fake();
+    \Illuminate\Support\Facades\Queue::fake();
+    \Illuminate\Support\Facades\Notification::fake();
     Storage::fake('sds-sheets');
+    Storage::fake('do-audits');
+    Storage::fake('do-manuals');
+
+    // PDF dispatchers instantiate heavy jobs in their constructors. The smoke
+    // test only verifies route + middleware wiring, so swap them for no-ops.
+    $this->mock(\App\Domain\Tenant\Audits\Actions\DispatchAuditPdfGeneration::class)
+        ->shouldReceive('handle')->andReturnNull()->byDefault();
+    $this->mock(\App\Domain\Tenant\Audits\Actions\DispatchRemediationPdfGeneration::class)
+        ->shouldReceive('handle')->andReturnNull()->byDefault();
+    $this->mock(\App\Domain\Tenant\IndividualAudits\Actions\DispatchIndividualAuditPdfGeneration::class)
+        ->shouldReceive('handle')->andReturnNull()->byDefault();
 
     $this->tenant->update(['locations' => false]);
 
@@ -117,6 +132,48 @@ beforeEach(function (): void {
         'date' => now()->toDateString(),
     ]);
 
+    $this->oshaComment = AuditComment::query()->create([
+        'user_id' => $this->routeConsultant->id,
+        'auditable_id' => $this->oshaAudit->id,
+        'auditable_type' => OshaViolationAudit::class,
+        'comment' => 'Route coverage osha comment.',
+    ]);
+
+    $this->bodyShopComment = AuditComment::query()->create([
+        'user_id' => $this->routeConsultant->id,
+        'auditable_id' => $this->bodyShopAudit->id,
+        'auditable_type' => BodyShopViolationAudit::class,
+        'comment' => 'Route coverage body-shop comment.',
+    ]);
+
+    $this->glbaComment = AuditComment::query()->create([
+        'user_id' => $this->routeConsultant->id,
+        'auditable_id' => $this->glbaAudit->id,
+        'auditable_type' => GlbaViolationAudit::class,
+        'comment' => 'Route coverage glba comment.',
+    ]);
+
+    $this->oshaViolation = $this->oshaAudit->violations()->create([
+        'uuid' => (string) Str::uuid(),
+        'statement_id' => 0,
+        'statement' => 'Route coverage osha violation.',
+        'risk' => false,
+    ]);
+
+    $this->bodyShopViolation = $this->bodyShopAudit->violations()->create([
+        'uuid' => (string) Str::uuid(),
+        'statement_id' => 0,
+        'statement' => 'Route coverage body-shop violation.',
+        'risk' => false,
+    ]);
+
+    $this->glbaViolation = $this->glbaAudit->violations()->create([
+        'uuid' => (string) Str::uuid(),
+        'statement_id' => 0,
+        'statement' => 'Route coverage glba violation.',
+        'risk' => false,
+    ]);
+
     $this->individualAudit = IndividualAudit::query()->create([
         'uuid' => (string) Str::uuid(),
         'user_id' => $this->routeConsultant->id,
@@ -124,6 +181,7 @@ beforeEach(function (): void {
         'audit_date' => now()->toDateString(),
         'deal_jacket_date' => now()->toDateString(),
         'draft' => true,
+        'pdf_path' => 'route-coverage-individual.pdf',
     ]);
 
     $this->dealJacketGroup = DealJacketGroup::factory()->create([
@@ -181,7 +239,14 @@ function dealerNamedRoutes(): Collection
                 && str_starts_with($name, 'dealer.')
                 && $name !== 'dealer.';
         })
-        ->sortBy(fn (IlluminateRoute $route): string => (string) $route->getName())
+        ->sortBy(function (IlluminateRoute $route): string {
+            $name = (string) $route->getName();
+            // Run destructive routes after their non-destructive siblings so a
+            // delete doesn't 404 every later read against the same fixture.
+            $isDestructive = str_ends_with($name, '.destroy') || str_ends_with($name, '.destroy-group');
+
+            return ($isDestructive ? '2' : '1').$name;
+        })
         ->values();
 }
 
@@ -211,40 +276,90 @@ function routeHasExactMiddleware(IlluminateRoute $route, string $needle): bool
         ->contains(fn (string $middleware): bool => $middleware === $needle);
 }
 
+function violationAuditRouteParams(object $test, string $type, string $action): array
+{
+    $audit = match ($type) {
+        'body-shop' => $test->bodyShopAudit,
+        'osha' => $test->oshaAudit,
+        'finance' => $test->glbaAudit,
+    };
+
+    $comment = match ($type) {
+        'body-shop' => $test->bodyShopComment,
+        'osha' => $test->oshaComment,
+        'finance' => $test->glbaComment,
+    };
+
+    $violation = match ($type) {
+        'body-shop' => $test->bodyShopViolation,
+        'osha' => $test->oshaViolation,
+        'finance' => $test->glbaViolation,
+    };
+
+    if ($action === 'create') {
+        return ['store' => $test->store->id];
+    }
+
+    if ($action === 'index') {
+        return [];
+    }
+
+    return match ($action) {
+        'comments.update', 'comments.destroy' => ['audit' => $audit->uuid, 'comment' => $comment->id],
+        'violations.destroy' => ['audit' => $audit->uuid, 'violation' => $violation->id],
+        'violations.photos.destroy' => ['audit' => $audit->uuid, 'violation' => $violation->id, 'photoId' => 1],
+        default => ['audit' => $audit->uuid],
+    };
+}
+
 function namedRouteParameters(object $test, string $routeName): array
 {
-    return match ($routeName) {
-        'dealer.audit.body-shop.create' => ['store' => $test->store->id],
-        'dealer.audit.body-shop.edit' => ['bodyShopViolationAudit' => $test->bodyShopAudit->uuid],
-        'dealer.audit.body-shop.remediation' => ['bodyShopViolationAudit' => $test->bodyShopAudit->uuid],
-        'dealer.audit.body-shop.show' => ['bodyShopViolationAudit' => $test->bodyShopAudit->uuid],
+    if (preg_match('/^dealer\.audit\.(body-shop|osha|finance)\.(.+)$/', $routeName, $matches) === 1) {
+        return violationAuditRouteParams($test, $matches[1], $matches[2]);
+    }
 
+    return match ($routeName) {
         'dealer.audit.deal-jacket-reports.download' => ['fileName' => $test->dealJacketReportFile],
+        'dealer.audit.deal-jackets.complete' => ['dealJacketGroup' => $test->dealJacketGroup->uuid],
         'dealer.audit.deal-jackets.create' => ['dealJacketGroup' => $test->dealJacketGroup->uuid],
+        'dealer.audit.deal-jackets.destroy' => [
+            'dealJacketGroup' => $test->dealJacketGroup->uuid,
+            'dealJacket' => $test->dealJacket->uuid,
+        ],
+        'dealer.audit.deal-jackets.destroy-group' => ['dealJacketGroup' => $test->dealJacketGroup->uuid],
         'dealer.audit.deal-jackets.edit' => [
             'dealJacketGroup' => $test->dealJacketGroup->uuid,
-            'dealJacket' => $test->dealJacket->id,
+            'dealJacket' => $test->dealJacket->uuid,
         ],
         'dealer.audit.deal-jackets.show' => ['dealJacketGroup' => $test->dealJacketGroup->uuid],
-
-        'dealer.audit.finance.create' => ['store' => $test->store->id],
-        'dealer.audit.finance.edit' => ['glbaViolationAudit' => $test->glbaAudit->uuid],
-        'dealer.audit.finance.remediation' => ['glbaViolationAudit' => $test->glbaAudit->uuid],
-        'dealer.audit.finance.show' => ['glbaViolationAudit' => $test->glbaAudit->uuid],
+        'dealer.audit.deal-jackets.store' => ['dealJacketGroup' => $test->dealJacketGroup->uuid],
+        'dealer.audit.deal-jackets.update' => [
+            'dealJacketGroup' => $test->dealJacketGroup->uuid,
+            'dealJacket' => $test->dealJacket->uuid,
+        ],
 
         'dealer.audit.individual.create' => ['individualAudit' => $test->individualAudit->id],
+        'dealer.audit.individual.create-child' => ['individualAudit' => $test->individualAudit->uuid],
+        'dealer.audit.individual.destroy' => ['individualAudit' => $test->individualAudit->uuid],
+        'dealer.audit.individual.download' => ['individualAudit' => $test->individualAudit->uuid],
         'dealer.audit.individual.edit' => ['individualAudit' => $test->individualAudit->uuid],
+        'dealer.audit.individual.generate' => ['individualAudit' => $test->individualAudit->uuid],
         'dealer.audit.individual.show' => ['individualAudit' => $test->individualAudit->uuid],
-
-        'dealer.audit.osha.create' => ['store' => $test->store->id],
-        'dealer.audit.osha.edit' => ['oshaViolationAudit' => $test->oshaAudit->uuid],
-        'dealer.audit.osha.remediation' => ['oshaViolationAudit' => $test->oshaAudit->uuid],
-        'dealer.audit.osha.show' => ['oshaViolationAudit' => $test->oshaAudit->uuid],
+        'dealer.audit.individual.update' => ['individualAudit' => $test->individualAudit->uuid],
 
         'dealer.courses.edit' => ['course' => coverageCourse($test)->slug],
         'dealer.courses.quiz' => ['course' => coverageCourse($test)->slug],
         'dealer.courses.results.store' => ['course' => coverageCourse($test)->slug],
         'dealer.courses.show' => ['course' => coverageCourse($test)->slug],
+        'dealer.courses.video-complete' => ['course' => coverageCourse($test)->slug],
+
+        'dealer.dashboard.audit-type-report' => ['type' => 'osha'],
+
+        'dealer.dealer.settings.general.update' => ['store' => $test->store->id],
+        'dealer.dealer.settings.managers.update' => ['store' => $test->store->id],
+        'dealer.dealer.settings.compliance.update' => ['store' => $test->store->id],
+        'dealer.dealer.settings.compliance.download' => ['store' => $test->store->id],
+        'dealer.dealer.settings.reset-courses.run' => ['store' => $test->store->id],
 
         'dealer.employee.impersonate' => ['user' => $test->employee->id],
         'dealer.employees.create' => ['invite' => Invite::query()->create([
@@ -354,6 +469,71 @@ function coverageCourse(object $test): DealerCourse
     return $test->routeCoverageCourse;
 }
 
+function refreshAuditFixtures(object $test): void
+{
+    $oshaMissing = OshaViolationAudit::query()->whereKey($test->oshaAudit->id)->doesntExist();
+    if ($oshaMissing) {
+        $test->oshaAudit = OshaViolationAudit::query()->create([
+            'uuid' => (string) Str::uuid(),
+            'user_id' => $test->routeConsultant->id,
+            'store_id' => $test->store->id,
+            'date' => now()->toDateString(),
+        ]);
+    }
+
+    $bodyShopMissing = BodyShopViolationAudit::query()->whereKey($test->bodyShopAudit->id)->doesntExist();
+    if ($bodyShopMissing) {
+        $test->bodyShopAudit = BodyShopViolationAudit::query()->create([
+            'uuid' => (string) Str::uuid(),
+            'user_id' => $test->routeConsultant->id,
+            'store_id' => $test->store->id,
+            'date' => now()->toDateString(),
+        ]);
+    }
+
+    $glbaMissing = GlbaViolationAudit::query()->whereKey($test->glbaAudit->id)->doesntExist();
+    if ($glbaMissing) {
+        $test->glbaAudit = GlbaViolationAudit::query()->create([
+            'uuid' => (string) Str::uuid(),
+            'user_id' => $test->routeConsultant->id,
+            'store_id' => $test->store->id,
+            'date' => now()->toDateString(),
+        ]);
+    }
+
+    foreach (
+        [
+            'osha' => [$test->oshaAudit, OshaViolationAudit::class, 'oshaComment', 'oshaViolation'],
+            'body-shop' => [$test->bodyShopAudit, BodyShopViolationAudit::class, 'bodyShopComment', 'bodyShopViolation'],
+            'finance' => [$test->glbaAudit, GlbaViolationAudit::class, 'glbaComment', 'glbaViolation'],
+        ] as $entry
+    ) {
+        [$audit, $modelClass, $commentField, $violationField] = $entry;
+
+        $commentBelongsToCurrentAudit = (int) $test->{$commentField}->auditable_id === (int) $audit->id;
+        if (AuditComment::query()->whereKey($test->{$commentField}->id)->doesntExist() || ! $commentBelongsToCurrentAudit) {
+            $test->{$commentField} = AuditComment::query()->create([
+                'user_id' => $test->routeConsultant->id,
+                'auditable_id' => $audit->id,
+                'auditable_type' => $modelClass,
+                'comment' => 'Route coverage refreshed comment.',
+            ]);
+        }
+
+        $violationBelongsToCurrentAudit = (int) $test->{$violationField}->violationable_id === (int) $audit->id;
+        if (! $violationBelongsToCurrentAudit
+            || \App\Models\Dealer\Violation::query()->whereKey($test->{$violationField}->id)->doesntExist()
+        ) {
+            $test->{$violationField} = $audit->violations()->create([
+                'uuid' => (string) Str::uuid(),
+                'statement_id' => 0,
+                'statement' => 'Route coverage refreshed violation.',
+                'risk' => false,
+            ]);
+        }
+    }
+}
+
 function actorForNamedRoute(object $test, IlluminateRoute $route, bool $consultantMode): ?User
 {
     $route->getName();
@@ -382,11 +562,17 @@ function assertResponseHealthy(string $routeName, int $status): void
     expect($status)
         ->toBeLessThan(500);
 
-    $allowedNotFound = ['dealer.scan.report'];
+    $allowedNotFound = [
+        'dealer.scan.report',
+        // These dashboard PDF endpoints legitimately 404 when no completed,
+        // graded audits exist in scope, which the smoke fixtures do not seed.
+        'dealer.dashboard.audit-report',
+        'dealer.dashboard.audit-type-report',
+    ];
 
     if (! in_array($routeName, $allowedNotFound, true)) {
         expect($status)
-            ->not->toBe(404);
+            ->not->toBe(404, "{$routeName} returned 404.");
     }
 }
 
@@ -412,6 +598,7 @@ it('smoke tests every named dealer tenant route as super-admin', function (): vo
     expect($routes)->not->toBeEmpty();
 
     foreach ($routes as $route) {
+        refreshAuditFixtures($this);
         $name = (string) $route->getName();
 
         $method = firstHttpMethod($route);
@@ -426,7 +613,7 @@ it('smoke tests every named dealer tenant route as super-admin', function (): vo
 
         $url = routeHasMiddleware($route, 'signed')
             ? URL::signedRoute($name, array_merge($params, match ($name) {
-                'dealer.dealer.settings.form' => ['store' => $this->store->id],
+                'dealer.dealer.settings.form', 'dealer.dealer.settings.form.update' => ['store' => $this->store->id],
                 'dealer.vendor.create' => ['id' => $this->vendor->id],
                 'dealer.vendor.form' => ['vid' => $this->vendorForm->id],
                 default => [],
@@ -467,7 +654,7 @@ it('smoke tests consultant access for non super-admin-only named dealer routes',
 
         $url = routeHasMiddleware($route, 'signed')
             ? URL::signedRoute($name, array_merge($params, match ($name) {
-                'dealer.dealer.settings.form' => ['store' => $this->store->id],
+                'dealer.dealer.settings.form', 'dealer.dealer.settings.form.update' => ['store' => $this->store->id],
                 'dealer.vendor.create' => ['id' => $this->vendor->id],
                 'dealer.vendor.form' => ['vid' => $this->vendorForm->id],
                 default => [],

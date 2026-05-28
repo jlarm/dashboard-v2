@@ -51,8 +51,8 @@ class IndividualAuditController extends Controller
 
     public function create(
         Request $request,
-        ?string $individualAudit,
         CreateIndividualAudit $createAudit,
+        ?string $individualAudit = null,
     ): RedirectResponse {
         $user = $request->user();
         throw_unless($user instanceof User, RuntimeException::class, 'Authenticated user required.');
