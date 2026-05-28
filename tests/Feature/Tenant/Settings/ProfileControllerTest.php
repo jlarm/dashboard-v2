@@ -26,7 +26,6 @@ describe('GET /profile', function (): void {
             ->assertInertia(fn ($page) => $page
                 ->component('tenant/settings/Profile')
                 ->where('status', null)
-                ->has('mustVerifyEmail')
             );
     });
 
@@ -51,30 +50,6 @@ describe('PATCH /profile', function (): void {
         $fresh = $this->user->fresh();
         expect($fresh->name)->toBe('Renamed Person');
         expect($fresh->email)->toStartWith('renamed-');
-    });
-
-    it('clears email_verified_at when the user changes their email', function (): void {
-        $newEmail = 'newemail-'.uniqid().'@test-tenant.localhost';
-
-        $this->actingAs($this->user)
-            ->patch(route('dealer.profile.update'), [
-                'name' => $this->user->name,
-                'email' => $newEmail,
-            ])
-            ->assertRedirect(route('dealer.profile.edit'));
-
-        expect($this->user->fresh()->email_verified_at)->toBeNull();
-    });
-
-    it('keeps email_verified_at when name changes but email does not', function (): void {
-        $this->actingAs($this->user)
-            ->patch(route('dealer.profile.update'), [
-                'name' => 'Just A New Name',
-                'email' => $this->user->email,
-            ])
-            ->assertRedirect(route('dealer.profile.edit'));
-
-        expect($this->user->fresh()->email_verified_at?->toDateTimeString())->toBe('2026-01-01 12:00:00');
     });
 
     it('rejects updates that try to take an email already used by another user', function (): void {

@@ -13,7 +13,6 @@ import { Form, Head, usePage } from '@inertiajs/vue3';
 import { computed } from 'vue';
 
 type Props = {
-    mustVerifyEmail: boolean;
     status?: string;
 };
 
@@ -76,20 +75,6 @@ const user = computed(() => page.props.auth.user);
                             placeholder="Email address"
                         />
                         <InputError class="mt-2" :message="errors.email" />
-                    </div>
-
-                    <div v-if="mustVerifyEmail && !user.email_verified_at">
-                        <p class="-mt-4 text-sm text-muted-foreground">
-                            Your email address is unverified.
-                        </p>
-
-                        <div
-                            v-if="status === 'verification-link-sent'"
-                            class="mt-2 text-sm font-medium text-green-600"
-                        >
-                            A new verification link has been sent to your email
-                            address.
-                        </div>
                     </div>
 
                     <div class="flex items-center gap-4">

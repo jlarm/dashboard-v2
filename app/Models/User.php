@@ -12,7 +12,6 @@ use App\Notifications\ResetPassword;
 use App\Observers\UserObserver;
 use App\Traits\HasCourses;
 use Database\Factories\UserFactory;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -44,7 +43,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read bool $user_has_not_completed_courses
  */
 #[ObservedBy(UserObserver::class)]
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable
 {
     /**
      * @use HasFactory<UserFactory>
