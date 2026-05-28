@@ -297,6 +297,7 @@ class User extends Authenticatable
             'slug' => 'string',
             'email' => 'string',
             'phone' => 'string',
+            'password' => 'hashed',
             'email_verified_at' => 'datetime',
             'last_login_at' => 'datetime',
             'current_store_id' => 'integer',
