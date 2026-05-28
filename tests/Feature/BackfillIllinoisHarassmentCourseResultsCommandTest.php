@@ -119,7 +119,7 @@ it('backfills illinois course results from passed sexual-harassment-e results', 
         expect($targetResult)->not->toBeNull()
             ->and($targetResult->user_id)->toBe($user->id);
 
-        expect($targetResult->passed)->toBe(1)
+        expect($targetResult->passed)->toBeTrue()
             ->and($targetResult->percentage)->toBe($sourceResult->percentage)
             ->and($targetResult->created_at->toDateTimeString())->toBe($sourceTimestamp->toDateTimeString())
             ->and($targetResult->updated_at->toDateTimeString())->toBe($sourceTimestamp->toDateTimeString());
