@@ -3,31 +3,27 @@
 declare(strict_types=1);
 
 use App\Domain\Tenant\Audits\Queries\BuildAuditChartData;
-use Carbon\CarbonImmutable;
-use Illuminate\Support\Collection;
+use App\Models\Dealer\Audit\BodyShopAudit;
+use App\Models\Dealer\Audit\OshaAudit;
+use App\Models\Dealer\Audit\OshaViolationAudit;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 
-function violationAudit(string $date, string $grade, int $violations, int $remediations): object
+function violationAudit(?string $date, ?string $grade, int $violations = 0, int $remediations = 0): OshaViolationAudit
 {
-    return new readonly class(CarbonImmutable::parse($date), $grade, $violations, $remediations)
-    {
-        public function __construct(
-            public CarbonImmutable $date,
-            public string $grade,
-            public int $violation_count,
-            public int $remediation_count,
-        ) {}
-    };
+    return new OshaViolationAudit()->setRawAttributes([
+        'date' => $date,
+        'grade' => $grade,
+        'violation_count' => $violations,
+        'remediation_count' => $remediations,
+    ]);
 }
 
-function legacyAuditWithoutViolations(string $date, ?string $grade): object
+function legacyAuditWithoutViolations(string $date, ?string $grade): BodyShopAudit
 {
-    return new readonly class(CarbonImmutable::parse($date), $grade)
-    {
-        public function __construct(
-            public CarbonImmutable $audit_date,
-            public ?string $grade,
-        ) {}
-    };
+    return new BodyShopAudit()->setRawAttributes([
+        'audit_date' => $date,
+        'grade' => $grade,
+    ]);
 }
 
 it('formats violation audits into chart points sorted ascending', function (): void {
@@ -64,30 +60,14 @@ it('keeps only the four most recent audits but sorts them ascending', function (
 });
 
 it('skips audits missing a date or grade', function (): void {
-    $audits = [
-        violationAudit('2024-01-15', 'A', 1, 1),
-        new class
-        {
-            public ?CarbonImmutable $date = null;
-            public string $grade = 'A';
-            public int $violation_count = 0;
-            public int $remediation_count = 0;
-        },
-        new class
-        {
-            public CarbonImmutable $date;
-            public ?string $grade = null;
-            public int $violation_count = 0;
-            public int $remediation_count = 0;
-
-            public function __construct()
-            {
-                $this->date = CarbonImmutable::parse('2024-02-01');
-            }
-        },
-    ];
-
-    $result = new BuildAuditChartData()->handle($audits, []);
+    $result = new BuildAuditChartData()->handle(
+        violationAudits: [
+            violationAudit('2024-01-15', 'A', 1, 1),
+            violationAudit(null, 'A'),
+            violationAudit('2024-02-01', null),
+        ],
+        legacyAudits: [],
+    );
 
     expect($result['labels'])->toBe(["Jan '24"])
         ->and($result['gradesLetters'])->toBe(['A']);
@@ -108,28 +88,15 @@ it('treats legacy audits without a violations relation as zero violations', func
 });
 
 it('counts pre-loaded legacy violations when the relation is loaded', function (): void {
-    $audit = new class
-    {
-        public CarbonImmutable $audit_date;
-        public string $grade = 'A';
-        public Collection $violations;
-
-        public function __construct()
-        {
-            $this->audit_date = CarbonImmutable::parse('2024-06-01');
-            $this->violations = collect([(object) [], (object) [], (object) []]);
-        }
-
-        public function violations(): Collection
-        {
-            return $this->violations;
-        }
-
-        public function relationLoaded(string $name): bool
-        {
-            return $name === 'violations';
-        }
-    };
+    $audit = new OshaAudit()->setRawAttributes([
+        'audit_date' => '2024-06-01',
+        'grade' => 'A',
+    ]);
+    $audit->setRelation('violations', new EloquentCollection([
+        (object) [],
+        (object) [],
+        (object) [],
+    ]));
 
     $result = new BuildAuditChartData()->handle([], [$audit]);
 
