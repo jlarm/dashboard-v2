@@ -31,20 +31,20 @@ use Spatie\Permission\Models\Permission;
 use Spatie\Permission\PermissionRegistrar;
 
 beforeEach(function (): void {
-    \Illuminate\Support\Facades\Bus::fake();
-    \Illuminate\Support\Facades\Queue::fake();
-    \Illuminate\Support\Facades\Notification::fake();
+    Illuminate\Support\Facades\Bus::fake();
+    Illuminate\Support\Facades\Queue::fake();
+    Illuminate\Support\Facades\Notification::fake();
     Storage::fake('sds-sheets');
     Storage::fake('do-audits');
     Storage::fake('do-manuals');
 
     // PDF dispatchers instantiate heavy jobs in their constructors. The smoke
     // test only verifies route + middleware wiring, so swap them for no-ops.
-    $this->mock(\App\Domain\Tenant\Audits\Actions\DispatchAuditPdfGeneration::class)
+    $this->mock(App\Domain\Tenant\Audits\Actions\DispatchAuditPdfGeneration::class)
         ->shouldReceive('handle')->andReturnNull()->byDefault();
-    $this->mock(\App\Domain\Tenant\Audits\Actions\DispatchRemediationPdfGeneration::class)
+    $this->mock(App\Domain\Tenant\Audits\Actions\DispatchRemediationPdfGeneration::class)
         ->shouldReceive('handle')->andReturnNull()->byDefault();
-    $this->mock(\App\Domain\Tenant\IndividualAudits\Actions\DispatchIndividualAuditPdfGeneration::class)
+    $this->mock(App\Domain\Tenant\IndividualAudits\Actions\DispatchIndividualAuditPdfGeneration::class)
         ->shouldReceive('handle')->andReturnNull()->byDefault();
 
     $this->tenant->update(['locations' => false]);
@@ -522,7 +522,7 @@ function refreshAuditFixtures(object $test): void
 
         $violationBelongsToCurrentAudit = (int) $test->{$violationField}->violationable_id === (int) $audit->id;
         if (! $violationBelongsToCurrentAudit
-            || \App\Models\Dealer\Violation::query()->whereKey($test->{$violationField}->id)->doesntExist()
+            || App\Models\Dealer\Violation::query()->whereKey($test->{$violationField}->id)->doesntExist()
         ) {
             $test->{$violationField} = $audit->violations()->create([
                 'uuid' => (string) Str::uuid(),
@@ -679,22 +679,24 @@ it('smoke tests consultant access for non super-admin-only named dealer routes',
 });
 
 it('enforces elevated route limitations for manager and employee roles', function (): void {
+    // Each entry is [method, route, params]. individual.create is POST (GET on
+    // the same URI matches individual.index, which managers can read).
     $restrictedRoutes = [
-        'dealer.settings.global' => [],
-        'dealer.settings.global.reset-courses' => [],
-        'dealer.audit.osha.create' => ['store' => $this->store->id],
-        'dealer.audit.body-shop.create' => ['store' => $this->store->id],
-        'dealer.audit.finance.create' => ['store' => $this->store->id],
-        'dealer.audit.individual.create' => ['individualAudit' => $this->individualAudit->id],
+        ['get', 'dealer.settings.global', []],
+        ['get', 'dealer.settings.global.reset-courses', []],
+        ['get', 'dealer.audit.osha.create', ['store' => $this->store->id]],
+        ['get', 'dealer.audit.body-shop.create', ['store' => $this->store->id]],
+        ['get', 'dealer.audit.finance.create', ['store' => $this->store->id]],
+        ['post', 'dealer.audit.individual.create', []],
     ];
 
-    foreach ($restrictedRoutes as $routeName => $params) {
+    foreach ($restrictedRoutes as [$method, $routeName, $params]) {
         $this->actingAs($this->manager)
-            ->get(route($routeName, $params))
+            ->{$method}(route($routeName, $params))
             ->assertForbidden();
 
         $this->actingAs($this->employee)
-            ->get(route($routeName, $params))
+            ->{$method}(route($routeName, $params))
             ->assertForbidden();
     }
 });
