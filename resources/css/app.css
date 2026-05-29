@@ -2,7 +2,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&display=swap');
 
 @import 'tailwindcss';
-@import '../../vendor/livewire/flux/dist/flux.css';
 @import 'tw-animate-css';
 @import 'vue-sonner/style.css';
 @import 'shadcn-vue/tailwind.css';

@@ -53,14 +53,6 @@ Schedule::command('delete:temporary-uploads')
     ->onOneServer()
     ->emailOutputOnFailure(config('app.admin_email'));
 
-// Clear Livewire temporary files for all tenants
-Schedule::command('livewire:clear-temp-files')
-    ->dailyAt('01:00')
-    ->runInBackground()
-    ->withoutOverlapping()
-    ->onOneServer()
-    ->emailOutputOnFailure(config('app.admin_email'));
-
 // Create backups
 Schedule::command('backups:go')
     ->dailyAt('01:30')

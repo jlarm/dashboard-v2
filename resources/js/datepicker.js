@@ -310,16 +310,4 @@
     } else {
         initDatepickers();
     }
-
-    // Support for Livewire
-    document.addEventListener('livewire:navigated', initDatepickers);
-    document.addEventListener('livewire:init', function() {
-        initDatepickers();
-        // Livewire 2: Re-initialize datepickers after DOM is updated
-        if (window.Livewire && window.Livewire.hook) {
-            window.Livewire.hook('message.processed', (message, component) => {
-                initDatepickers();
-            });
-        }
-    });
 })();

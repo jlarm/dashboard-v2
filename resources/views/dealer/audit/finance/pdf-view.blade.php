@@ -17,7 +17,6 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @livewireStyles
 </head>
 <body class="font-sans antialiased">
 <div class="w-full h-screen bg-gray-50 grid grid-cols-8 grid-rows-6">

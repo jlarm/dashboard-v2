@@ -15,14 +15,10 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @livewireStyles
-    @fluxAppearance
 </head>
 <body class="font-sans text-gray-900 antialiased">
 <div class="h-screen">
     {{ $slot }}
 </div>
-@livewireScripts
-@fluxScripts
 </body>
 </html>

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain\Central\Courses\Actions;
 
-use App\Http\Livewire\Dealer\Employee\DepartmentCompletionStats;
 use App\Models\Course;
 use App\Models\Dealer\Course as TenantCourse;
 use App\Models\Dealership;
@@ -44,11 +43,6 @@ class ReconcileTenantCourses
                 $stats['tenants_checked']++;
                 tenancy()->initialize($tenant);
                 $this->reconcileTenant($tenant, $assignmentsBySlug, $apply, $log, $stats);
-
-                if ($apply) {
-                    DepartmentCompletionStats::flushCacheForCurrentTenant();
-                }
-
                 tenancy()->end();
             }
         });

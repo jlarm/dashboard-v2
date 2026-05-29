@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Domain\Central\Courses\Actions;
 
 use App\Domain\Central\Courses\Data\CourseSettingsData;
-use App\Http\Livewire\Dealer\Employee\DepartmentCompletionStats;
 use App\Models\Course;
 use App\Models\Dealer\Course as TenantCourse;
 use App\Models\Dealership;
@@ -37,7 +36,6 @@ class UpdateCourseSettings
                     /** @var Dealership $tenant */
                     tenancy()->initialize($tenant);
                     $this->reconcileTenantCourse((string) $tenant->id, $course, $data, $attributes, $roleNames);
-                    DepartmentCompletionStats::flushCacheForCurrentTenant();
                     tenancy()->end();
                 }
             });

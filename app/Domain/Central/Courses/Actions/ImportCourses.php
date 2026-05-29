@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Domain\Central\Courses\Actions;
 
-use App\Http\Livewire\Dealer\Employee\DepartmentCompletionStats;
 use App\Models\Course;
 use App\Models\Dealer\Course as TenantCourse;
 use App\Models\Dealership;
@@ -35,7 +34,6 @@ class ImportCourses
                     tenancy()->initialize($tenant);
                     $this->upsertTenantCourses($assignedCourses);
                     $this->softDeleteUnassignedTenantCourses($unassignedSlugs);
-                    DepartmentCompletionStats::flushCacheForCurrentTenant();
                     tenancy()->end();
                 }
             });
