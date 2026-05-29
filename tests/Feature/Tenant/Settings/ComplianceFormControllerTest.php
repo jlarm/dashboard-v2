@@ -98,8 +98,12 @@ describe('compliance form update', function (): void {
 });
 
 describe('compliance info pdf view', function (): void {
-    it('renders the downloadable compliance view as plain blade', function (): void {
-        $html = view('dealer.settings.ComplianceInfoDownloadView', ['store' => $this->store])->render();
+    it('renders the downloadable compliance pdf view as plain blade', function (): void {
+        $html = view('dealer.reports.compliance-info-pdf', [
+            'store' => $this->store,
+            'managers' => $this->store->employeeList ?? new EmployeeList(),
+            'generatedAt' => now(),
+        ])->render();
 
         expect($html)->toContain((string) $this->store->name);
     });

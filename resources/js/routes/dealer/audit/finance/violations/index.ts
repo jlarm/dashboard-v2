@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 import photos from './photos'
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::store
@@ -53,28 +53,6 @@ store.post = (args: { audit: string | number } | [audit: string | number ] | str
 })
 
 /**
-* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::store
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:221
-* @route '/audits/finance/{audit}/violations'
-*/
-const storeForm = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: store.url(args, options),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::store
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:221
-* @route '/audits/finance/{audit}/violations'
-*/
-storeForm.post = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: store.url(args, options),
-    method: 'post',
-})
-
-store.form = storeForm
-
-/**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::destroy
 * @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:235
 * @route '/audits/finance/{audit}/violations/{violation}'
@@ -126,38 +104,6 @@ destroy.delete = (args: { audit: string | number, violation: string | number | {
     url: destroy.url(args, options),
     method: 'delete',
 })
-
-/**
-* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::destroy
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:235
-* @route '/audits/finance/{audit}/violations/{violation}'
-*/
-const destroyForm = (args: { audit: string | number, violation: string | number | { id: string | number } } | [audit: string | number, violation: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: destroy.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'DELETE',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::destroy
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:235
-* @route '/audits/finance/{audit}/violations/{violation}'
-*/
-destroyForm.delete = (args: { audit: string | number, violation: string | number | { id: string | number } } | [audit: string | number, violation: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: destroy.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'DELETE',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'post',
-})
-
-destroy.form = destroyForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::search
@@ -220,43 +166,6 @@ search.head = (args: { audit: string | number } | [audit: string | number ] | st
     url: search.url(args, options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::search
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:268
-* @route '/audits/finance/{audit}/violations/search'
-*/
-const searchForm = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: search.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::search
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:268
-* @route '/audits/finance/{audit}/violations/search'
-*/
-searchForm.get = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: search.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::search
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:268
-* @route '/audits/finance/{audit}/violations/search'
-*/
-searchForm.head = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: search.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-search.form = searchForm
 
 const violations = {
     store: Object.assign(store, store),

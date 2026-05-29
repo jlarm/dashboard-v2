@@ -398,6 +398,27 @@ const submitCompliance = (): void => {
 const downloadComplianceUrl = (): string =>
     StoreSettingsController.downloadCompliance.url({ store: props.store.id });
 
+// ---------- Send compliance form email ----------
+
+const sendEmailOpen = ref(false);
+const sendEmailForm = useForm({ email: '' });
+
+const submitSendEmail = (): void => {
+    sendEmailForm.post(StoreSettingsController.sendComplianceFormLink.url({ store: props.store.id }), {
+        preserveScroll: true,
+        onSuccess: () => {
+            sendEmailForm.reset();
+            sendEmailOpen.value = false;
+        },
+    });
+};
+
+const cancelSendEmail = (): void => {
+    sendEmailForm.reset();
+    sendEmailForm.clearErrors();
+    sendEmailOpen.value = false;
+};
+
 // ---------- Reset Courses section ----------
 
 const resetMode = ref<'everyone' | 'selected-users'>('everyone');
@@ -720,7 +741,10 @@ const confirmMessage = computed<string>(() =>
                 </div>
 
                 <form v-else class="space-y-6" @submit.prevent="submitCompliance">
-                    <div class="flex justify-end">
+                    <div class="flex justify-end gap-2">
+                        <Button type="button" variant="outline" @click="sendEmailOpen = true">
+                            Send Form via Email
+                        </Button>
                         <Button as="a" :href="downloadComplianceUrl()" target="_blank" variant="outline">
                             Download PDF
                         </Button>
@@ -939,6 +963,42 @@ const confirmMessage = computed<string>(() =>
                         </Button>
                     </div>
                 </form>
+
+                <Dialog v-model:open="sendEmailOpen">
+                    <DialogContent class="sm:max-w-md">
+                        <DialogHeader>
+                            <DialogTitle>Send Compliance Form</DialogTitle>
+                            <DialogDescription>
+                                Email an employee a link to complete this compliance form. The link will expire in 4 days.
+                            </DialogDescription>
+                        </DialogHeader>
+
+                        <form class="grid gap-4" @submit.prevent="submitSendEmail">
+                            <div class="grid gap-2">
+                                <Label for="send_email">Recipient Email</Label>
+                                <Input
+                                    id="send_email"
+                                    v-model="sendEmailForm.email"
+                                    type="email"
+                                    placeholder="you@example.com"
+                                    required
+                                    autofocus
+                                />
+                                <InputError :message="sendEmailForm.errors.email" />
+                            </div>
+
+                            <DialogFooter class="gap-2">
+                                <Button type="button" variant="outline" @click="cancelSendEmail">
+                                    Cancel
+                                </Button>
+                                <Button type="submit" :disabled="sendEmailForm.processing">
+                                    <Loader2 v-if="sendEmailForm.processing" class="mr-2 size-4 animate-spin" />
+                                    Send
+                                </Button>
+                            </DialogFooter>
+                        </form>
+                    </DialogContent>
+                </Dialog>
             </div>
 
             <!-- Reset Courses -->

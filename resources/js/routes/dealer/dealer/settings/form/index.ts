@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\Settings\ComplianceFormController::update
 * @see app/Http/Controllers/Tenant/Settings/ComplianceFormController.php:45
@@ -33,24 +33,3 @@ update.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     method: 'post',
 })
 
-/**
-* @see \App\Http\Controllers\Tenant\Settings\ComplianceFormController::update
-* @see app/Http/Controllers/Tenant/Settings/ComplianceFormController.php:45
-* @route '/email/settings'
-*/
-const updateForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: update.url(options),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Settings\ComplianceFormController::update
-* @see app/Http/Controllers/Tenant/Settings/ComplianceFormController.php:45
-* @route '/email/settings'
-*/
-updateForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: update.url(options),
-    method: 'post',
-})
-
-update.form = updateForm

@@ -241,6 +241,7 @@ Route::name('dealer.')->middleware([
             Route::patch('managers/{store}', [StoreSettingsController::class, 'updateManagers'])->name('managers.update');
             Route::patch('compliance/{store}', [StoreSettingsController::class, 'updateCompliance'])->name('compliance.update');
             Route::get('compliance/{store}/download', [StoreSettingsController::class, 'downloadCompliance'])->name('compliance.download');
+            Route::post('compliance/{store}/send-email', [StoreSettingsController::class, 'sendComplianceFormLink'])->name('compliance.send-email');
             Route::get('managers', [StoreSettingsController::class, 'index'])
                 ->defaults('section', 'managers')
                 ->name('managers');

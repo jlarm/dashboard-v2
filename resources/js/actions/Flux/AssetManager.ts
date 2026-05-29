@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../wayfinder'
 /**
 * @see \Flux\AssetManager::fluxJs
 * @see vendor/livewire/flux/src/AssetManager.php:44
@@ -42,43 +42,6 @@ fluxJs.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: fluxJs.url(options),
     method: 'head',
 })
-
-/**
-* @see \Flux\AssetManager::fluxJs
-* @see vendor/livewire/flux/src/AssetManager.php:44
-* @route '/flux/flux.js'
-*/
-const fluxJsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: fluxJs.url(options),
-    method: 'get',
-})
-
-/**
-* @see \Flux\AssetManager::fluxJs
-* @see vendor/livewire/flux/src/AssetManager.php:44
-* @route '/flux/flux.js'
-*/
-fluxJsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: fluxJs.url(options),
-    method: 'get',
-})
-
-/**
-* @see \Flux\AssetManager::fluxJs
-* @see vendor/livewire/flux/src/AssetManager.php:44
-* @route '/flux/flux.js'
-*/
-fluxJsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: fluxJs.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-fluxJs.form = fluxJsForm
 
 /**
 * @see \Flux\AssetManager::fluxMinJs
@@ -125,43 +88,6 @@ fluxMinJs.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see \Flux\AssetManager::fluxMinJs
-* @see vendor/livewire/flux/src/AssetManager.php:50
-* @route '/flux/flux.min.js'
-*/
-const fluxMinJsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: fluxMinJs.url(options),
-    method: 'get',
-})
-
-/**
-* @see \Flux\AssetManager::fluxMinJs
-* @see vendor/livewire/flux/src/AssetManager.php:50
-* @route '/flux/flux.min.js'
-*/
-fluxMinJsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: fluxMinJs.url(options),
-    method: 'get',
-})
-
-/**
-* @see \Flux\AssetManager::fluxMinJs
-* @see vendor/livewire/flux/src/AssetManager.php:50
-* @route '/flux/flux.min.js'
-*/
-fluxMinJsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: fluxMinJs.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-fluxMinJs.form = fluxMinJsForm
-
-/**
 * @see \Flux\AssetManager::editorCss
 * @see vendor/livewire/flux/src/AssetManager.php:56
 * @route '/flux/editor.css'
@@ -204,43 +130,6 @@ editorCss.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: editorCss.url(options),
     method: 'head',
 })
-
-/**
-* @see \Flux\AssetManager::editorCss
-* @see vendor/livewire/flux/src/AssetManager.php:56
-* @route '/flux/editor.css'
-*/
-const editorCssForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: editorCss.url(options),
-    method: 'get',
-})
-
-/**
-* @see \Flux\AssetManager::editorCss
-* @see vendor/livewire/flux/src/AssetManager.php:56
-* @route '/flux/editor.css'
-*/
-editorCssForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: editorCss.url(options),
-    method: 'get',
-})
-
-/**
-* @see \Flux\AssetManager::editorCss
-* @see vendor/livewire/flux/src/AssetManager.php:56
-* @route '/flux/editor.css'
-*/
-editorCssForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: editorCss.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-editorCss.form = editorCssForm
 
 /**
 * @see \Flux\AssetManager::editorJs
@@ -287,43 +176,6 @@ editorJs.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see \Flux\AssetManager::editorJs
-* @see vendor/livewire/flux/src/AssetManager.php:62
-* @route '/flux/editor.js'
-*/
-const editorJsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: editorJs.url(options),
-    method: 'get',
-})
-
-/**
-* @see \Flux\AssetManager::editorJs
-* @see vendor/livewire/flux/src/AssetManager.php:62
-* @route '/flux/editor.js'
-*/
-editorJsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: editorJs.url(options),
-    method: 'get',
-})
-
-/**
-* @see \Flux\AssetManager::editorJs
-* @see vendor/livewire/flux/src/AssetManager.php:62
-* @route '/flux/editor.js'
-*/
-editorJsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: editorJs.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-editorJs.form = editorJsForm
-
-/**
 * @see \Flux\AssetManager::editorMinJs
 * @see vendor/livewire/flux/src/AssetManager.php:68
 * @route '/flux/editor.min.js'
@@ -366,43 +218,6 @@ editorMinJs.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: editorMinJs.url(options),
     method: 'head',
 })
-
-/**
-* @see \Flux\AssetManager::editorMinJs
-* @see vendor/livewire/flux/src/AssetManager.php:68
-* @route '/flux/editor.min.js'
-*/
-const editorMinJsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: editorMinJs.url(options),
-    method: 'get',
-})
-
-/**
-* @see \Flux\AssetManager::editorMinJs
-* @see vendor/livewire/flux/src/AssetManager.php:68
-* @route '/flux/editor.min.js'
-*/
-editorMinJsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: editorMinJs.url(options),
-    method: 'get',
-})
-
-/**
-* @see \Flux\AssetManager::editorMinJs
-* @see vendor/livewire/flux/src/AssetManager.php:68
-* @route '/flux/editor.min.js'
-*/
-editorMinJsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: editorMinJs.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-editorMinJs.form = editorMinJsForm
 
 const AssetManager = { fluxJs, fluxMinJs, editorCss, editorJs, editorMinJs }
 

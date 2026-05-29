@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\OshaController::index
 * @see app/Http/Controllers/Tenant/Manuals/OshaController.php:33
@@ -42,43 +42,6 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: index.url(options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Controllers\Tenant\Manuals\OshaController::index
-* @see app/Http/Controllers/Tenant/Manuals/OshaController.php:33
-* @route '/manuals/osha'
-*/
-const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Manuals\OshaController::index
-* @see app/Http/Controllers/Tenant/Manuals/OshaController.php:33
-* @route '/manuals/osha'
-*/
-indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Manuals\OshaController::index
-* @see app/Http/Controllers/Tenant/Manuals/OshaController.php:33
-* @route '/manuals/osha'
-*/
-indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-index.form = indexForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\OshaController::create
@@ -125,43 +88,6 @@ create.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see \App\Http\Controllers\Tenant\Manuals\OshaController::create
-* @see app/Http/Controllers/Tenant/Manuals/OshaController.php:52
-* @route '/manuals/osha/create'
-*/
-const createForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: create.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Manuals\OshaController::create
-* @see app/Http/Controllers/Tenant/Manuals/OshaController.php:52
-* @route '/manuals/osha/create'
-*/
-createForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: create.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Manuals\OshaController::create
-* @see app/Http/Controllers/Tenant/Manuals/OshaController.php:52
-* @route '/manuals/osha/create'
-*/
-createForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: create.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-create.form = createForm
-
-/**
 * @see \App\Http\Controllers\Tenant\Manuals\OshaController::store
 * @see app/Http/Controllers/Tenant/Manuals/OshaController.php:64
 * @route '/manuals/osha'
@@ -194,28 +120,6 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
     method: 'post',
 })
-
-/**
-* @see \App\Http\Controllers\Tenant\Manuals\OshaController::store
-* @see app/Http/Controllers/Tenant/Manuals/OshaController.php:64
-* @route '/manuals/osha'
-*/
-const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: store.url(options),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Manuals\OshaController::store
-* @see app/Http/Controllers/Tenant/Manuals/OshaController.php:64
-* @route '/manuals/osha'
-*/
-storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: store.url(options),
-    method: 'post',
-})
-
-store.form = storeForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Manuals\OshaController::download
@@ -286,43 +190,6 @@ download.head = (args: { manual: string | number | { id: string | number } } | [
 })
 
 /**
-* @see \App\Http\Controllers\Tenant\Manuals\OshaController::download
-* @see app/Http/Controllers/Tenant/Manuals/OshaController.php:91
-* @route '/manuals/osha/{manual}/download'
-*/
-const downloadForm = (args: { manual: string | number | { id: string | number } } | [manual: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: download.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Manuals\OshaController::download
-* @see app/Http/Controllers/Tenant/Manuals/OshaController.php:91
-* @route '/manuals/osha/{manual}/download'
-*/
-downloadForm.get = (args: { manual: string | number | { id: string | number } } | [manual: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: download.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Manuals\OshaController::download
-* @see app/Http/Controllers/Tenant/Manuals/OshaController.php:91
-* @route '/manuals/osha/{manual}/download'
-*/
-downloadForm.head = (args: { manual: string | number | { id: string | number } } | [manual: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: download.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-download.form = downloadForm
-
-/**
 * @see \App\Http\Controllers\Tenant\Manuals\OshaController::destroy
 * @see app/Http/Controllers/Tenant/Manuals/OshaController.php:79
 * @route '/manuals/osha/{manual}'
@@ -379,38 +246,6 @@ destroy.delete = (args: { manual: string | number | { id: string | number } } | 
     url: destroy.url(args, options),
     method: 'delete',
 })
-
-/**
-* @see \App\Http\Controllers\Tenant\Manuals\OshaController::destroy
-* @see app/Http/Controllers/Tenant/Manuals/OshaController.php:79
-* @route '/manuals/osha/{manual}'
-*/
-const destroyForm = (args: { manual: string | number | { id: string | number } } | [manual: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: destroy.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'DELETE',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Manuals\OshaController::destroy
-* @see app/Http/Controllers/Tenant/Manuals/OshaController.php:79
-* @route '/manuals/osha/{manual}'
-*/
-destroyForm.delete = (args: { manual: string | number | { id: string | number } } | [manual: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: destroy.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'DELETE',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'post',
-})
-
-destroy.form = destroyForm
 
 const osha = {
     index: Object.assign(index, index),

@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\ScanArchiveController::upload
 * @see app/Http/Controllers/Tenant/ScanArchiveController.php:48
@@ -32,28 +32,6 @@ upload.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: upload.url(options),
     method: 'post',
 })
-
-/**
-* @see \App\Http\Controllers\Tenant\ScanArchiveController::upload
-* @see app/Http/Controllers/Tenant/ScanArchiveController.php:48
-* @route '/scans-archive/upload'
-*/
-const uploadForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: upload.url(options),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\ScanArchiveController::upload
-* @see app/Http/Controllers/Tenant/ScanArchiveController.php:48
-* @route '/scans-archive/upload'
-*/
-uploadForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: upload.url(options),
-    method: 'post',
-})
-
-upload.form = uploadForm
 
 const archive = {
     upload: Object.assign(upload, upload),

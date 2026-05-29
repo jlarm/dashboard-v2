@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\DashboardController::update
 * @see app/Http/Controllers/Tenant/DashboardController.php:199
@@ -32,28 +32,6 @@ update.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: update.url(options),
     method: 'post',
 })
-
-/**
-* @see \App\Http\Controllers\Tenant\DashboardController::update
-* @see app/Http/Controllers/Tenant/DashboardController.php:199
-* @route '/dashboard/consultant-note'
-*/
-const updateForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: update.url(options),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\DashboardController::update
-* @see app/Http/Controllers/Tenant/DashboardController.php:199
-* @route '/dashboard/consultant-note'
-*/
-updateForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: update.url(options),
-    method: 'post',
-})
-
-update.form = updateForm
 
 const consultantNote = {
     update: Object.assign(update, update),

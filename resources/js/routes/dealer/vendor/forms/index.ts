@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Dealer\VendorController::download
 * @see app/Http/Controllers/Dealer/VendorController.php:120
@@ -68,43 +68,6 @@ download.head = (args: { vendorForm: string | number | { id: string | number } }
 })
 
 /**
-* @see \App\Http\Controllers\Dealer\VendorController::download
-* @see app/Http/Controllers/Dealer/VendorController.php:120
-* @route '/vendors/forms/{vendorForm}/download'
-*/
-const downloadForm = (args: { vendorForm: string | number | { id: string | number } } | [vendorForm: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: download.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\VendorController::download
-* @see app/Http/Controllers/Dealer/VendorController.php:120
-* @route '/vendors/forms/{vendorForm}/download'
-*/
-downloadForm.get = (args: { vendorForm: string | number | { id: string | number } } | [vendorForm: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: download.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\VendorController::download
-* @see app/Http/Controllers/Dealer/VendorController.php:120
-* @route '/vendors/forms/{vendorForm}/download'
-*/
-downloadForm.head = (args: { vendorForm: string | number | { id: string | number } } | [vendorForm: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: download.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-download.form = downloadForm
-
-/**
 * @see \App\Http\Controllers\Dealer\VendorController::send
 * @see app/Http/Controllers/Dealer/VendorController.php:90
 * @route '/vendors/{vendor}/forms'
@@ -161,28 +124,6 @@ send.post = (args: { vendor: string | number | { id: string | number } } | [vend
     url: send.url(args, options),
     method: 'post',
 })
-
-/**
-* @see \App\Http\Controllers\Dealer\VendorController::send
-* @see app/Http/Controllers/Dealer/VendorController.php:90
-* @route '/vendors/{vendor}/forms'
-*/
-const sendForm = (args: { vendor: string | number | { id: string | number } } | [vendor: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: send.url(args, options),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Dealer\VendorController::send
-* @see app/Http/Controllers/Dealer/VendorController.php:90
-* @route '/vendors/{vendor}/forms'
-*/
-sendForm.post = (args: { vendor: string | number | { id: string | number } } | [vendor: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: send.url(args, options),
-    method: 'post',
-})
-
-send.form = sendForm
 
 const forms = {
     download: Object.assign(download, download),

@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::destroy
 * @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:251
@@ -54,38 +54,6 @@ destroy.delete = (args: { audit: string | number, violation: string | number | {
     url: destroy.url(args, options),
     method: 'delete',
 })
-
-/**
-* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::destroy
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:251
-* @route '/audits/osha/{audit}/violations/{violation}/photos/{photoId}'
-*/
-const destroyForm = (args: { audit: string | number, violation: string | number | { id: string | number }, photoId: string | number } | [audit: string | number, violation: string | number | { id: string | number }, photoId: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: destroy.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'DELETE',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::destroy
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:251
-* @route '/audits/osha/{audit}/violations/{violation}/photos/{photoId}'
-*/
-destroyForm.delete = (args: { audit: string | number, violation: string | number | { id: string | number }, photoId: string | number } | [audit: string | number, violation: string | number | { id: string | number }, photoId: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: destroy.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'DELETE',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'post',
-})
-
-destroy.form = destroyForm
 
 const photos = {
     destroy: Object.assign(destroy, destroy),

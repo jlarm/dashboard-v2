@@ -252,6 +252,62 @@ describe('compliance section update', function (): void {
     });
 });
 
+describe('compliance send form email', function (): void {
+    it('emails a signed compliance form link to the recipient', function (): void {
+        Illuminate\Support\Facades\Mail::fake();
+
+        $store = Store::query()->firstOrFail();
+        $this->consultant->update(['current_store_id' => $store->id]);
+
+        $this->actingAs($this->consultant)
+            ->from(route('dealer.dealer.settings.compliance'))
+            ->post(route('dealer.dealer.settings.compliance.send-email', $store), [
+                'email' => 'hr@example.com',
+            ])
+            ->assertRedirect(route('dealer.dealer.settings.compliance'))
+            ->assertSessionHas('flash.success');
+
+        Illuminate\Support\Facades\Mail::assertQueued(
+            App\Mail\ComplianceFormMail::class,
+            fn (App\Mail\ComplianceFormMail $mail): bool => $mail->hasTo('hr@example.com')
+                && str_contains($mail->signedUrl, '/email/settings')
+                && $mail->storeName === $store->name,
+        );
+    });
+
+    it('validates the email address', function (): void {
+        Illuminate\Support\Facades\Mail::fake();
+
+        $store = Store::query()->firstOrFail();
+        $this->consultant->update(['current_store_id' => $store->id]);
+
+        $this->actingAs($this->consultant)
+            ->from(route('dealer.dealer.settings.compliance'))
+            ->post(route('dealer.dealer.settings.compliance.send-email', $store), [
+                'email' => 'not-an-email',
+            ])
+            ->assertRedirect(route('dealer.dealer.settings.compliance'))
+            ->assertSessionHasErrors('email');
+
+        Illuminate\Support\Facades\Mail::assertNothingQueued();
+    });
+
+    it('forbids managers from sending the compliance form email', function (): void {
+        Illuminate\Support\Facades\Mail::fake();
+
+        $store = Store::query()->firstOrFail();
+        $this->manager->update(['current_store_id' => $store->id]);
+
+        $this->actingAs($this->manager)
+            ->post(route('dealer.dealer.settings.compliance.send-email', $store), [
+                'email' => 'hr@example.com',
+            ])
+            ->assertForbidden();
+
+        Illuminate\Support\Facades\Mail::assertNothingQueued();
+    });
+});
+
 describe('reset courses', function (): void {
     it('renders the reset-courses page when users at the store have course results', function (): void {
         $store = Store::query()->firstOrFail();

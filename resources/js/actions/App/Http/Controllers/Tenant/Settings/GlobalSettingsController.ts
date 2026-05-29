@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
 * @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
@@ -46,42 +46,6 @@ index84eaef77ed484e45d931ed7337b74dfe.head = (options?: RouteQueryOptions): Rout
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
 * @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
-* @route '/global-settings'
-*/
-const index84eaef77ed484e45d931ed7337b74dfeForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index84eaef77ed484e45d931ed7337b74dfe.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
-* @route '/global-settings'
-*/
-index84eaef77ed484e45d931ed7337b74dfeForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index84eaef77ed484e45d931ed7337b74dfe.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
-* @route '/global-settings'
-*/
-index84eaef77ed484e45d931ed7337b74dfeForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index84eaef77ed484e45d931ed7337b74dfe.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-index84eaef77ed484e45d931ed7337b74dfe.form = index84eaef77ed484e45d931ed7337b74dfeForm
-/**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
 * @route '/global-settings/course-management'
 */
 const indexce0eb901513cf042a12cae43acdd20b9 = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -126,42 +90,6 @@ indexce0eb901513cf042a12cae43acdd20b9.head = (options?: RouteQueryOptions): Rout
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
 * @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
-* @route '/global-settings/course-management'
-*/
-const indexce0eb901513cf042a12cae43acdd20b9Form = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: indexce0eb901513cf042a12cae43acdd20b9.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
-* @route '/global-settings/course-management'
-*/
-indexce0eb901513cf042a12cae43acdd20b9Form.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: indexce0eb901513cf042a12cae43acdd20b9.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
-* @route '/global-settings/course-management'
-*/
-indexce0eb901513cf042a12cae43acdd20b9Form.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: indexce0eb901513cf042a12cae43acdd20b9.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-indexce0eb901513cf042a12cae43acdd20b9.form = indexce0eb901513cf042a12cae43acdd20b9Form
-/**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
 * @route '/global-settings/reset-courses'
 */
 const index28cdf476162496027c9b301bf30468cb = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -202,43 +130,6 @@ index28cdf476162496027c9b301bf30468cb.head = (options?: RouteQueryOptions): Rout
     url: index28cdf476162496027c9b301bf30468cb.url(options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
-* @route '/global-settings/reset-courses'
-*/
-const index28cdf476162496027c9b301bf30468cbForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index28cdf476162496027c9b301bf30468cb.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
-* @route '/global-settings/reset-courses'
-*/
-index28cdf476162496027c9b301bf30468cbForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index28cdf476162496027c9b301bf30468cb.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:41
-* @route '/global-settings/reset-courses'
-*/
-index28cdf476162496027c9b301bf30468cbForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index28cdf476162496027c9b301bf30468cb.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-index28cdf476162496027c9b301bf30468cb.form = index28cdf476162496027c9b301bf30468cbForm
 
 /**
 * Multiple routes resolve to \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::index, so this export is a
@@ -310,28 +201,6 @@ toggleStoreNotifications.post = (args: { store: string | number | { id: string |
 })
 
 /**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::toggleStoreNotifications
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:78
-* @route '/global-settings/stores/{store}/notifications'
-*/
-const toggleStoreNotificationsForm = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: toggleStoreNotifications.url(args, options),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::toggleStoreNotifications
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:78
-* @route '/global-settings/stores/{store}/notifications'
-*/
-toggleStoreNotificationsForm.post = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: toggleStoreNotifications.url(args, options),
-    method: 'post',
-})
-
-toggleStoreNotifications.form = toggleStoreNotificationsForm
-
-/**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::toggleStoreRemediations
 * @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:87
 * @route '/global-settings/stores/{store}/remediations'
@@ -388,28 +257,6 @@ toggleStoreRemediations.post = (args: { store: string | number | { id: string | 
     url: toggleStoreRemediations.url(args, options),
     method: 'post',
 })
-
-/**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::toggleStoreRemediations
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:87
-* @route '/global-settings/stores/{store}/remediations'
-*/
-const toggleStoreRemediationsForm = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: toggleStoreRemediations.url(args, options),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::toggleStoreRemediations
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:87
-* @route '/global-settings/stores/{store}/remediations'
-*/
-toggleStoreRemediationsForm.post = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: toggleStoreRemediations.url(args, options),
-    method: 'post',
-})
-
-toggleStoreRemediations.form = toggleStoreRemediationsForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::toggleOptionalCourse
@@ -470,38 +317,6 @@ toggleOptionalCourse.patch = (args: { course: number | { id: number } } | [cours
 })
 
 /**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::toggleOptionalCourse
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:96
-* @route '/global-settings/courses/{course}/optional'
-*/
-const toggleOptionalCourseForm = (args: { course: number | { id: number } } | [course: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: toggleOptionalCourse.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'PATCH',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::toggleOptionalCourse
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:96
-* @route '/global-settings/courses/{course}/optional'
-*/
-toggleOptionalCourseForm.patch = (args: { course: number | { id: number } } | [course: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: toggleOptionalCourse.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'PATCH',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'post',
-})
-
-toggleOptionalCourse.form = toggleOptionalCourseForm
-
-/**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::resetCourses
 * @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:105
 * @route '/global-settings/reset-courses'
@@ -534,28 +349,6 @@ resetCourses.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: resetCourses.url(options),
     method: 'post',
 })
-
-/**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::resetCourses
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:105
-* @route '/global-settings/reset-courses'
-*/
-const resetCoursesForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: resetCourses.url(options),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::resetCourses
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:105
-* @route '/global-settings/reset-courses'
-*/
-resetCoursesForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: resetCourses.url(options),
-    method: 'post',
-})
-
-resetCourses.form = resetCoursesForm
 
 const GlobalSettingsController = { index, toggleStoreNotifications, toggleStoreRemediations, toggleOptionalCourse, resetCourses }
 

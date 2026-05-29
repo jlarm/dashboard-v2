@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../wayfinder'
 import violations from './violations'
 import remediation065e42 from './remediation'
 import comments from './comments'
@@ -71,43 +71,6 @@ create.head = (args: { store: string | number | { id: string | number } } | [sto
 })
 
 /**
-* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::create
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:171
-* @route '/audits/osha/create/{store}'
-*/
-const createForm = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: create.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::create
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:171
-* @route '/audits/osha/create/{store}'
-*/
-createForm.get = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: create.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::create
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:171
-* @route '/audits/osha/create/{store}'
-*/
-createForm.head = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: create.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-create.form = createForm
-
-/**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::edit
 * @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:123
 * @route '/audits/osha/{audit}/edit'
@@ -170,43 +133,6 @@ edit.head = (args: { audit: string | number } | [audit: string | number ] | stri
 })
 
 /**
-* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::edit
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:123
-* @route '/audits/osha/{audit}/edit'
-*/
-const editForm = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: edit.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::edit
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:123
-* @route '/audits/osha/{audit}/edit'
-*/
-editForm.get = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: edit.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::edit
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:123
-* @route '/audits/osha/{audit}/edit'
-*/
-editForm.head = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: edit.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-edit.form = editForm
-
-/**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::update
 * @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:143
 * @route '/audits/osha/{audit}'
@@ -257,38 +183,6 @@ update.patch = (args: { audit: string | number } | [audit: string | number ] | s
     url: update.url(args, options),
     method: 'patch',
 })
-
-/**
-* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::update
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:143
-* @route '/audits/osha/{audit}'
-*/
-const updateForm = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: update.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'PATCH',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::update
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:143
-* @route '/audits/osha/{audit}'
-*/
-updateForm.patch = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: update.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'PATCH',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'post',
-})
-
-update.form = updateForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::destroy
@@ -343,38 +237,6 @@ destroy.delete = (args: { audit: string | number } | [audit: string | number ] |
 })
 
 /**
-* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::destroy
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:157
-* @route '/audits/osha/{audit}'
-*/
-const destroyForm = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: destroy.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'DELETE',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::destroy
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:157
-* @route '/audits/osha/{audit}'
-*/
-destroyForm.delete = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: destroy.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'DELETE',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'post',
-})
-
-destroy.form = destroyForm
-
-/**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::grade
 * @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:410
 * @route '/audits/osha/{audit}/grade'
@@ -425,38 +287,6 @@ grade.patch = (args: { audit: string | number } | [audit: string | number ] | st
     url: grade.url(args, options),
     method: 'patch',
 })
-
-/**
-* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::grade
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:410
-* @route '/audits/osha/{audit}/grade'
-*/
-const gradeForm = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: grade.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'PATCH',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::grade
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:410
-* @route '/audits/osha/{audit}/grade'
-*/
-gradeForm.patch = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: grade.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'PATCH',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'post',
-})
-
-grade.form = gradeForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::complete
@@ -511,28 +341,6 @@ complete.post = (args: { audit: string | number } | [audit: string | number ] | 
 })
 
 /**
-* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::complete
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:384
-* @route '/audits/osha/{audit}/complete'
-*/
-const completeForm = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: complete.url(args, options),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::complete
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:384
-* @route '/audits/osha/{audit}/complete'
-*/
-completeForm.post = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: complete.url(args, options),
-    method: 'post',
-})
-
-complete.form = completeForm
-
-/**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::reopen
 * @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:397
 * @route '/audits/osha/{audit}/complete'
@@ -583,38 +391,6 @@ reopen.delete = (args: { audit: string | number } | [audit: string | number ] | 
     url: reopen.url(args, options),
     method: 'delete',
 })
-
-/**
-* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::reopen
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:397
-* @route '/audits/osha/{audit}/complete'
-*/
-const reopenForm = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: reopen.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'DELETE',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::reopen
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:397
-* @route '/audits/osha/{audit}/complete'
-*/
-reopenForm.delete = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: reopen.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'DELETE',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'post',
-})
-
-reopen.form = reopenForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::generate
@@ -669,28 +445,6 @@ generate.post = (args: { audit: string | number } | [audit: string | number ] | 
 })
 
 /**
-* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::generate
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:309
-* @route '/audits/osha/{audit}/generate'
-*/
-const generateForm = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: generate.url(args, options),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::generate
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:309
-* @route '/audits/osha/{audit}/generate'
-*/
-generateForm.post = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: generate.url(args, options),
-    method: 'post',
-})
-
-generate.form = generateForm
-
-/**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::index
 * @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:60
 * @route '/audits/osha'
@@ -733,43 +487,6 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: index.url(options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::index
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:60
-* @route '/audits/osha'
-*/
-const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::index
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:60
-* @route '/audits/osha'
-*/
-indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::index
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:60
-* @route '/audits/osha'
-*/
-indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-index.form = indexForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::remediation
@@ -834,43 +551,6 @@ remediation.head = (args: { audit: string | number } | [audit: string | number ]
 })
 
 /**
-* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::remediation
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:185
-* @route '/audits/osha/{audit}/remediation'
-*/
-const remediationForm = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: remediation.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::remediation
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:185
-* @route '/audits/osha/{audit}/remediation'
-*/
-remediationForm.get = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: remediation.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::remediation
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:185
-* @route '/audits/osha/{audit}/remediation'
-*/
-remediationForm.head = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: remediation.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-remediation.form = remediationForm
-
-/**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::download
 * @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:283
 * @route '/audits/osha/{audit}/download'
@@ -933,43 +613,6 @@ download.head = (args: { audit: string | number } | [audit: string | number ] | 
 })
 
 /**
-* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::download
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:283
-* @route '/audits/osha/{audit}/download'
-*/
-const downloadForm = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: download.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::download
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:283
-* @route '/audits/osha/{audit}/download'
-*/
-downloadForm.get = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: download.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::download
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:283
-* @route '/audits/osha/{audit}/download'
-*/
-downloadForm.head = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: download.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-download.form = downloadForm
-
-/**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::show
 * @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:104
 * @route '/audits/osha/{audit}'
@@ -1030,43 +673,6 @@ show.head = (args: { audit: string | number } | [audit: string | number ] | stri
     url: show.url(args, options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::show
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:104
-* @route '/audits/osha/{audit}'
-*/
-const showForm = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: show.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::show
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:104
-* @route '/audits/osha/{audit}'
-*/
-showForm.get = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: show.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::show
-* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:104
-* @route '/audits/osha/{audit}'
-*/
-showForm.head = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: show.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-show.form = showForm
 
 const osha = {
     create: Object.assign(create, create),

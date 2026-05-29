@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults, validateParameters } from './../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults, validateParameters } from './../../../wayfinder'
 /**
 * @see \Illuminate\Routing\RedirectController::__invoke
 * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
@@ -114,113 +114,6 @@ redirect.options = (args?: { path?: string | number } | [path: string | number ]
     url: redirect.url(args, options),
     method: 'options',
 })
-
-/**
-* @see \Illuminate\Routing\RedirectController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
-* @route '/stores/{path?}'
-*/
-const redirectForm = (args?: { path?: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: redirect.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \Illuminate\Routing\RedirectController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
-* @route '/stores/{path?}'
-*/
-redirectForm.get = (args?: { path?: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: redirect.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \Illuminate\Routing\RedirectController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
-* @route '/stores/{path?}'
-*/
-redirectForm.head = (args?: { path?: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: redirect.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-/**
-* @see \Illuminate\Routing\RedirectController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
-* @route '/stores/{path?}'
-*/
-redirectForm.post = (args?: { path?: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: redirect.url(args, options),
-    method: 'post',
-})
-
-/**
-* @see \Illuminate\Routing\RedirectController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
-* @route '/stores/{path?}'
-*/
-redirectForm.put = (args?: { path?: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: redirect.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'PUT',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'post',
-})
-
-/**
-* @see \Illuminate\Routing\RedirectController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
-* @route '/stores/{path?}'
-*/
-redirectForm.patch = (args?: { path?: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: redirect.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'PATCH',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'post',
-})
-
-/**
-* @see \Illuminate\Routing\RedirectController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
-* @route '/stores/{path?}'
-*/
-redirectForm.delete = (args?: { path?: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: redirect.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'DELETE',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'post',
-})
-
-/**
-* @see \Illuminate\Routing\RedirectController::__invoke
-* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
-* @route '/stores/{path?}'
-*/
-redirectForm.options = (args?: { path?: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: redirect.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'OPTIONS',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-redirect.form = redirectForm
 
 const legacyStores = {
     redirect: Object.assign(redirect, redirect),

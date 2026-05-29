@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\Central\DocumentController::index
 * @see app/Http/Controllers/Central/DocumentController.php:26
@@ -44,43 +44,6 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see \App\Http\Controllers\Central\DocumentController::index
-* @see app/Http/Controllers/Central/DocumentController.php:26
-* @route '//dashboard.test/documents'
-*/
-const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Central\DocumentController::index
-* @see app/Http/Controllers/Central/DocumentController.php:26
-* @route '//dashboard.test/documents'
-*/
-indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Central\DocumentController::index
-* @see app/Http/Controllers/Central/DocumentController.php:26
-* @route '//dashboard.test/documents'
-*/
-indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-index.form = indexForm
-
-/**
 * @see \App\Http\Controllers\Central\DocumentController::store
 * @see app/Http/Controllers/Central/DocumentController.php:49
 * @route '//dashboard.test/documents'
@@ -113,28 +76,6 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
     method: 'post',
 })
-
-/**
-* @see \App\Http\Controllers\Central\DocumentController::store
-* @see app/Http/Controllers/Central/DocumentController.php:49
-* @route '//dashboard.test/documents'
-*/
-const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: store.url(options),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Central\DocumentController::store
-* @see app/Http/Controllers/Central/DocumentController.php:49
-* @route '//dashboard.test/documents'
-*/
-storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: store.url(options),
-    method: 'post',
-})
-
-store.form = storeForm
 
 /**
 * @see \App\Http\Controllers\Central\DocumentController::download
@@ -205,43 +146,6 @@ download.head = (args: { document: number | { id: number } } | [document: number
 })
 
 /**
-* @see \App\Http\Controllers\Central\DocumentController::download
-* @see app/Http/Controllers/Central/DocumentController.php:66
-* @route '//dashboard.test/documents/{document}/download'
-*/
-const downloadForm = (args: { document: number | { id: number } } | [document: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: download.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Central\DocumentController::download
-* @see app/Http/Controllers/Central/DocumentController.php:66
-* @route '//dashboard.test/documents/{document}/download'
-*/
-downloadForm.get = (args: { document: number | { id: number } } | [document: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: download.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Central\DocumentController::download
-* @see app/Http/Controllers/Central/DocumentController.php:66
-* @route '//dashboard.test/documents/{document}/download'
-*/
-downloadForm.head = (args: { document: number | { id: number } } | [document: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: download.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-download.form = downloadForm
-
-/**
 * @see \App\Http\Controllers\Central\DocumentController::destroy
 * @see app/Http/Controllers/Central/DocumentController.php:77
 * @route '//dashboard.test/documents/{document}'
@@ -298,38 +202,6 @@ destroy.delete = (args: { document: number | { id: number } } | [document: numbe
     url: destroy.url(args, options),
     method: 'delete',
 })
-
-/**
-* @see \App\Http\Controllers\Central\DocumentController::destroy
-* @see app/Http/Controllers/Central/DocumentController.php:77
-* @route '//dashboard.test/documents/{document}'
-*/
-const destroyForm = (args: { document: number | { id: number } } | [document: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: destroy.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'DELETE',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Central\DocumentController::destroy
-* @see app/Http/Controllers/Central/DocumentController.php:77
-* @route '//dashboard.test/documents/{document}'
-*/
-destroyForm.delete = (args: { document: number | { id: number } } | [document: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: destroy.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'DELETE',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'post',
-})
-
-destroy.form = destroyForm
 
 const documents = {
     index: Object.assign(index, index),

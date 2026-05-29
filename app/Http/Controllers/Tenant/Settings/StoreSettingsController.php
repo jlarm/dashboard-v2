@@ -6,6 +6,8 @@ namespace App\Http\Controllers\Tenant\Settings;
 
 use App\Domain\Tenant\GlobalSettings\Data\ResettableUserData;
 use App\Domain\Tenant\StoreSettings\Actions\ResetStoreCourses;
+use App\Domain\Tenant\StoreSettings\Actions\SendComplianceFormLink;
+use App\Domain\Tenant\StoreSettings\Actions\StreamComplianceInfoPdf;
 use App\Domain\Tenant\StoreSettings\Actions\UpdateComplianceSection;
 use App\Domain\Tenant\StoreSettings\Actions\UpdateGeneralSection;
 use App\Domain\Tenant\StoreSettings\Actions\UpdateManagersSection;
@@ -15,6 +17,7 @@ use App\Domain\Tenant\StoreSettings\Queries\GetManagersSection;
 use App\Domain\Tenant\StoreSettings\Queries\GetStoreResettableUsers;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tenant\StoreSettings\ResetStoreCoursesRequest;
+use App\Http\Requests\Tenant\StoreSettings\SendComplianceFormLinkRequest;
 use App\Http\Requests\Tenant\StoreSettings\UpdateComplianceRequest;
 use App\Http\Requests\Tenant\StoreSettings\UpdateGeneralRequest;
 use App\Http\Requests\Tenant\StoreSettings\UpdateManagersRequest;
@@ -24,8 +27,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response as InertiaResponse;
-use Spatie\Browsershot\Browsershot;
-use Symfony\Component\HttpFoundation\StreamedResponse;
+use Spatie\LaravelPdf\PdfBuilder;
 use Throwable;
 
 class StoreSettingsController extends Controller
@@ -174,27 +176,27 @@ class StoreSettingsController extends Controller
         return back()->with('flash.success', $message);
     }
 
-    public function downloadCompliance(Store $store): StreamedResponse
+    public function downloadCompliance(Store $store, StreamComplianceInfoPdf $streamComplianceInfoPdf): PdfBuilder
     {
         $this->authorize('update', $store);
 
-        try {
-            $html = view('dealer.settings.ComplianceInfoDownloadView', ['store' => $store])->render();
+        return $streamComplianceInfoPdf->handle($store);
+    }
 
-            $pdf = Browsershot::html($html)
-                ->format('A4')
-                ->margins(20, 10, 20, 10)
-                ->pdf();
+    public function sendComplianceFormLink(
+        SendComplianceFormLinkRequest $request,
+        Store $store,
+        SendComplianceFormLink $sendComplianceFormLink,
+    ): RedirectResponse {
+        try {
+            $sendComplianceFormLink->handle($store, $request->recipientEmail());
         } catch (Throwable $e) {
             report($e);
-            abort(503, 'We could not generate the compliance PDF. Please try again later.');
+
+            return back()->with('flash.error', 'We could not send the compliance form email. Please try again.');
         }
 
-        $filename = str_replace(' ', '-', mb_strtolower((string) $store->name)).'-compliance-info-'.now()->format('m-d-y').'.pdf';
-
-        return response()->streamDownload(static function () use ($pdf): void {
-            echo $pdf;
-        }, $filename, ['Content-Type' => 'application/pdf']);
+        return back()->with('flash.success', 'Compliance form email sent.');
     }
 
     private function resolveStore(): ?Store

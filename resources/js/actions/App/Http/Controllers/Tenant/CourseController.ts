@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::index
 * @see app/Http/Controllers/Tenant/CourseController.php:29
@@ -42,43 +42,6 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: index.url(options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Controllers\Tenant\CourseController::index
-* @see app/Http/Controllers/Tenant/CourseController.php:29
-* @route '/courses'
-*/
-const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\CourseController::index
-* @see app/Http/Controllers/Tenant/CourseController.php:29
-* @route '/courses'
-*/
-indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\CourseController::index
-* @see app/Http/Controllers/Tenant/CourseController.php:29
-* @route '/courses'
-*/
-indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-index.form = indexForm
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::all
@@ -125,43 +88,6 @@ all.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see \App\Http\Controllers\Tenant\CourseController::all
-* @see app/Http/Controllers/Tenant/CourseController.php:44
-* @route '/courses/all'
-*/
-const allForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: all.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\CourseController::all
-* @see app/Http/Controllers/Tenant/CourseController.php:44
-* @route '/courses/all'
-*/
-allForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: all.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\CourseController::all
-* @see app/Http/Controllers/Tenant/CourseController.php:44
-* @route '/courses/all'
-*/
-allForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: all.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-all.form = allForm
-
-/**
 * @see \App\Http\Controllers\Tenant\CourseController::issueDotCertificate
 * @see app/Http/Controllers/Tenant/CourseController.php:122
 * @route '/courses/dot-certificate'
@@ -194,28 +120,6 @@ issueDotCertificate.post = (options?: RouteQueryOptions): RouteDefinition<'post'
     url: issueDotCertificate.url(options),
     method: 'post',
 })
-
-/**
-* @see \App\Http\Controllers\Tenant\CourseController::issueDotCertificate
-* @see app/Http/Controllers/Tenant/CourseController.php:122
-* @route '/courses/dot-certificate'
-*/
-const issueDotCertificateForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: issueDotCertificate.url(options),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\CourseController::issueDotCertificate
-* @see app/Http/Controllers/Tenant/CourseController.php:122
-* @route '/courses/dot-certificate'
-*/
-issueDotCertificateForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: issueDotCertificate.url(options),
-    method: 'post',
-})
-
-issueDotCertificate.form = issueDotCertificateForm
 
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::show
@@ -286,43 +190,6 @@ show.head = (args: { course: string | { slug: string } } | [course: string | { s
 })
 
 /**
-* @see \App\Http\Controllers\Tenant\CourseController::show
-* @see app/Http/Controllers/Tenant/CourseController.php:53
-* @route '/courses/{course}'
-*/
-const showForm = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: show.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\CourseController::show
-* @see app/Http/Controllers/Tenant/CourseController.php:53
-* @route '/courses/{course}'
-*/
-showForm.get = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: show.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\CourseController::show
-* @see app/Http/Controllers/Tenant/CourseController.php:53
-* @route '/courses/{course}'
-*/
-showForm.head = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: show.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-show.form = showForm
-
-/**
 * @see \App\Http\Controllers\Tenant\CourseController::quiz
 * @see app/Http/Controllers/Tenant/CourseController.php:69
 * @route '/courses/{course}/quiz'
@@ -391,43 +258,6 @@ quiz.head = (args: { course: string | { slug: string } } | [course: string | { s
 })
 
 /**
-* @see \App\Http\Controllers\Tenant\CourseController::quiz
-* @see app/Http/Controllers/Tenant/CourseController.php:69
-* @route '/courses/{course}/quiz'
-*/
-const quizForm = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: quiz.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\CourseController::quiz
-* @see app/Http/Controllers/Tenant/CourseController.php:69
-* @route '/courses/{course}/quiz'
-*/
-quizForm.get = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: quiz.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\CourseController::quiz
-* @see app/Http/Controllers/Tenant/CourseController.php:69
-* @route '/courses/{course}/quiz'
-*/
-quizForm.head = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: quiz.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-quiz.form = quizForm
-
-/**
 * @see \App\Http\Controllers\Tenant\CourseController::submitQuiz
 * @see app/Http/Controllers/Tenant/CourseController.php:91
 * @route '/courses/{course}/quiz'
@@ -486,28 +316,6 @@ submitQuiz.post = (args: { course: string | { slug: string } } | [course: string
 })
 
 /**
-* @see \App\Http\Controllers\Tenant\CourseController::submitQuiz
-* @see app/Http/Controllers/Tenant/CourseController.php:91
-* @route '/courses/{course}/quiz'
-*/
-const submitQuizForm = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: submitQuiz.url(args, options),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\CourseController::submitQuiz
-* @see app/Http/Controllers/Tenant/CourseController.php:91
-* @route '/courses/{course}/quiz'
-*/
-submitQuizForm.post = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: submitQuiz.url(args, options),
-    method: 'post',
-})
-
-submitQuiz.form = submitQuizForm
-
-/**
 * @see \App\Http\Controllers\Tenant\CourseController::markVideoComplete
 * @see app/Http/Controllers/Tenant/CourseController.php:112
 * @route '/courses/{course}/video-complete'
@@ -564,28 +372,6 @@ markVideoComplete.post = (args: { course: string | { slug: string } } | [course:
     url: markVideoComplete.url(args, options),
     method: 'post',
 })
-
-/**
-* @see \App\Http\Controllers\Tenant\CourseController::markVideoComplete
-* @see app/Http/Controllers/Tenant/CourseController.php:112
-* @route '/courses/{course}/video-complete'
-*/
-const markVideoCompleteForm = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: markVideoComplete.url(args, options),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\CourseController::markVideoComplete
-* @see app/Http/Controllers/Tenant/CourseController.php:112
-* @route '/courses/{course}/video-complete'
-*/
-markVideoCompleteForm.post = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: markVideoComplete.url(args, options),
-    method: 'post',
-})
-
-markVideoComplete.form = markVideoCompleteForm
 
 const CourseController = { index, all, issueDotCertificate, show, quiz, submitQuiz, markVideoComplete }
 

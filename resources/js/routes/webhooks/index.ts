@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\API\MailgunWebhookController::mailgun
 * @see app/Http/Controllers/API/MailgunWebhookController.php:17
@@ -32,28 +32,6 @@ mailgun.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: mailgun.url(options),
     method: 'post',
 })
-
-/**
-* @see \App\Http\Controllers\API\MailgunWebhookController::mailgun
-* @see app/Http/Controllers/API/MailgunWebhookController.php:17
-* @route '//dashboard.test/api/webhooks/mailgun'
-*/
-const mailgunForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: mailgun.url(options),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\API\MailgunWebhookController::mailgun
-* @see app/Http/Controllers/API/MailgunWebhookController.php:17
-* @route '//dashboard.test/api/webhooks/mailgun'
-*/
-mailgunForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: mailgun.url(options),
-    method: 'post',
-})
-
-mailgun.form = mailgunForm
 
 const webhooks = {
     mailgun: Object.assign(mailgun, mailgun),

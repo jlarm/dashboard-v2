@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\CourseController::issue
 * @see app/Http/Controllers/Tenant/CourseController.php:122
@@ -32,28 +32,6 @@ issue.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: issue.url(options),
     method: 'post',
 })
-
-/**
-* @see \App\Http\Controllers\Tenant\CourseController::issue
-* @see app/Http/Controllers/Tenant/CourseController.php:122
-* @route '/courses/dot-certificate'
-*/
-const issueForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: issue.url(options),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\CourseController::issue
-* @see app/Http/Controllers/Tenant/CourseController.php:122
-* @route '/courses/dot-certificate'
-*/
-issueForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: issue.url(options),
-    method: 'post',
-})
-
-issue.form = issueForm
 
 const dotCertificate = {
     issue: Object.assign(issue, issue),

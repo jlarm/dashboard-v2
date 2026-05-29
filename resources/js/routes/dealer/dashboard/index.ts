@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../wayfinder'
 import consultantNote from './consultant-note'
 /**
 * @see \App\Http\Controllers\Tenant\DashboardController::auditReport
@@ -43,43 +43,6 @@ auditReport.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: auditReport.url(options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Controllers\Tenant\DashboardController::auditReport
-* @see app/Http/Controllers/Tenant/DashboardController.php:221
-* @route '/dashboard/audit-report'
-*/
-const auditReportForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: auditReport.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\DashboardController::auditReport
-* @see app/Http/Controllers/Tenant/DashboardController.php:221
-* @route '/dashboard/audit-report'
-*/
-auditReportForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: auditReport.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\DashboardController::auditReport
-* @see app/Http/Controllers/Tenant/DashboardController.php:221
-* @route '/dashboard/audit-report'
-*/
-auditReportForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: auditReport.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-auditReport.form = auditReportForm
 
 /**
 * @see \App\Http\Controllers\Tenant\DashboardController::auditTypeReport
@@ -142,43 +105,6 @@ auditTypeReport.head = (args: { type: string | number } | [type: string | number
     url: auditTypeReport.url(args, options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Controllers\Tenant\DashboardController::auditTypeReport
-* @see app/Http/Controllers/Tenant/DashboardController.php:246
-* @route '/dashboard/audit-report/{type}'
-*/
-const auditTypeReportForm = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: auditTypeReport.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\DashboardController::auditTypeReport
-* @see app/Http/Controllers/Tenant/DashboardController.php:246
-* @route '/dashboard/audit-report/{type}'
-*/
-auditTypeReportForm.get = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: auditTypeReport.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\DashboardController::auditTypeReport
-* @see app/Http/Controllers/Tenant/DashboardController.php:246
-* @route '/dashboard/audit-report/{type}'
-*/
-auditTypeReportForm.head = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: auditTypeReport.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-auditTypeReport.form = auditTypeReportForm
 
 const dashboard = {
     auditReport: Object.assign(auditReport, auditReport),

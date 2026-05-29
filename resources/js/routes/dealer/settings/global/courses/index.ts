@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::optional
 * @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:96
@@ -56,38 +56,6 @@ optional.patch = (args: { course: number | { id: number } } | [course: number | 
     url: optional.url(args, options),
     method: 'patch',
 })
-
-/**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::optional
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:96
-* @route '/global-settings/courses/{course}/optional'
-*/
-const optionalForm = (args: { course: number | { id: number } } | [course: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: optional.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'PATCH',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Tenant\Settings\GlobalSettingsController::optional
-* @see app/Http/Controllers/Tenant/Settings/GlobalSettingsController.php:96
-* @route '/global-settings/courses/{course}/optional'
-*/
-optionalForm.patch = (args: { course: number | { id: number } } | [course: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: optional.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'PATCH',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'post',
-})
-
-optional.form = optionalForm
 
 const courses = {
     optional: Object.assign(optional, optional),

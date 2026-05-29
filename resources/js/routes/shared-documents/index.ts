@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\Central\SharedDocumentController::index
 * @see app/Http/Controllers/Central/SharedDocumentController.php:26
@@ -44,43 +44,6 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see \App\Http\Controllers\Central\SharedDocumentController::index
-* @see app/Http/Controllers/Central/SharedDocumentController.php:26
-* @route '//dashboard.test/shared-documents'
-*/
-const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Central\SharedDocumentController::index
-* @see app/Http/Controllers/Central/SharedDocumentController.php:26
-* @route '//dashboard.test/shared-documents'
-*/
-indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Central\SharedDocumentController::index
-* @see app/Http/Controllers/Central/SharedDocumentController.php:26
-* @route '//dashboard.test/shared-documents'
-*/
-indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-index.form = indexForm
-
-/**
 * @see \App\Http\Controllers\Central\SharedDocumentController::store
 * @see app/Http/Controllers/Central/SharedDocumentController.php:49
 * @route '//dashboard.test/shared-documents'
@@ -113,28 +76,6 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
     method: 'post',
 })
-
-/**
-* @see \App\Http\Controllers\Central\SharedDocumentController::store
-* @see app/Http/Controllers/Central/SharedDocumentController.php:49
-* @route '//dashboard.test/shared-documents'
-*/
-const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: store.url(options),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Central\SharedDocumentController::store
-* @see app/Http/Controllers/Central/SharedDocumentController.php:49
-* @route '//dashboard.test/shared-documents'
-*/
-storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: store.url(options),
-    method: 'post',
-})
-
-store.form = storeForm
 
 /**
 * @see \App\Http\Controllers\Central\SharedDocumentController::download
@@ -205,43 +146,6 @@ download.head = (args: { sharedDocument: number | { id: number } } | [sharedDocu
 })
 
 /**
-* @see \App\Http\Controllers\Central\SharedDocumentController::download
-* @see app/Http/Controllers/Central/SharedDocumentController.php:66
-* @route '//dashboard.test/shared-documents/{sharedDocument}/download'
-*/
-const downloadForm = (args: { sharedDocument: number | { id: number } } | [sharedDocument: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: download.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Central\SharedDocumentController::download
-* @see app/Http/Controllers/Central/SharedDocumentController.php:66
-* @route '//dashboard.test/shared-documents/{sharedDocument}/download'
-*/
-downloadForm.get = (args: { sharedDocument: number | { id: number } } | [sharedDocument: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: download.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\Central\SharedDocumentController::download
-* @see app/Http/Controllers/Central/SharedDocumentController.php:66
-* @route '//dashboard.test/shared-documents/{sharedDocument}/download'
-*/
-downloadForm.head = (args: { sharedDocument: number | { id: number } } | [sharedDocument: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: download.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-download.form = downloadForm
-
-/**
 * @see \App\Http\Controllers\Central\SharedDocumentController::destroy
 * @see app/Http/Controllers/Central/SharedDocumentController.php:77
 * @route '//dashboard.test/shared-documents/{sharedDocument}'
@@ -298,38 +202,6 @@ destroy.delete = (args: { sharedDocument: number | { id: number } } | [sharedDoc
     url: destroy.url(args, options),
     method: 'delete',
 })
-
-/**
-* @see \App\Http\Controllers\Central\SharedDocumentController::destroy
-* @see app/Http/Controllers/Central/SharedDocumentController.php:77
-* @route '//dashboard.test/shared-documents/{sharedDocument}'
-*/
-const destroyForm = (args: { sharedDocument: number | { id: number } } | [sharedDocument: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: destroy.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'DELETE',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\Central\SharedDocumentController::destroy
-* @see app/Http/Controllers/Central/SharedDocumentController.php:77
-* @route '//dashboard.test/shared-documents/{sharedDocument}'
-*/
-destroyForm.delete = (args: { sharedDocument: number | { id: number } } | [sharedDocument: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: destroy.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'DELETE',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'post',
-})
-
-destroy.form = destroyForm
 
 const sharedDocuments = {
     index: Object.assign(index, index),
