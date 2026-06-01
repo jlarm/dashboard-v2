@@ -20,7 +20,6 @@
         "laravel/nightwatch": "^1.7",
         "laravel/sanctum": "^4.0",
         "laravel/slack-notification-channel": "^3.2",
-        "laravel/telescope": "^5.0",
         "laravel/tinker": "^3.0",
         "laravel/wayfinder": "^0.1.16",
         "league/flysystem-aws-s3-v3": "^3.0",

@@ -522,45 +522,6 @@ CREATE TABLE `shared_documents` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `telescope_entries`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `telescope_entries` (
-  `sequence` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `batch_id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `family_hash` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `should_display_on_index` tinyint(1) NOT NULL DEFAULT '1',
-  `type` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `content` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`sequence`),
-  UNIQUE KEY `telescope_entries_uuid_unique` (`uuid`),
-  KEY `telescope_entries_batch_id_index` (`batch_id`),
-  KEY `telescope_entries_family_hash_index` (`family_hash`),
-  KEY `telescope_entries_created_at_index` (`created_at`),
-  KEY `telescope_entries_type_should_display_on_index_index` (`type`,`should_display_on_index`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `telescope_entries_tags`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `telescope_entries_tags` (
-  `entry_uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tag` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`entry_uuid`,`tag`),
-  KEY `telescope_entries_tags_tag_index` (`tag`),
-  CONSTRAINT `telescope_entries_tags_entry_uuid_foreign` FOREIGN KEY (`entry_uuid`) REFERENCES `telescope_entries` (`uuid`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-DROP TABLE IF EXISTS `telescope_monitoring`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `telescope_monitoring` (
-  `tag` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`tag`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 DROP TABLE IF EXISTS `tenant_user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -664,7 +625,6 @@ CREATE TABLE `video_progress` (
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (1,'2014_10_12_000000_create_users_table',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (2,'2014_10_12_100000_create_password_resets_table',1);
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (3,'2018_08_08_100000_create_telescope_entries_table',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (4,'2019_08_19_000000_create_failed_jobs_table',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (5,'2019_09_15_000010_create_tenants_table',1);
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (6,'2019_09_15_000020_create_domains_table',1);

@@ -100,12 +100,6 @@ function setupCentralDatabase(): void
         '--realpath' => false,
     ]);
 
-    // Run Telescope migrations
-    Artisan::call('migrate', [
-        '--path' => 'vendor/laravel/telescope/database/migrations',
-        '--realpath' => true,
-    ]);
-
     Dealership::query()->delete();
 
     Artisan::call('db:seed', ['--class' => RoleAndPermissionSeeder::class]);
