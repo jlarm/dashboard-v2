@@ -1,98 +1,204 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults, validateParameters } from './../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults, validateParameters } from './../../../wayfinder'
 /**
 * @see \Illuminate\Routing\RedirectController::__invoke
 * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
-* @route '//dashboard.test/settings'
+* @route '//dashboard-v2.test/settings'
 */
-const RedirectController2687bf76ad8e7377a5f0cf25c4ea5b92 = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: RedirectController2687bf76ad8e7377a5f0cf25c4ea5b92.url(options),
+const RedirectController0f90409069c7ddcbfa4db7398cde9d76 = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: RedirectController0f90409069c7ddcbfa4db7398cde9d76.url(options),
     method: 'get',
 })
 
-RedirectController2687bf76ad8e7377a5f0cf25c4ea5b92.definition = {
+RedirectController0f90409069c7ddcbfa4db7398cde9d76.definition = {
     methods: ["get","head","post","put","patch","delete","options"],
-    url: '//dashboard.test/settings',
+    url: '//dashboard-v2.test/settings',
 } satisfies RouteDefinition<["get","head","post","put","patch","delete","options"]>
 
 /**
 * @see \Illuminate\Routing\RedirectController::__invoke
 * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
-* @route '//dashboard.test/settings'
+* @route '//dashboard-v2.test/settings'
 */
-RedirectController2687bf76ad8e7377a5f0cf25c4ea5b92.url = (options?: RouteQueryOptions) => {
-    return RedirectController2687bf76ad8e7377a5f0cf25c4ea5b92.definition.url + queryParams(options)
+RedirectController0f90409069c7ddcbfa4db7398cde9d76.url = (options?: RouteQueryOptions) => {
+    return RedirectController0f90409069c7ddcbfa4db7398cde9d76.definition.url + queryParams(options)
 }
 
 /**
 * @see \Illuminate\Routing\RedirectController::__invoke
 * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
-* @route '//dashboard.test/settings'
+* @route '//dashboard-v2.test/settings'
 */
-RedirectController2687bf76ad8e7377a5f0cf25c4ea5b92.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: RedirectController2687bf76ad8e7377a5f0cf25c4ea5b92.url(options),
+RedirectController0f90409069c7ddcbfa4db7398cde9d76.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: RedirectController0f90409069c7ddcbfa4db7398cde9d76.url(options),
     method: 'get',
 })
 
 /**
 * @see \Illuminate\Routing\RedirectController::__invoke
 * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
-* @route '//dashboard.test/settings'
+* @route '//dashboard-v2.test/settings'
 */
-RedirectController2687bf76ad8e7377a5f0cf25c4ea5b92.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
-    url: RedirectController2687bf76ad8e7377a5f0cf25c4ea5b92.url(options),
+RedirectController0f90409069c7ddcbfa4db7398cde9d76.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: RedirectController0f90409069c7ddcbfa4db7398cde9d76.url(options),
     method: 'head',
 })
 
 /**
 * @see \Illuminate\Routing\RedirectController::__invoke
 * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
-* @route '//dashboard.test/settings'
+* @route '//dashboard-v2.test/settings'
 */
-RedirectController2687bf76ad8e7377a5f0cf25c4ea5b92.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
-    url: RedirectController2687bf76ad8e7377a5f0cf25c4ea5b92.url(options),
+RedirectController0f90409069c7ddcbfa4db7398cde9d76.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
+    url: RedirectController0f90409069c7ddcbfa4db7398cde9d76.url(options),
     method: 'post',
 })
 
 /**
 * @see \Illuminate\Routing\RedirectController::__invoke
 * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
-* @route '//dashboard.test/settings'
+* @route '//dashboard-v2.test/settings'
 */
-RedirectController2687bf76ad8e7377a5f0cf25c4ea5b92.put = (options?: RouteQueryOptions): RouteDefinition<'put'> => ({
-    url: RedirectController2687bf76ad8e7377a5f0cf25c4ea5b92.url(options),
+RedirectController0f90409069c7ddcbfa4db7398cde9d76.put = (options?: RouteQueryOptions): RouteDefinition<'put'> => ({
+    url: RedirectController0f90409069c7ddcbfa4db7398cde9d76.url(options),
     method: 'put',
 })
 
 /**
 * @see \Illuminate\Routing\RedirectController::__invoke
 * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
-* @route '//dashboard.test/settings'
+* @route '//dashboard-v2.test/settings'
 */
-RedirectController2687bf76ad8e7377a5f0cf25c4ea5b92.patch = (options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
-    url: RedirectController2687bf76ad8e7377a5f0cf25c4ea5b92.url(options),
+RedirectController0f90409069c7ddcbfa4db7398cde9d76.patch = (options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+    url: RedirectController0f90409069c7ddcbfa4db7398cde9d76.url(options),
     method: 'patch',
 })
 
 /**
 * @see \Illuminate\Routing\RedirectController::__invoke
 * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
-* @route '//dashboard.test/settings'
+* @route '//dashboard-v2.test/settings'
 */
-RedirectController2687bf76ad8e7377a5f0cf25c4ea5b92.delete = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
-    url: RedirectController2687bf76ad8e7377a5f0cf25c4ea5b92.url(options),
+RedirectController0f90409069c7ddcbfa4db7398cde9d76.delete = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
+    url: RedirectController0f90409069c7ddcbfa4db7398cde9d76.url(options),
     method: 'delete',
 })
 
 /**
 * @see \Illuminate\Routing\RedirectController::__invoke
 * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
-* @route '//dashboard.test/settings'
+* @route '//dashboard-v2.test/settings'
 */
-RedirectController2687bf76ad8e7377a5f0cf25c4ea5b92.options = (options?: RouteQueryOptions): RouteDefinition<'options'> => ({
-    url: RedirectController2687bf76ad8e7377a5f0cf25c4ea5b92.url(options),
+RedirectController0f90409069c7ddcbfa4db7398cde9d76.options = (options?: RouteQueryOptions): RouteDefinition<'options'> => ({
+    url: RedirectController0f90409069c7ddcbfa4db7398cde9d76.url(options),
     method: 'options',
 })
 
+/**
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
+* @route '//dashboard-v2.test/settings'
+*/
+const RedirectController0f90409069c7ddcbfa4db7398cde9d76Form = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: RedirectController0f90409069c7ddcbfa4db7398cde9d76.url(options),
+    method: 'get',
+})
+
+/**
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
+* @route '//dashboard-v2.test/settings'
+*/
+RedirectController0f90409069c7ddcbfa4db7398cde9d76Form.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: RedirectController0f90409069c7ddcbfa4db7398cde9d76.url(options),
+    method: 'get',
+})
+
+/**
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
+* @route '//dashboard-v2.test/settings'
+*/
+RedirectController0f90409069c7ddcbfa4db7398cde9d76Form.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: RedirectController0f90409069c7ddcbfa4db7398cde9d76.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+/**
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
+* @route '//dashboard-v2.test/settings'
+*/
+RedirectController0f90409069c7ddcbfa4db7398cde9d76Form.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: RedirectController0f90409069c7ddcbfa4db7398cde9d76.url(options),
+    method: 'post',
+})
+
+/**
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
+* @route '//dashboard-v2.test/settings'
+*/
+RedirectController0f90409069c7ddcbfa4db7398cde9d76Form.put = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: RedirectController0f90409069c7ddcbfa4db7398cde9d76.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PUT',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+/**
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
+* @route '//dashboard-v2.test/settings'
+*/
+RedirectController0f90409069c7ddcbfa4db7398cde9d76Form.patch = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: RedirectController0f90409069c7ddcbfa4db7398cde9d76.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PATCH',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+/**
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
+* @route '//dashboard-v2.test/settings'
+*/
+RedirectController0f90409069c7ddcbfa4db7398cde9d76Form.delete = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: RedirectController0f90409069c7ddcbfa4db7398cde9d76.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'DELETE',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+/**
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
+* @route '//dashboard-v2.test/settings'
+*/
+RedirectController0f90409069c7ddcbfa4db7398cde9d76Form.options = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: RedirectController0f90409069c7ddcbfa4db7398cde9d76.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'OPTIONS',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+RedirectController0f90409069c7ddcbfa4db7398cde9d76.form = RedirectController0f90409069c7ddcbfa4db7398cde9d76Form
 /**
 * @see \Illuminate\Routing\RedirectController::__invoke
 * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
@@ -210,12 +316,119 @@ RedirectController5d40208b2ac3ad3e0fd02f29aabcb6ca.options = (args?: { path?: st
 })
 
 /**
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
+* @route '/stores/{path?}'
+*/
+const RedirectController5d40208b2ac3ad3e0fd02f29aabcb6caForm = (args?: { path?: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: RedirectController5d40208b2ac3ad3e0fd02f29aabcb6ca.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
+* @route '/stores/{path?}'
+*/
+RedirectController5d40208b2ac3ad3e0fd02f29aabcb6caForm.get = (args?: { path?: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: RedirectController5d40208b2ac3ad3e0fd02f29aabcb6ca.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
+* @route '/stores/{path?}'
+*/
+RedirectController5d40208b2ac3ad3e0fd02f29aabcb6caForm.head = (args?: { path?: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: RedirectController5d40208b2ac3ad3e0fd02f29aabcb6ca.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+/**
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
+* @route '/stores/{path?}'
+*/
+RedirectController5d40208b2ac3ad3e0fd02f29aabcb6caForm.post = (args?: { path?: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: RedirectController5d40208b2ac3ad3e0fd02f29aabcb6ca.url(args, options),
+    method: 'post',
+})
+
+/**
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
+* @route '/stores/{path?}'
+*/
+RedirectController5d40208b2ac3ad3e0fd02f29aabcb6caForm.put = (args?: { path?: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: RedirectController5d40208b2ac3ad3e0fd02f29aabcb6ca.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PUT',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+/**
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
+* @route '/stores/{path?}'
+*/
+RedirectController5d40208b2ac3ad3e0fd02f29aabcb6caForm.patch = (args?: { path?: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: RedirectController5d40208b2ac3ad3e0fd02f29aabcb6ca.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PATCH',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+/**
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
+* @route '/stores/{path?}'
+*/
+RedirectController5d40208b2ac3ad3e0fd02f29aabcb6caForm.delete = (args?: { path?: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: RedirectController5d40208b2ac3ad3e0fd02f29aabcb6ca.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'DELETE',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+/**
+* @see \Illuminate\Routing\RedirectController::__invoke
+* @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
+* @route '/stores/{path?}'
+*/
+RedirectController5d40208b2ac3ad3e0fd02f29aabcb6caForm.options = (args?: { path?: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: RedirectController5d40208b2ac3ad3e0fd02f29aabcb6ca.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'OPTIONS',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+RedirectController5d40208b2ac3ad3e0fd02f29aabcb6ca.form = RedirectController5d40208b2ac3ad3e0fd02f29aabcb6caForm
+
+/**
 * Multiple routes resolve to \Illuminate\Routing\RedirectController::RedirectController, so this export is a
 * dictionary keyed by URI rather than a callable. Call a specific route with `RedirectController['<uri>'](...)`,
 * or import the route by name from your generated `routes/` directory.
 */
 const RedirectController = {
-    '//dashboard.test/settings': RedirectController2687bf76ad8e7377a5f0cf25c4ea5b92,
+    '//dashboard-v2.test/settings': RedirectController0f90409069c7ddcbfa4db7398cde9d76,
     '/stores/{path?}': RedirectController5d40208b2ac3ad3e0fd02f29aabcb6ca,
 }
 

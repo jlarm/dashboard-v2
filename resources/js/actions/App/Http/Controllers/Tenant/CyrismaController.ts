@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\CyrismaController::settings
 * @see app/Http/Controllers/Tenant/CyrismaController.php:21
@@ -44,6 +44,43 @@ settings.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
+* @see \App\Http\Controllers\Tenant\CyrismaController::settings
+* @see app/Http/Controllers/Tenant/CyrismaController.php:21
+* @route '/scans/settings'
+*/
+const settingsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: settings.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\CyrismaController::settings
+* @see app/Http/Controllers/Tenant/CyrismaController.php:21
+* @route '/scans/settings'
+*/
+settingsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: settings.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\CyrismaController::settings
+* @see app/Http/Controllers/Tenant/CyrismaController.php:21
+* @route '/scans/settings'
+*/
+settingsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: settings.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+settings.form = settingsForm
+
+/**
 * @see \App\Http\Controllers\Tenant\CyrismaController::update
 * @see app/Http/Controllers/Tenant/CyrismaController.php:33
 * @route '/scans/settings'
@@ -76,6 +113,38 @@ update.put = (options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(options),
     method: 'put',
 })
+
+/**
+* @see \App\Http\Controllers\Tenant\CyrismaController::update
+* @see app/Http/Controllers/Tenant/CyrismaController.php:33
+* @route '/scans/settings'
+*/
+const updateForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: update.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PUT',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\CyrismaController::update
+* @see app/Http/Controllers/Tenant/CyrismaController.php:33
+* @route '/scans/settings'
+*/
+updateForm.put = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: update.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PUT',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+update.form = updateForm
 
 const CyrismaController = { settings, update }
 

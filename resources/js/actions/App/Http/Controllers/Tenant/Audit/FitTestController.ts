@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\Audit\FitTestController::index
 * @see app/Http/Controllers/Tenant/Audit/FitTestController.php:28
@@ -44,6 +44,43 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
+* @see \App\Http\Controllers\Tenant\Audit\FitTestController::index
+* @see app/Http/Controllers/Tenant/Audit/FitTestController.php:28
+* @route '/fit-tests'
+*/
+const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\FitTestController::index
+* @see app/Http/Controllers/Tenant/Audit/FitTestController.php:28
+* @route '/fit-tests'
+*/
+indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\FitTestController::index
+* @see app/Http/Controllers/Tenant/Audit/FitTestController.php:28
+* @route '/fit-tests'
+*/
+indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+index.form = indexForm
+
+/**
 * @see \App\Http\Controllers\Tenant\Audit\FitTestController::store
 * @see app/Http/Controllers/Tenant/Audit/FitTestController.php:45
 * @route '/fit-tests'
@@ -76,6 +113,28 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
     method: 'post',
 })
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\FitTestController::store
+* @see app/Http/Controllers/Tenant/Audit/FitTestController.php:45
+* @route '/fit-tests'
+*/
+const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: store.url(options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\FitTestController::store
+* @see app/Http/Controllers/Tenant/Audit/FitTestController.php:45
+* @route '/fit-tests'
+*/
+storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: store.url(options),
+    method: 'post',
+})
+
+store.form = storeForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\FitTestController::download
@@ -146,6 +205,43 @@ download.head = (args: { fitTestDoc: string | number | { id: string | number } }
 })
 
 /**
+* @see \App\Http\Controllers\Tenant\Audit\FitTestController::download
+* @see app/Http/Controllers/Tenant/Audit/FitTestController.php:80
+* @route '/fit-tests/{fitTestDoc}/download'
+*/
+const downloadForm = (args: { fitTestDoc: string | number | { id: string | number } } | [fitTestDoc: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: download.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\FitTestController::download
+* @see app/Http/Controllers/Tenant/Audit/FitTestController.php:80
+* @route '/fit-tests/{fitTestDoc}/download'
+*/
+downloadForm.get = (args: { fitTestDoc: string | number | { id: string | number } } | [fitTestDoc: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: download.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\FitTestController::download
+* @see app/Http/Controllers/Tenant/Audit/FitTestController.php:80
+* @route '/fit-tests/{fitTestDoc}/download'
+*/
+downloadForm.head = (args: { fitTestDoc: string | number | { id: string | number } } | [fitTestDoc: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: download.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+download.form = downloadForm
+
+/**
 * @see \App\Http\Controllers\Tenant\Audit\FitTestController::destroy
 * @see app/Http/Controllers/Tenant/Audit/FitTestController.php:62
 * @route '/fit-tests/{fitTestDoc}'
@@ -202,6 +298,38 @@ destroy.delete = (args: { fitTestDoc: string | number | { id: string | number } 
     url: destroy.url(args, options),
     method: 'delete',
 })
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\FitTestController::destroy
+* @see app/Http/Controllers/Tenant/Audit/FitTestController.php:62
+* @route '/fit-tests/{fitTestDoc}'
+*/
+const destroyForm = (args: { fitTestDoc: string | number | { id: string | number } } | [fitTestDoc: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: destroy.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'DELETE',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\FitTestController::destroy
+* @see app/Http/Controllers/Tenant/Audit/FitTestController.php:62
+* @route '/fit-tests/{fitTestDoc}'
+*/
+destroyForm.delete = (args: { fitTestDoc: string | number | { id: string | number } } | [fitTestDoc: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: destroy.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'DELETE',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+destroy.form = destroyForm
 
 const FitTestController = { index, store, download, destroy }
 

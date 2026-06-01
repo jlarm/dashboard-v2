@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\Settings\ComplianceFormController::show
 * @see app/Http/Controllers/Tenant/Settings/ComplianceFormController.php:26
@@ -44,6 +44,43 @@ show.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
+* @see \App\Http\Controllers\Tenant\Settings\ComplianceFormController::show
+* @see app/Http/Controllers/Tenant/Settings/ComplianceFormController.php:26
+* @route '/email/settings'
+*/
+const showForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: show.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\ComplianceFormController::show
+* @see app/Http/Controllers/Tenant/Settings/ComplianceFormController.php:26
+* @route '/email/settings'
+*/
+showForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: show.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\ComplianceFormController::show
+* @see app/Http/Controllers/Tenant/Settings/ComplianceFormController.php:26
+* @route '/email/settings'
+*/
+showForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: show.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+show.form = showForm
+
+/**
 * @see \App\Http\Controllers\Tenant\Settings\ComplianceFormController::update
 * @see app/Http/Controllers/Tenant/Settings/ComplianceFormController.php:45
 * @route '/email/settings'
@@ -76,6 +113,28 @@ update.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: update.url(options),
     method: 'post',
 })
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\ComplianceFormController::update
+* @see app/Http/Controllers/Tenant/Settings/ComplianceFormController.php:45
+* @route '/email/settings'
+*/
+const updateForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: update.url(options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\ComplianceFormController::update
+* @see app/Http/Controllers/Tenant/Settings/ComplianceFormController.php:45
+* @route '/email/settings'
+*/
+updateForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: update.url(options),
+    method: 'post',
+})
+
+update.form = updateForm
 
 const ComplianceFormController = { show, update }
 

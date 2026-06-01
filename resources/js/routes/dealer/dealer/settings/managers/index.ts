@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::update
 * @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:123
@@ -57,3 +57,34 @@ update.patch = (args: { store: string | number | { id: string | number } } | [st
     method: 'patch',
 })
 
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::update
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:123
+* @route '/settings/managers/{store}'
+*/
+const updateForm = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: update.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PATCH',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::update
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:123
+* @route '/settings/managers/{store}'
+*/
+updateForm.patch = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: update.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PATCH',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+update.form = updateForm

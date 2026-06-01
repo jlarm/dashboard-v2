@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\Audit\IndividualAuditController::create
 * @see app/Http/Controllers/Tenant/Audit/IndividualAuditController.php:52
@@ -33,6 +33,27 @@ createe695fe70ff5de8e12d4c1a58d8b29494.post = (options?: RouteQueryOptions): Rou
     method: 'post',
 })
 
+/**
+* @see \App\Http\Controllers\Tenant\Audit\IndividualAuditController::create
+* @see app/Http/Controllers/Tenant/Audit/IndividualAuditController.php:52
+* @route '/audits/deal-jackets-archived'
+*/
+const createe695fe70ff5de8e12d4c1a58d8b29494Form = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: createe695fe70ff5de8e12d4c1a58d8b29494.url(options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\IndividualAuditController::create
+* @see app/Http/Controllers/Tenant/Audit/IndividualAuditController.php:52
+* @route '/audits/deal-jackets-archived'
+*/
+createe695fe70ff5de8e12d4c1a58d8b29494Form.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: createe695fe70ff5de8e12d4c1a58d8b29494.url(options),
+    method: 'post',
+})
+
+createe695fe70ff5de8e12d4c1a58d8b29494.form = createe695fe70ff5de8e12d4c1a58d8b29494Form
 /**
 * @see \App\Http\Controllers\Tenant\Audit\IndividualAuditController::create
 * @see app/Http/Controllers/Tenant/Audit/IndividualAuditController.php:52
@@ -90,6 +111,28 @@ create582a795d9d809cdf0da2fd23f265ce7c.post = (args: { individualAudit: string |
     url: create582a795d9d809cdf0da2fd23f265ce7c.url(args, options),
     method: 'post',
 })
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\IndividualAuditController::create
+* @see app/Http/Controllers/Tenant/Audit/IndividualAuditController.php:52
+* @route '/audits/deal-jackets-archived/{individualAudit}/children'
+*/
+const create582a795d9d809cdf0da2fd23f265ce7cForm = (args: { individualAudit: string | number | { uuid: string | number } } | [individualAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: create582a795d9d809cdf0da2fd23f265ce7c.url(args, options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\IndividualAuditController::create
+* @see app/Http/Controllers/Tenant/Audit/IndividualAuditController.php:52
+* @route '/audits/deal-jackets-archived/{individualAudit}/children'
+*/
+create582a795d9d809cdf0da2fd23f265ce7cForm.post = (args: { individualAudit: string | number | { uuid: string | number } } | [individualAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: create582a795d9d809cdf0da2fd23f265ce7c.url(args, options),
+    method: 'post',
+})
+
+create582a795d9d809cdf0da2fd23f265ce7c.form = create582a795d9d809cdf0da2fd23f265ce7cForm
 
 /**
 * Multiple routes resolve to \App\Http\Controllers\Tenant\Audit\IndividualAuditController::create, so this export is a
@@ -170,6 +213,43 @@ edit.head = (args: { individualAudit: string | number | { uuid: string | number 
 })
 
 /**
+* @see \App\Http\Controllers\Tenant\Audit\IndividualAuditController::edit
+* @see app/Http/Controllers/Tenant/Audit/IndividualAuditController.php:68
+* @route '/audits/deal-jackets-archived/{individualAudit}/edit'
+*/
+const editForm = (args: { individualAudit: string | number | { uuid: string | number } } | [individualAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: edit.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\IndividualAuditController::edit
+* @see app/Http/Controllers/Tenant/Audit/IndividualAuditController.php:68
+* @route '/audits/deal-jackets-archived/{individualAudit}/edit'
+*/
+editForm.get = (args: { individualAudit: string | number | { uuid: string | number } } | [individualAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: edit.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\IndividualAuditController::edit
+* @see app/Http/Controllers/Tenant/Audit/IndividualAuditController.php:68
+* @route '/audits/deal-jackets-archived/{individualAudit}/edit'
+*/
+editForm.head = (args: { individualAudit: string | number | { uuid: string | number } } | [individualAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: edit.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+edit.form = editForm
+
+/**
 * @see \App\Http\Controllers\Tenant\Audit\IndividualAuditController::update
 * @see app/Http/Controllers/Tenant/Audit/IndividualAuditController.php:83
 * @route '/audits/deal-jackets-archived/{individualAudit}'
@@ -226,6 +306,38 @@ update.patch = (args: { individualAudit: string | number | { uuid: string | numb
     url: update.url(args, options),
     method: 'patch',
 })
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\IndividualAuditController::update
+* @see app/Http/Controllers/Tenant/Audit/IndividualAuditController.php:83
+* @route '/audits/deal-jackets-archived/{individualAudit}'
+*/
+const updateForm = (args: { individualAudit: string | number | { uuid: string | number } } | [individualAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: update.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PATCH',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\IndividualAuditController::update
+* @see app/Http/Controllers/Tenant/Audit/IndividualAuditController.php:83
+* @route '/audits/deal-jackets-archived/{individualAudit}'
+*/
+updateForm.patch = (args: { individualAudit: string | number | { uuid: string | number } } | [individualAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: update.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PATCH',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+update.form = updateForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\IndividualAuditController::destroy
@@ -286,6 +398,38 @@ destroy.delete = (args: { individualAudit: string | number | { uuid: string | nu
 })
 
 /**
+* @see \App\Http\Controllers\Tenant\Audit\IndividualAuditController::destroy
+* @see app/Http/Controllers/Tenant/Audit/IndividualAuditController.php:104
+* @route '/audits/deal-jackets-archived/{individualAudit}'
+*/
+const destroyForm = (args: { individualAudit: string | number | { uuid: string | number } } | [individualAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: destroy.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'DELETE',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\IndividualAuditController::destroy
+* @see app/Http/Controllers/Tenant/Audit/IndividualAuditController.php:104
+* @route '/audits/deal-jackets-archived/{individualAudit}'
+*/
+destroyForm.delete = (args: { individualAudit: string | number | { uuid: string | number } } | [individualAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: destroy.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'DELETE',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+destroy.form = destroyForm
+
+/**
 * @see \App\Http\Controllers\Tenant\Audit\IndividualAuditController::generate
 * @see app/Http/Controllers/Tenant/Audit/IndividualAuditController.php:123
 * @route '/audits/deal-jackets-archived/{individualAudit}/generate'
@@ -344,6 +488,28 @@ generate.post = (args: { individualAudit: string | number | { uuid: string | num
 })
 
 /**
+* @see \App\Http\Controllers\Tenant\Audit\IndividualAuditController::generate
+* @see app/Http/Controllers/Tenant/Audit/IndividualAuditController.php:123
+* @route '/audits/deal-jackets-archived/{individualAudit}/generate'
+*/
+const generateForm = (args: { individualAudit: string | number | { uuid: string | number } } | [individualAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: generate.url(args, options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\IndividualAuditController::generate
+* @see app/Http/Controllers/Tenant/Audit/IndividualAuditController.php:123
+* @route '/audits/deal-jackets-archived/{individualAudit}/generate'
+*/
+generateForm.post = (args: { individualAudit: string | number | { uuid: string | number } } | [individualAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: generate.url(args, options),
+    method: 'post',
+})
+
+generate.form = generateForm
+
+/**
 * @see \App\Http\Controllers\Tenant\Audit\IndividualAuditController::index
 * @see app/Http/Controllers/Tenant/Audit/IndividualAuditController.php:31
 * @route '/audits/deal-jackets-archived'
@@ -386,6 +552,43 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: index.url(options),
     method: 'head',
 })
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\IndividualAuditController::index
+* @see app/Http/Controllers/Tenant/Audit/IndividualAuditController.php:31
+* @route '/audits/deal-jackets-archived'
+*/
+const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\IndividualAuditController::index
+* @see app/Http/Controllers/Tenant/Audit/IndividualAuditController.php:31
+* @route '/audits/deal-jackets-archived'
+*/
+indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\IndividualAuditController::index
+* @see app/Http/Controllers/Tenant/Audit/IndividualAuditController.php:31
+* @route '/audits/deal-jackets-archived'
+*/
+indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+index.form = indexForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\IndividualAuditController::show
@@ -456,6 +659,43 @@ show.head = (args: { individualAudit: string | number | { uuid: string | number 
 })
 
 /**
+* @see \App\Http\Controllers\Tenant\Audit\IndividualAuditController::show
+* @see app/Http/Controllers/Tenant/Audit/IndividualAuditController.php:43
+* @route '/audits/deal-jackets-archived/{individualAudit}'
+*/
+const showForm = (args: { individualAudit: string | number | { uuid: string | number } } | [individualAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: show.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\IndividualAuditController::show
+* @see app/Http/Controllers/Tenant/Audit/IndividualAuditController.php:43
+* @route '/audits/deal-jackets-archived/{individualAudit}'
+*/
+showForm.get = (args: { individualAudit: string | number | { uuid: string | number } } | [individualAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: show.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\IndividualAuditController::show
+* @see app/Http/Controllers/Tenant/Audit/IndividualAuditController.php:43
+* @route '/audits/deal-jackets-archived/{individualAudit}'
+*/
+showForm.head = (args: { individualAudit: string | number | { uuid: string | number } } | [individualAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: show.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+show.form = showForm
+
+/**
 * @see \App\Http\Controllers\Tenant\Audit\IndividualAuditController::download
 * @see app/Http/Controllers/Tenant/Audit/IndividualAuditController.php:134
 * @route '/audits/deal-jackets-archived/{individualAudit}/download'
@@ -522,6 +762,43 @@ download.head = (args: { individualAudit: string | number | { uuid: string | num
     url: download.url(args, options),
     method: 'head',
 })
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\IndividualAuditController::download
+* @see app/Http/Controllers/Tenant/Audit/IndividualAuditController.php:134
+* @route '/audits/deal-jackets-archived/{individualAudit}/download'
+*/
+const downloadForm = (args: { individualAudit: string | number | { uuid: string | number } } | [individualAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: download.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\IndividualAuditController::download
+* @see app/Http/Controllers/Tenant/Audit/IndividualAuditController.php:134
+* @route '/audits/deal-jackets-archived/{individualAudit}/download'
+*/
+downloadForm.get = (args: { individualAudit: string | number | { uuid: string | number } } | [individualAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: download.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\IndividualAuditController::download
+* @see app/Http/Controllers/Tenant/Audit/IndividualAuditController.php:134
+* @route '/audits/deal-jackets-archived/{individualAudit}/download'
+*/
+downloadForm.head = (args: { individualAudit: string | number | { uuid: string | number } } | [individualAudit: string | number | { uuid: string | number } ] | string | number | { uuid: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: download.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+download.form = downloadForm
 
 const IndividualAuditController = { create, edit, update, destroy, generate, index, show, download }
 

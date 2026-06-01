@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\DealerDocController::index
 * @see app/Http/Controllers/Tenant/DealerDocController.php:26
@@ -44,6 +44,43 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
+* @see \App\Http\Controllers\Tenant\DealerDocController::index
+* @see app/Http/Controllers/Tenant/DealerDocController.php:26
+* @route '/documents'
+*/
+const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\DealerDocController::index
+* @see app/Http/Controllers/Tenant/DealerDocController.php:26
+* @route '/documents'
+*/
+indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\DealerDocController::index
+* @see app/Http/Controllers/Tenant/DealerDocController.php:26
+* @route '/documents'
+*/
+indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+index.form = indexForm
+
+/**
 * @see \App\Http\Controllers\Tenant\DealerDocController::store
 * @see app/Http/Controllers/Tenant/DealerDocController.php:45
 * @route '/documents'
@@ -76,6 +113,28 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
     method: 'post',
 })
+
+/**
+* @see \App\Http\Controllers\Tenant\DealerDocController::store
+* @see app/Http/Controllers/Tenant/DealerDocController.php:45
+* @route '/documents'
+*/
+const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: store.url(options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\DealerDocController::store
+* @see app/Http/Controllers/Tenant/DealerDocController.php:45
+* @route '/documents'
+*/
+storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: store.url(options),
+    method: 'post',
+})
+
+store.form = storeForm
 
 /**
 * @see \App\Http\Controllers\Tenant\DealerDocController::download
@@ -146,6 +205,43 @@ download.head = (args: { dealerDoc: string | number | { id: string | number } } 
 })
 
 /**
+* @see \App\Http\Controllers\Tenant\DealerDocController::download
+* @see app/Http/Controllers/Tenant/DealerDocController.php:75
+* @route '/documents/{dealerDoc}/download'
+*/
+const downloadForm = (args: { dealerDoc: string | number | { id: string | number } } | [dealerDoc: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: download.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\DealerDocController::download
+* @see app/Http/Controllers/Tenant/DealerDocController.php:75
+* @route '/documents/{dealerDoc}/download'
+*/
+downloadForm.get = (args: { dealerDoc: string | number | { id: string | number } } | [dealerDoc: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: download.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\DealerDocController::download
+* @see app/Http/Controllers/Tenant/DealerDocController.php:75
+* @route '/documents/{dealerDoc}/download'
+*/
+downloadForm.head = (args: { dealerDoc: string | number | { id: string | number } } | [dealerDoc: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: download.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+download.form = downloadForm
+
+/**
 * @see \App\Http\Controllers\Tenant\DealerDocController::downloadShared
 * @see app/Http/Controllers/Tenant/DealerDocController.php:88
 * @route '/documents/shared/{sharedDocument}/download'
@@ -208,6 +304,43 @@ downloadShared.head = (args: { sharedDocument: string | number } | [sharedDocume
 })
 
 /**
+* @see \App\Http\Controllers\Tenant\DealerDocController::downloadShared
+* @see app/Http/Controllers/Tenant/DealerDocController.php:88
+* @route '/documents/shared/{sharedDocument}/download'
+*/
+const downloadSharedForm = (args: { sharedDocument: string | number } | [sharedDocument: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: downloadShared.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\DealerDocController::downloadShared
+* @see app/Http/Controllers/Tenant/DealerDocController.php:88
+* @route '/documents/shared/{sharedDocument}/download'
+*/
+downloadSharedForm.get = (args: { sharedDocument: string | number } | [sharedDocument: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: downloadShared.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\DealerDocController::downloadShared
+* @see app/Http/Controllers/Tenant/DealerDocController.php:88
+* @route '/documents/shared/{sharedDocument}/download'
+*/
+downloadSharedForm.head = (args: { sharedDocument: string | number } | [sharedDocument: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: downloadShared.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+downloadShared.form = downloadSharedForm
+
+/**
 * @see \App\Http\Controllers\Tenant\DealerDocController::destroy
 * @see app/Http/Controllers/Tenant/DealerDocController.php:60
 * @route '/documents/{dealerDoc}'
@@ -264,6 +397,38 @@ destroy.delete = (args: { dealerDoc: string | number | { id: string | number } }
     url: destroy.url(args, options),
     method: 'delete',
 })
+
+/**
+* @see \App\Http\Controllers\Tenant\DealerDocController::destroy
+* @see app/Http/Controllers/Tenant/DealerDocController.php:60
+* @route '/documents/{dealerDoc}'
+*/
+const destroyForm = (args: { dealerDoc: string | number | { id: string | number } } | [dealerDoc: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: destroy.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'DELETE',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\DealerDocController::destroy
+* @see app/Http/Controllers/Tenant/DealerDocController.php:60
+* @route '/documents/{dealerDoc}'
+*/
+destroyForm.delete = (args: { dealerDoc: string | number | { id: string | number } } | [dealerDoc: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: destroy.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'DELETE',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+destroy.form = destroyForm
 
 const DealerDocController = { index, store, download, downloadShared, destroy }
 

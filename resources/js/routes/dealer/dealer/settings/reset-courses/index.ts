@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::run
 * @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:159
@@ -56,6 +56,28 @@ run.post = (args: { store: string | number | { id: string | number } } | [store:
     url: run.url(args, options),
     method: 'post',
 })
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::run
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:159
+* @route '/settings/reset-courses/{store}'
+*/
+const runForm = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: run.url(args, options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::run
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:159
+* @route '/settings/reset-courses/{store}'
+*/
+runForm.post = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: run.url(args, options),
+    method: 'post',
+})
+
+run.form = runForm
 
 const resetCourses = {
     run: Object.assign(run, run),

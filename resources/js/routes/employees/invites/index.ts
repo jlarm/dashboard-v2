@@ -1,8 +1,8 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Central\InviteController::store
 * @see app/Http/Controllers/Central/InviteController.php:33
-* @route '//dashboard.test/employees/invites'
+* @route '//dashboard-v2.test/employees/invites'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
@@ -11,13 +11,13 @@ export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => (
 
 store.definition = {
     methods: ["post"],
-    url: '//dashboard.test/employees/invites',
+    url: '//dashboard-v2.test/employees/invites',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \App\Http\Controllers\Central\InviteController::store
 * @see app/Http/Controllers/Central/InviteController.php:33
-* @route '//dashboard.test/employees/invites'
+* @route '//dashboard-v2.test/employees/invites'
 */
 store.url = (options?: RouteQueryOptions) => {
     return store.definition.url + queryParams(options)
@@ -26,7 +26,7 @@ store.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\Central\InviteController::store
 * @see app/Http/Controllers/Central/InviteController.php:33
-* @route '//dashboard.test/employees/invites'
+* @route '//dashboard-v2.test/employees/invites'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
@@ -34,9 +34,31 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 })
 
 /**
+* @see \App\Http\Controllers\Central\InviteController::store
+* @see app/Http/Controllers/Central/InviteController.php:33
+* @route '//dashboard-v2.test/employees/invites'
+*/
+const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: store.url(options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Central\InviteController::store
+* @see app/Http/Controllers/Central/InviteController.php:33
+* @route '//dashboard-v2.test/employees/invites'
+*/
+storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: store.url(options),
+    method: 'post',
+})
+
+store.form = storeForm
+
+/**
 * @see \App\Http\Controllers\Central\InviteController::destroy
 * @see app/Http/Controllers/Central/InviteController.php:55
-* @route '//dashboard.test/employees/invites/{invite}'
+* @route '//dashboard-v2.test/employees/invites/{invite}'
 */
 export const destroy = (args: { invite: number | { id: number } } | [invite: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
@@ -45,13 +67,13 @@ export const destroy = (args: { invite: number | { id: number } } | [invite: num
 
 destroy.definition = {
     methods: ["delete"],
-    url: '//dashboard.test/employees/invites/{invite}',
+    url: '//dashboard-v2.test/employees/invites/{invite}',
 } satisfies RouteDefinition<["delete"]>
 
 /**
 * @see \App\Http\Controllers\Central\InviteController::destroy
 * @see app/Http/Controllers/Central/InviteController.php:55
-* @route '//dashboard.test/employees/invites/{invite}'
+* @route '//dashboard-v2.test/employees/invites/{invite}'
 */
 destroy.url = (args: { invite: number | { id: number } } | [invite: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
@@ -84,12 +106,44 @@ destroy.url = (args: { invite: number | { id: number } } | [invite: number | { i
 /**
 * @see \App\Http\Controllers\Central\InviteController::destroy
 * @see app/Http/Controllers/Central/InviteController.php:55
-* @route '//dashboard.test/employees/invites/{invite}'
+* @route '//dashboard-v2.test/employees/invites/{invite}'
 */
 destroy.delete = (args: { invite: number | { id: number } } | [invite: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
     method: 'delete',
 })
+
+/**
+* @see \App\Http\Controllers\Central\InviteController::destroy
+* @see app/Http/Controllers/Central/InviteController.php:55
+* @route '//dashboard-v2.test/employees/invites/{invite}'
+*/
+const destroyForm = (args: { invite: number | { id: number } } | [invite: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: destroy.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'DELETE',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Central\InviteController::destroy
+* @see app/Http/Controllers/Central/InviteController.php:55
+* @route '//dashboard-v2.test/employees/invites/{invite}'
+*/
+destroyForm.delete = (args: { invite: number | { id: number } } | [invite: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: destroy.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'DELETE',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+destroy.form = destroyForm
 
 const invites = {
     store: Object.assign(store, store),

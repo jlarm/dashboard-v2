@@ -1,8 +1,8 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Central\UserController::index
 * @see app/Http/Controllers/Central/UserController.php:24
-* @route '//dashboard.test/employees'
+* @route '//dashboard-v2.test/employees'
 */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: index.url(options),
@@ -11,13 +11,13 @@ export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 index.definition = {
     methods: ["get","head"],
-    url: '//dashboard.test/employees',
+    url: '//dashboard-v2.test/employees',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \App\Http\Controllers\Central\UserController::index
 * @see app/Http/Controllers/Central/UserController.php:24
-* @route '//dashboard.test/employees'
+* @route '//dashboard-v2.test/employees'
 */
 index.url = (options?: RouteQueryOptions) => {
     return index.definition.url + queryParams(options)
@@ -26,7 +26,7 @@ index.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\Central\UserController::index
 * @see app/Http/Controllers/Central/UserController.php:24
-* @route '//dashboard.test/employees'
+* @route '//dashboard-v2.test/employees'
 */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: index.url(options),
@@ -36,7 +36,7 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 /**
 * @see \App\Http\Controllers\Central\UserController::index
 * @see app/Http/Controllers/Central/UserController.php:24
-* @route '//dashboard.test/employees'
+* @route '//dashboard-v2.test/employees'
 */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: index.url(options),
@@ -44,9 +44,46 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
+* @see \App\Http\Controllers\Central\UserController::index
+* @see app/Http/Controllers/Central/UserController.php:24
+* @route '//dashboard-v2.test/employees'
+*/
+const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Central\UserController::index
+* @see app/Http/Controllers/Central/UserController.php:24
+* @route '//dashboard-v2.test/employees'
+*/
+indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Central\UserController::index
+* @see app/Http/Controllers/Central/UserController.php:24
+* @route '//dashboard-v2.test/employees'
+*/
+indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+index.form = indexForm
+
+/**
 * @see \App\Http\Controllers\Central\UserController::deleted
 * @see app/Http/Controllers/Central/UserController.php:41
-* @route '//dashboard.test/employees/deleted'
+* @route '//dashboard-v2.test/employees/deleted'
 */
 export const deleted = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: deleted.url(options),
@@ -55,13 +92,13 @@ export const deleted = (options?: RouteQueryOptions): RouteDefinition<'get'> => 
 
 deleted.definition = {
     methods: ["get","head"],
-    url: '//dashboard.test/employees/deleted',
+    url: '//dashboard-v2.test/employees/deleted',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \App\Http\Controllers\Central\UserController::deleted
 * @see app/Http/Controllers/Central/UserController.php:41
-* @route '//dashboard.test/employees/deleted'
+* @route '//dashboard-v2.test/employees/deleted'
 */
 deleted.url = (options?: RouteQueryOptions) => {
     return deleted.definition.url + queryParams(options)
@@ -70,7 +107,7 @@ deleted.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\Central\UserController::deleted
 * @see app/Http/Controllers/Central/UserController.php:41
-* @route '//dashboard.test/employees/deleted'
+* @route '//dashboard-v2.test/employees/deleted'
 */
 deleted.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: deleted.url(options),
@@ -80,7 +117,7 @@ deleted.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 /**
 * @see \App\Http\Controllers\Central\UserController::deleted
 * @see app/Http/Controllers/Central/UserController.php:41
-* @route '//dashboard.test/employees/deleted'
+* @route '//dashboard-v2.test/employees/deleted'
 */
 deleted.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: deleted.url(options),
@@ -88,9 +125,46 @@ deleted.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
+* @see \App\Http\Controllers\Central\UserController::deleted
+* @see app/Http/Controllers/Central/UserController.php:41
+* @route '//dashboard-v2.test/employees/deleted'
+*/
+const deletedForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: deleted.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Central\UserController::deleted
+* @see app/Http/Controllers/Central/UserController.php:41
+* @route '//dashboard-v2.test/employees/deleted'
+*/
+deletedForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: deleted.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Central\UserController::deleted
+* @see app/Http/Controllers/Central/UserController.php:41
+* @route '//dashboard-v2.test/employees/deleted'
+*/
+deletedForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: deleted.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+deleted.form = deletedForm
+
+/**
 * @see \App\Http\Controllers\Central\UserController::show
 * @see app/Http/Controllers/Central/UserController.php:32
-* @route '//dashboard.test/employees/{user}'
+* @route '//dashboard-v2.test/employees/{user}'
 */
 export const show = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: show.url(args, options),
@@ -99,13 +173,13 @@ export const show = (args: { user: string | { slug: string } } | [user: string |
 
 show.definition = {
     methods: ["get","head"],
-    url: '//dashboard.test/employees/{user}',
+    url: '//dashboard-v2.test/employees/{user}',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \App\Http\Controllers\Central\UserController::show
 * @see app/Http/Controllers/Central/UserController.php:32
-* @route '//dashboard.test/employees/{user}'
+* @route '//dashboard-v2.test/employees/{user}'
 */
 show.url = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
@@ -138,7 +212,7 @@ show.url = (args: { user: string | { slug: string } } | [user: string | { slug: 
 /**
 * @see \App\Http\Controllers\Central\UserController::show
 * @see app/Http/Controllers/Central/UserController.php:32
-* @route '//dashboard.test/employees/{user}'
+* @route '//dashboard-v2.test/employees/{user}'
 */
 show.get = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: show.url(args, options),
@@ -148,12 +222,49 @@ show.get = (args: { user: string | { slug: string } } | [user: string | { slug: 
 /**
 * @see \App\Http\Controllers\Central\UserController::show
 * @see app/Http/Controllers/Central/UserController.php:32
-* @route '//dashboard.test/employees/{user}'
+* @route '//dashboard-v2.test/employees/{user}'
 */
 show.head = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: show.url(args, options),
     method: 'head',
 })
+
+/**
+* @see \App\Http\Controllers\Central\UserController::show
+* @see app/Http/Controllers/Central/UserController.php:32
+* @route '//dashboard-v2.test/employees/{user}'
+*/
+const showForm = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: show.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Central\UserController::show
+* @see app/Http/Controllers/Central/UserController.php:32
+* @route '//dashboard-v2.test/employees/{user}'
+*/
+showForm.get = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: show.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Central\UserController::show
+* @see app/Http/Controllers/Central/UserController.php:32
+* @route '//dashboard-v2.test/employees/{user}'
+*/
+showForm.head = (args: { user: string | { slug: string } } | [user: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: show.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+show.form = showForm
 
 const UserController = { index, deleted, show }
 

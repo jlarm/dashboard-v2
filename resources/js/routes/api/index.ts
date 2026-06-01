@@ -1,8 +1,8 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\API\AuthController::__invoke
 * @see app/Http/Controllers/API/AuthController.php:17
-* @route '//dashboard.test/api/auth'
+* @route '//dashboard-v2.test/api/auth'
 */
 export const auth = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: auth.url(options),
@@ -11,13 +11,13 @@ export const auth = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 auth.definition = {
     methods: ["post"],
-    url: '//dashboard.test/api/auth',
+    url: '//dashboard-v2.test/api/auth',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \App\Http\Controllers\API\AuthController::__invoke
 * @see app/Http/Controllers/API/AuthController.php:17
-* @route '//dashboard.test/api/auth'
+* @route '//dashboard-v2.test/api/auth'
 */
 auth.url = (options?: RouteQueryOptions) => {
     return auth.definition.url + queryParams(options)
@@ -26,12 +26,34 @@ auth.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\API\AuthController::__invoke
 * @see app/Http/Controllers/API/AuthController.php:17
-* @route '//dashboard.test/api/auth'
+* @route '//dashboard-v2.test/api/auth'
 */
 auth.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: auth.url(options),
     method: 'post',
 })
+
+/**
+* @see \App\Http\Controllers\API\AuthController::__invoke
+* @see app/Http/Controllers/API/AuthController.php:17
+* @route '//dashboard-v2.test/api/auth'
+*/
+const authForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: auth.url(options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\API\AuthController::__invoke
+* @see app/Http/Controllers/API/AuthController.php:17
+* @route '//dashboard-v2.test/api/auth'
+*/
+authForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: auth.url(options),
+    method: 'post',
+})
+
+auth.form = authForm
 
 const api = {
     auth: Object.assign(auth, auth),

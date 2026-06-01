@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
 import forms from './forms'
 /**
 * @see \App\Http\Controllers\Dealer\VendorController::form
@@ -45,6 +45,43 @@ form.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
+* @see \App\Http\Controllers\Dealer\VendorController::form
+* @see app/Http/Controllers/Dealer/VendorController.php:136
+* @route '/form'
+*/
+const formForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: form.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Dealer\VendorController::form
+* @see app/Http/Controllers/Dealer/VendorController.php:136
+* @route '/form'
+*/
+formForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: form.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Dealer\VendorController::form
+* @see app/Http/Controllers/Dealer/VendorController.php:136
+* @route '/form'
+*/
+formForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: form.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+form.form = formForm
+
+/**
 * @see \App\Http\Controllers\Dealer\VendorController::submit
 * @see app/Http/Controllers/Dealer/VendorController.php:158
 * @route '/form'
@@ -77,6 +114,28 @@ submit.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: submit.url(options),
     method: 'post',
 })
+
+/**
+* @see \App\Http\Controllers\Dealer\VendorController::submit
+* @see app/Http/Controllers/Dealer/VendorController.php:158
+* @route '/form'
+*/
+const submitForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: submit.url(options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Dealer\VendorController::submit
+* @see app/Http/Controllers/Dealer/VendorController.php:158
+* @route '/form'
+*/
+submitForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: submit.url(options),
+    method: 'post',
+})
+
+submit.form = submitForm
 
 /**
 * @see \App\Http\Controllers\Dealer\VendorController::index
@@ -123,6 +182,43 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
+* @see \App\Http\Controllers\Dealer\VendorController::index
+* @see app/Http/Controllers/Dealer/VendorController.php:36
+* @route '/vendors'
+*/
+const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Dealer\VendorController::index
+* @see app/Http/Controllers/Dealer/VendorController.php:36
+* @route '/vendors'
+*/
+indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Dealer\VendorController::index
+* @see app/Http/Controllers/Dealer/VendorController.php:36
+* @route '/vendors'
+*/
+indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: index.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+index.form = indexForm
+
+/**
 * @see \App\Http\Controllers\Dealer\VendorController::store
 * @see app/Http/Controllers/Dealer/VendorController.php:75
 * @route '/vendors'
@@ -155,6 +251,28 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
     method: 'post',
 })
+
+/**
+* @see \App\Http\Controllers\Dealer\VendorController::store
+* @see app/Http/Controllers/Dealer/VendorController.php:75
+* @route '/vendors'
+*/
+const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: store.url(options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Dealer\VendorController::store
+* @see app/Http/Controllers/Dealer/VendorController.php:75
+* @route '/vendors'
+*/
+storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: store.url(options),
+    method: 'post',
+})
+
+store.form = storeForm
 
 /**
 * @see \App\Http\Controllers\Dealer\VendorController::show
@@ -225,6 +343,43 @@ show.head = (args: { vendor: string | number | { id: string | number } } | [vend
 })
 
 /**
+* @see \App\Http\Controllers\Dealer\VendorController::show
+* @see app/Http/Controllers/Dealer/VendorController.php:54
+* @route '/vendors/{vendor}'
+*/
+const showForm = (args: { vendor: string | number | { id: string | number } } | [vendor: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: show.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Dealer\VendorController::show
+* @see app/Http/Controllers/Dealer/VendorController.php:54
+* @route '/vendors/{vendor}'
+*/
+showForm.get = (args: { vendor: string | number | { id: string | number } } | [vendor: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: show.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Dealer\VendorController::show
+* @see app/Http/Controllers/Dealer/VendorController.php:54
+* @route '/vendors/{vendor}'
+*/
+showForm.head = (args: { vendor: string | number | { id: string | number } } | [vendor: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: show.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+show.form = showForm
+
+/**
 * @see \App\Http\Controllers\Dealer\VendorController::destroy
 * @see app/Http/Controllers/Dealer/VendorController.php:105
 * @route '/vendors/{vendor}'
@@ -281,6 +436,38 @@ destroy.delete = (args: { vendor: string | number | { id: string | number } } | 
     url: destroy.url(args, options),
     method: 'delete',
 })
+
+/**
+* @see \App\Http\Controllers\Dealer\VendorController::destroy
+* @see app/Http/Controllers/Dealer/VendorController.php:105
+* @route '/vendors/{vendor}'
+*/
+const destroyForm = (args: { vendor: string | number | { id: string | number } } | [vendor: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: destroy.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'DELETE',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Dealer\VendorController::destroy
+* @see app/Http/Controllers/Dealer/VendorController.php:105
+* @route '/vendors/{vendor}'
+*/
+destroyForm.delete = (args: { vendor: string | number | { id: string | number } } | [vendor: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: destroy.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'DELETE',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+destroy.form = destroyForm
 
 const vendor = {
     form: Object.assign(form, form),

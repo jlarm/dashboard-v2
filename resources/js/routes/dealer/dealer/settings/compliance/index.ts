@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::update
 * @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:141
@@ -56,6 +56,38 @@ update.patch = (args: { store: string | number | { id: string | number } } | [st
     url: update.url(args, options),
     method: 'patch',
 })
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::update
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:141
+* @route '/settings/compliance/{store}'
+*/
+const updateForm = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: update.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PATCH',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::update
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:141
+* @route '/settings/compliance/{store}'
+*/
+updateForm.patch = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: update.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PATCH',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+update.form = updateForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::download
@@ -126,6 +158,43 @@ download.head = (args: { store: string | number | { id: string | number } } | [s
 })
 
 /**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::download
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:179
+* @route '/settings/compliance/{store}/download'
+*/
+const downloadForm = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: download.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::download
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:179
+* @route '/settings/compliance/{store}/download'
+*/
+downloadForm.get = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: download.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::download
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:179
+* @route '/settings/compliance/{store}/download'
+*/
+downloadForm.head = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: download.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+download.form = downloadForm
+
+/**
 * @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::sendEmail
 * @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:186
 * @route '/settings/compliance/{store}/send-email'
@@ -183,3 +252,24 @@ sendEmail.post = (args: { store: string | number | { id: string | number } } | [
     method: 'post',
 })
 
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::sendEmail
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:186
+* @route '/settings/compliance/{store}/send-email'
+*/
+const sendEmailForm = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: sendEmail.url(args, options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Settings\StoreSettingsController::sendEmail
+* @see app/Http/Controllers/Tenant/Settings/StoreSettingsController.php:186
+* @route '/settings/compliance/{store}/send-email'
+*/
+sendEmailForm.post = (args: { store: string | number | { id: string | number } } | [store: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: sendEmail.url(args, options),
+    method: 'post',
+})
+
+sendEmail.form = sendEmailForm

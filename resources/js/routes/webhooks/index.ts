@@ -1,8 +1,8 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\API\MailgunWebhookController::mailgun
 * @see app/Http/Controllers/API/MailgunWebhookController.php:17
-* @route '//dashboard.test/api/webhooks/mailgun'
+* @route '//dashboard-v2.test/api/webhooks/mailgun'
 */
 export const mailgun = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: mailgun.url(options),
@@ -11,13 +11,13 @@ export const mailgun = (options?: RouteQueryOptions): RouteDefinition<'post'> =>
 
 mailgun.definition = {
     methods: ["post"],
-    url: '//dashboard.test/api/webhooks/mailgun',
+    url: '//dashboard-v2.test/api/webhooks/mailgun',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \App\Http\Controllers\API\MailgunWebhookController::mailgun
 * @see app/Http/Controllers/API/MailgunWebhookController.php:17
-* @route '//dashboard.test/api/webhooks/mailgun'
+* @route '//dashboard-v2.test/api/webhooks/mailgun'
 */
 mailgun.url = (options?: RouteQueryOptions) => {
     return mailgun.definition.url + queryParams(options)
@@ -26,12 +26,34 @@ mailgun.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\API\MailgunWebhookController::mailgun
 * @see app/Http/Controllers/API/MailgunWebhookController.php:17
-* @route '//dashboard.test/api/webhooks/mailgun'
+* @route '//dashboard-v2.test/api/webhooks/mailgun'
 */
 mailgun.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: mailgun.url(options),
     method: 'post',
 })
+
+/**
+* @see \App\Http\Controllers\API\MailgunWebhookController::mailgun
+* @see app/Http/Controllers/API/MailgunWebhookController.php:17
+* @route '//dashboard-v2.test/api/webhooks/mailgun'
+*/
+const mailgunForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: mailgun.url(options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\API\MailgunWebhookController::mailgun
+* @see app/Http/Controllers/API/MailgunWebhookController.php:17
+* @route '//dashboard-v2.test/api/webhooks/mailgun'
+*/
+mailgunForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: mailgun.url(options),
+    method: 'post',
+})
+
+mailgun.form = mailgunForm
 
 const webhooks = {
     mailgun: Object.assign(mailgun, mailgun),

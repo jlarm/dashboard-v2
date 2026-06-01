@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\DashboardController::show
 * @see app/Http/Controllers/Tenant/DashboardController.php:61
@@ -44,6 +44,43 @@ show.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
+* @see \App\Http\Controllers\Tenant\DashboardController::show
+* @see app/Http/Controllers/Tenant/DashboardController.php:61
+* @route '/dashboard'
+*/
+const showForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: show.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\DashboardController::show
+* @see app/Http/Controllers/Tenant/DashboardController.php:61
+* @route '/dashboard'
+*/
+showForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: show.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\DashboardController::show
+* @see app/Http/Controllers/Tenant/DashboardController.php:61
+* @route '/dashboard'
+*/
+showForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: show.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+show.form = showForm
+
+/**
 * @see \App\Http\Controllers\Tenant\DashboardController::downloadAuditReport
 * @see app/Http/Controllers/Tenant/DashboardController.php:221
 * @route '/dashboard/audit-report'
@@ -86,6 +123,43 @@ downloadAuditReport.head = (options?: RouteQueryOptions): RouteDefinition<'head'
     url: downloadAuditReport.url(options),
     method: 'head',
 })
+
+/**
+* @see \App\Http\Controllers\Tenant\DashboardController::downloadAuditReport
+* @see app/Http/Controllers/Tenant/DashboardController.php:221
+* @route '/dashboard/audit-report'
+*/
+const downloadAuditReportForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: downloadAuditReport.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\DashboardController::downloadAuditReport
+* @see app/Http/Controllers/Tenant/DashboardController.php:221
+* @route '/dashboard/audit-report'
+*/
+downloadAuditReportForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: downloadAuditReport.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\DashboardController::downloadAuditReport
+* @see app/Http/Controllers/Tenant/DashboardController.php:221
+* @route '/dashboard/audit-report'
+*/
+downloadAuditReportForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: downloadAuditReport.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+downloadAuditReport.form = downloadAuditReportForm
 
 /**
 * @see \App\Http\Controllers\Tenant\DashboardController::downloadAuditTypeReport
@@ -150,6 +224,43 @@ downloadAuditTypeReport.head = (args: { type: string | number } | [type: string 
 })
 
 /**
+* @see \App\Http\Controllers\Tenant\DashboardController::downloadAuditTypeReport
+* @see app/Http/Controllers/Tenant/DashboardController.php:246
+* @route '/dashboard/audit-report/{type}'
+*/
+const downloadAuditTypeReportForm = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: downloadAuditTypeReport.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\DashboardController::downloadAuditTypeReport
+* @see app/Http/Controllers/Tenant/DashboardController.php:246
+* @route '/dashboard/audit-report/{type}'
+*/
+downloadAuditTypeReportForm.get = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: downloadAuditTypeReport.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\DashboardController::downloadAuditTypeReport
+* @see app/Http/Controllers/Tenant/DashboardController.php:246
+* @route '/dashboard/audit-report/{type}'
+*/
+downloadAuditTypeReportForm.head = (args: { type: string | number } | [type: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: downloadAuditTypeReport.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+downloadAuditTypeReport.form = downloadAuditTypeReportForm
+
+/**
 * @see \App\Http\Controllers\Tenant\DashboardController::updateConsultantNote
 * @see app/Http/Controllers/Tenant/DashboardController.php:199
 * @route '/dashboard/consultant-note'
@@ -182,6 +293,28 @@ updateConsultantNote.post = (options?: RouteQueryOptions): RouteDefinition<'post
     url: updateConsultantNote.url(options),
     method: 'post',
 })
+
+/**
+* @see \App\Http\Controllers\Tenant\DashboardController::updateConsultantNote
+* @see app/Http/Controllers/Tenant/DashboardController.php:199
+* @route '/dashboard/consultant-note'
+*/
+const updateConsultantNoteForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: updateConsultantNote.url(options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\DashboardController::updateConsultantNote
+* @see app/Http/Controllers/Tenant/DashboardController.php:199
+* @route '/dashboard/consultant-note'
+*/
+updateConsultantNoteForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: updateConsultantNote.url(options),
+    method: 'post',
+})
+
+updateConsultantNote.form = updateConsultantNoteForm
 
 const DashboardController = { show, downloadAuditReport, downloadAuditTypeReport, updateConsultantNote }
 

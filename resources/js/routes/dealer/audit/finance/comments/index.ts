@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::store
 * @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:335
@@ -50,6 +50,28 @@ store.post = (args: { audit: string | number } | [audit: string | number ] | str
     url: store.url(args, options),
     method: 'post',
 })
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::store
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:335
+* @route '/audits/finance/{audit}/comments'
+*/
+const storeForm = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: store.url(args, options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::store
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:335
+* @route '/audits/finance/{audit}/comments'
+*/
+storeForm.post = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: store.url(args, options),
+    method: 'post',
+})
+
+store.form = storeForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::update
@@ -105,6 +127,38 @@ update.patch = (args: { audit: string | number, comment: string | number | { id:
 })
 
 /**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::update
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:352
+* @route '/audits/finance/{audit}/comments/{comment}'
+*/
+const updateForm = (args: { audit: string | number, comment: string | number | { id: string | number } } | [audit: string | number, comment: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: update.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PATCH',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::update
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:352
+* @route '/audits/finance/{audit}/comments/{comment}'
+*/
+updateForm.patch = (args: { audit: string | number, comment: string | number | { id: string | number } } | [audit: string | number, comment: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: update.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PATCH',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+update.form = updateForm
+
+/**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::destroy
 * @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:368
 * @route '/audits/finance/{audit}/comments/{comment}'
@@ -156,6 +210,38 @@ destroy.delete = (args: { audit: string | number, comment: string | number | { i
     url: destroy.url(args, options),
     method: 'delete',
 })
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::destroy
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:368
+* @route '/audits/finance/{audit}/comments/{comment}'
+*/
+const destroyForm = (args: { audit: string | number, comment: string | number | { id: string | number } } | [audit: string | number, comment: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: destroy.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'DELETE',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::destroy
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:368
+* @route '/audits/finance/{audit}/comments/{comment}'
+*/
+destroyForm.delete = (args: { audit: string | number, comment: string | number | { id: string | number } } | [audit: string | number, comment: string | number | { id: string | number } ], options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: destroy.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'DELETE',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+destroy.form = destroyForm
 
 const comments = {
     store: Object.assign(store, store),

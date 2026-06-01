@@ -1,8 +1,8 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Central\ContractPdfController::generate
 * @see app/Http/Controllers/Central/ContractPdfController.php:16
-* @route '//dashboard.test/contracts/{contract}/pdf'
+* @route '//dashboard-v2.test/contracts/{contract}/pdf'
 */
 export const generate = (args: { contract: string | { uuid: string } } | [contract: string | { uuid: string } ] | string | { uuid: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: generate.url(args, options),
@@ -11,13 +11,13 @@ export const generate = (args: { contract: string | { uuid: string } } | [contra
 
 generate.definition = {
     methods: ["post"],
-    url: '//dashboard.test/contracts/{contract}/pdf',
+    url: '//dashboard-v2.test/contracts/{contract}/pdf',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \App\Http\Controllers\Central\ContractPdfController::generate
 * @see app/Http/Controllers/Central/ContractPdfController.php:16
-* @route '//dashboard.test/contracts/{contract}/pdf'
+* @route '//dashboard-v2.test/contracts/{contract}/pdf'
 */
 generate.url = (args: { contract: string | { uuid: string } } | [contract: string | { uuid: string } ] | string | { uuid: string }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
@@ -50,7 +50,7 @@ generate.url = (args: { contract: string | { uuid: string } } | [contract: strin
 /**
 * @see \App\Http\Controllers\Central\ContractPdfController::generate
 * @see app/Http/Controllers/Central/ContractPdfController.php:16
-* @route '//dashboard.test/contracts/{contract}/pdf'
+* @route '//dashboard-v2.test/contracts/{contract}/pdf'
 */
 generate.post = (args: { contract: string | { uuid: string } } | [contract: string | { uuid: string } ] | string | { uuid: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: generate.url(args, options),
@@ -58,9 +58,31 @@ generate.post = (args: { contract: string | { uuid: string } } | [contract: stri
 })
 
 /**
+* @see \App\Http\Controllers\Central\ContractPdfController::generate
+* @see app/Http/Controllers/Central/ContractPdfController.php:16
+* @route '//dashboard-v2.test/contracts/{contract}/pdf'
+*/
+const generateForm = (args: { contract: string | { uuid: string } } | [contract: string | { uuid: string } ] | string | { uuid: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: generate.url(args, options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Central\ContractPdfController::generate
+* @see app/Http/Controllers/Central/ContractPdfController.php:16
+* @route '//dashboard-v2.test/contracts/{contract}/pdf'
+*/
+generateForm.post = (args: { contract: string | { uuid: string } } | [contract: string | { uuid: string } ] | string | { uuid: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: generate.url(args, options),
+    method: 'post',
+})
+
+generate.form = generateForm
+
+/**
 * @see \App\Http\Controllers\Central\ContractPdfController::download
 * @see app/Http/Controllers/Central/ContractPdfController.php:25
-* @route '//dashboard.test/contracts/{contract}/pdf'
+* @route '//dashboard-v2.test/contracts/{contract}/pdf'
 */
 export const download = (args: { contract: string | { uuid: string } } | [contract: string | { uuid: string } ] | string | { uuid: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: download.url(args, options),
@@ -69,13 +91,13 @@ export const download = (args: { contract: string | { uuid: string } } | [contra
 
 download.definition = {
     methods: ["get","head"],
-    url: '//dashboard.test/contracts/{contract}/pdf',
+    url: '//dashboard-v2.test/contracts/{contract}/pdf',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \App\Http\Controllers\Central\ContractPdfController::download
 * @see app/Http/Controllers/Central/ContractPdfController.php:25
-* @route '//dashboard.test/contracts/{contract}/pdf'
+* @route '//dashboard-v2.test/contracts/{contract}/pdf'
 */
 download.url = (args: { contract: string | { uuid: string } } | [contract: string | { uuid: string } ] | string | { uuid: string }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
@@ -108,7 +130,7 @@ download.url = (args: { contract: string | { uuid: string } } | [contract: strin
 /**
 * @see \App\Http\Controllers\Central\ContractPdfController::download
 * @see app/Http/Controllers/Central/ContractPdfController.php:25
-* @route '//dashboard.test/contracts/{contract}/pdf'
+* @route '//dashboard-v2.test/contracts/{contract}/pdf'
 */
 download.get = (args: { contract: string | { uuid: string } } | [contract: string | { uuid: string } ] | string | { uuid: string }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: download.url(args, options),
@@ -118,12 +140,49 @@ download.get = (args: { contract: string | { uuid: string } } | [contract: strin
 /**
 * @see \App\Http\Controllers\Central\ContractPdfController::download
 * @see app/Http/Controllers/Central/ContractPdfController.php:25
-* @route '//dashboard.test/contracts/{contract}/pdf'
+* @route '//dashboard-v2.test/contracts/{contract}/pdf'
 */
 download.head = (args: { contract: string | { uuid: string } } | [contract: string | { uuid: string } ] | string | { uuid: string }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: download.url(args, options),
     method: 'head',
 })
+
+/**
+* @see \App\Http\Controllers\Central\ContractPdfController::download
+* @see app/Http/Controllers/Central/ContractPdfController.php:25
+* @route '//dashboard-v2.test/contracts/{contract}/pdf'
+*/
+const downloadForm = (args: { contract: string | { uuid: string } } | [contract: string | { uuid: string } ] | string | { uuid: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: download.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Central\ContractPdfController::download
+* @see app/Http/Controllers/Central/ContractPdfController.php:25
+* @route '//dashboard-v2.test/contracts/{contract}/pdf'
+*/
+downloadForm.get = (args: { contract: string | { uuid: string } } | [contract: string | { uuid: string } ] | string | { uuid: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: download.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Central\ContractPdfController::download
+* @see app/Http/Controllers/Central/ContractPdfController.php:25
+* @route '//dashboard-v2.test/contracts/{contract}/pdf'
+*/
+downloadForm.head = (args: { contract: string | { uuid: string } } | [contract: string | { uuid: string } ] | string | { uuid: string }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: download.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+download.form = downloadForm
 
 const ContractPdfController = { generate, download }
 

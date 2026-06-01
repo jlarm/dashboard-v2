@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\UserController::resend
 * @see app/Http/Controllers/Tenant/UserController.php:174
@@ -32,6 +32,28 @@ resend.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: resend.url(options),
     method: 'post',
 })
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::resend
+* @see app/Http/Controllers/Tenant/UserController.php:174
+* @route '/employees/open-invites/resend'
+*/
+const resendForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: resend.url(options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::resend
+* @see app/Http/Controllers/Tenant/UserController.php:174
+* @route '/employees/open-invites/resend'
+*/
+resendForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: resend.url(options),
+    method: 'post',
+})
+
+resend.form = resendForm
 
 /**
 * @see \App\Http\Controllers\Tenant\UserController::resendOne
@@ -92,6 +114,28 @@ resendOne.post = (args: { invite: string | number | { id: string | number } } | 
 })
 
 /**
+* @see \App\Http\Controllers\Tenant\UserController::resendOne
+* @see app/Http/Controllers/Tenant/UserController.php:156
+* @route '/employees/open-invites/{invite}/resend'
+*/
+const resendOneForm = (args: { invite: string | number | { id: string | number } } | [invite: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: resendOne.url(args, options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::resendOne
+* @see app/Http/Controllers/Tenant/UserController.php:156
+* @route '/employees/open-invites/{invite}/resend'
+*/
+resendOneForm.post = (args: { invite: string | number | { id: string | number } } | [invite: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: resendOne.url(args, options),
+    method: 'post',
+})
+
+resendOne.form = resendOneForm
+
+/**
 * @see \App\Http\Controllers\Tenant\UserController::destroy
 * @see app/Http/Controllers/Tenant/UserController.php:214
 * @route '/employees/open-invites/{invite}'
@@ -148,6 +192,38 @@ destroy.delete = (args: { invite: string | number | { id: string | number } } | 
     url: destroy.url(args, options),
     method: 'delete',
 })
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::destroy
+* @see app/Http/Controllers/Tenant/UserController.php:214
+* @route '/employees/open-invites/{invite}'
+*/
+const destroyForm = (args: { invite: string | number | { id: string | number } } | [invite: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: destroy.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'DELETE',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\UserController::destroy
+* @see app/Http/Controllers/Tenant/UserController.php:214
+* @route '/employees/open-invites/{invite}'
+*/
+destroyForm.delete = (args: { invite: string | number | { id: string | number } } | [invite: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: destroy.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'DELETE',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+destroy.form = destroyForm
 
 const openInvites = {
     resend: Object.assign(resend, resend),

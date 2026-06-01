@@ -1,8 +1,8 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Auth\PasswordController::update
 * @see app/Http/Controllers/Auth/PasswordController.php:19
-* @route '//dashboard.test/password'
+* @route '//dashboard-v2.test/password'
 */
 export const update = (options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(options),
@@ -11,13 +11,13 @@ export const update = (options?: RouteQueryOptions): RouteDefinition<'put'> => (
 
 update.definition = {
     methods: ["put"],
-    url: '//dashboard.test/password',
+    url: '//dashboard-v2.test/password',
 } satisfies RouteDefinition<["put"]>
 
 /**
 * @see \App\Http\Controllers\Auth\PasswordController::update
 * @see app/Http/Controllers/Auth/PasswordController.php:19
-* @route '//dashboard.test/password'
+* @route '//dashboard-v2.test/password'
 */
 update.url = (options?: RouteQueryOptions) => {
     return update.definition.url + queryParams(options)
@@ -26,12 +26,44 @@ update.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\Auth\PasswordController::update
 * @see app/Http/Controllers/Auth/PasswordController.php:19
-* @route '//dashboard.test/password'
+* @route '//dashboard-v2.test/password'
 */
 update.put = (options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(options),
     method: 'put',
 })
+
+/**
+* @see \App\Http\Controllers\Auth\PasswordController::update
+* @see app/Http/Controllers/Auth/PasswordController.php:19
+* @route '//dashboard-v2.test/password'
+*/
+const updateForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: update.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PUT',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Auth\PasswordController::update
+* @see app/Http/Controllers/Auth/PasswordController.php:19
+* @route '//dashboard-v2.test/password'
+*/
+updateForm.put = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: update.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PUT',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+update.form = updateForm
 
 const PasswordController = { update }
 

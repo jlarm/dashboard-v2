@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::generate
 * @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:322
@@ -52,6 +52,28 @@ generate.post = (args: { audit: string | number } | [audit: string | number ] | 
 })
 
 /**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::generate
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:322
+* @route '/audits/osha/{audit}/remediation/generate'
+*/
+const generateForm = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: generate.url(args, options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::generate
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:322
+* @route '/audits/osha/{audit}/remediation/generate'
+*/
+generateForm.post = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: generate.url(args, options),
+    method: 'post',
+})
+
+generate.form = generateForm
+
+/**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::update
 * @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:204
 * @route '/audits/osha/{audit}/remediation'
@@ -102,6 +124,38 @@ update.patch = (args: { audit: string | number } | [audit: string | number ] | s
     url: update.url(args, options),
     method: 'patch',
 })
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::update
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:204
+* @route '/audits/osha/{audit}/remediation'
+*/
+const updateForm = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: update.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PATCH',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::update
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:204
+* @route '/audits/osha/{audit}/remediation'
+*/
+updateForm.patch = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: update.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PATCH',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+update.form = updateForm
 
 /**
 * @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::download
@@ -164,6 +218,43 @@ download.head = (args: { audit: string | number } | [audit: string | number ] | 
     url: download.url(args, options),
     method: 'head',
 })
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::download
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:296
+* @route '/audits/osha/{audit}/remediation/download'
+*/
+const downloadForm = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: download.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::download
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:296
+* @route '/audits/osha/{audit}/remediation/download'
+*/
+downloadForm.get = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: download.url(args, options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\Tenant\Audit\ViolationAuditController::download
+* @see app/Http/Controllers/Tenant/Audit/ViolationAuditController.php:296
+* @route '/audits/osha/{audit}/remediation/download'
+*/
+downloadForm.head = (args: { audit: string | number } | [audit: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: download.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+download.form = downloadForm
 
 const remediation = {
     update: Object.assign(update, update),

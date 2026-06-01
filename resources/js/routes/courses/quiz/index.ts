@@ -1,8 +1,8 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Central\CourseResultController::store
 * @see app/Http/Controllers/Central/CourseResultController.php:16
-* @route '//dashboard.test/courses/{course}/quiz'
+* @route '//dashboard-v2.test/courses/{course}/quiz'
 */
 export const store = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(args, options),
@@ -11,13 +11,13 @@ export const store = (args: { course: string | { slug: string } } | [course: str
 
 store.definition = {
     methods: ["post"],
-    url: '//dashboard.test/courses/{course}/quiz',
+    url: '//dashboard-v2.test/courses/{course}/quiz',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \App\Http\Controllers\Central\CourseResultController::store
 * @see app/Http/Controllers/Central/CourseResultController.php:16
-* @route '//dashboard.test/courses/{course}/quiz'
+* @route '//dashboard-v2.test/courses/{course}/quiz'
 */
 store.url = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
@@ -50,12 +50,34 @@ store.url = (args: { course: string | { slug: string } } | [course: string | { s
 /**
 * @see \App\Http\Controllers\Central\CourseResultController::store
 * @see app/Http/Controllers/Central/CourseResultController.php:16
-* @route '//dashboard.test/courses/{course}/quiz'
+* @route '//dashboard-v2.test/courses/{course}/quiz'
 */
 store.post = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(args, options),
     method: 'post',
 })
+
+/**
+* @see \App\Http\Controllers\Central\CourseResultController::store
+* @see app/Http/Controllers/Central/CourseResultController.php:16
+* @route '//dashboard-v2.test/courses/{course}/quiz'
+*/
+const storeForm = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: store.url(args, options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Central\CourseResultController::store
+* @see app/Http/Controllers/Central/CourseResultController.php:16
+* @route '//dashboard-v2.test/courses/{course}/quiz'
+*/
+storeForm.post = (args: { course: string | { slug: string } } | [course: string | { slug: string } ] | string | { slug: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: store.url(args, options),
+    method: 'post',
+})
+
+store.form = storeForm
 
 const quiz = {
     store: Object.assign(store, store),

@@ -1,8 +1,8 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Central\ContractReviewController::store
 * @see app/Http/Controllers/Central/ContractReviewController.php:68
-* @route '//dashboard.test/contract/view/{contract}'
+* @route '//dashboard-v2.test/contract/view/{contract}'
 */
 export const store = (args: { contract: string | { uuid: string } } | [contract: string | { uuid: string } ] | string | { uuid: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(args, options),
@@ -11,13 +11,13 @@ export const store = (args: { contract: string | { uuid: string } } | [contract:
 
 store.definition = {
     methods: ["post"],
-    url: '//dashboard.test/contract/view/{contract}',
+    url: '//dashboard-v2.test/contract/view/{contract}',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \App\Http\Controllers\Central\ContractReviewController::store
 * @see app/Http/Controllers/Central/ContractReviewController.php:68
-* @route '//dashboard.test/contract/view/{contract}'
+* @route '//dashboard-v2.test/contract/view/{contract}'
 */
 store.url = (args: { contract: string | { uuid: string } } | [contract: string | { uuid: string } ] | string | { uuid: string }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
@@ -50,12 +50,34 @@ store.url = (args: { contract: string | { uuid: string } } | [contract: string |
 /**
 * @see \App\Http\Controllers\Central\ContractReviewController::store
 * @see app/Http/Controllers/Central/ContractReviewController.php:68
-* @route '//dashboard.test/contract/view/{contract}'
+* @route '//dashboard-v2.test/contract/view/{contract}'
 */
 store.post = (args: { contract: string | { uuid: string } } | [contract: string | { uuid: string } ] | string | { uuid: string }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(args, options),
     method: 'post',
 })
+
+/**
+* @see \App\Http\Controllers\Central\ContractReviewController::store
+* @see app/Http/Controllers/Central/ContractReviewController.php:68
+* @route '//dashboard-v2.test/contract/view/{contract}'
+*/
+const storeForm = (args: { contract: string | { uuid: string } } | [contract: string | { uuid: string } ] | string | { uuid: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: store.url(args, options),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Central\ContractReviewController::store
+* @see app/Http/Controllers/Central/ContractReviewController.php:68
+* @route '//dashboard-v2.test/contract/view/{contract}'
+*/
+storeForm.post = (args: { contract: string | { uuid: string } } | [contract: string | { uuid: string } ] | string | { uuid: string }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: store.url(args, options),
+    method: 'post',
+})
+
+store.form = storeForm
 
 const review = {
     store: Object.assign(store, store),
